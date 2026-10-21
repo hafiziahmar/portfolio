@@ -73,7 +73,7 @@ export const seedDatabase = async (): Promise<void> => {
       );
     }
 
-    // 3. Seed Experiences (word-for-word from CV with exact dates)
+    // 3. Seed Experiences (word-for-word from CV with exact dates and all bullets consolidated in description)
     await pool.query('DELETE FROM experiences');
     const experiences = [
       {
@@ -83,12 +83,12 @@ export const seedDatabase = async (): Promise<void> => {
         start_date: 'May 2025',
         end_date: 'Mar 2026',
         is_current: false,
-        description: 'Spearheaded administration, procurement, compliance, and digital outreach pipelines for an Australian aged-care organization expanding operations into the Malaysian market.',
-        achievements: [
-          'Engineered and deployed an automated event registration and database feedback system utilizing Google Workspace and Google Apps Script, eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.',
-          'Leveraged structured prompting techniques with LLM assistants to accelerate script writing and prototype operational workflows, bridging healthcare processes with technical automation.',
-        ],
-        technologies: ['Google Apps Script', 'Google Workspace', 'Process Automation', 'Healthcare Operations', 'LLM Prompting'],
+        description: `Spearheaded administration, procurement, compliance, and digital outreach pipelines for an Australian aged-care organization expanding operations into the Malaysian market.
+
+• Engineered and deployed an automated event registration and database feedback system utilizing Google Workspace and Google Apps Script, eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.
+• Leveraged structured prompting techniques with LLM assistants to accelerate script writing and prototype operational workflows, bridging healthcare processes with technical automation.`,
+        achievements: [],
+        technologies: [],
         order_index: 1,
       },
       {
@@ -98,11 +98,11 @@ export const seedDatabase = async (): Promise<void> => {
         start_date: '2024',
         end_date: '2024',
         is_current: false,
-        description: 'Selected for a competitive global talent scholarship to undergo intensive on-site care operations and compliance training within NV College, alongside a practical placement within NVC Group’s Riverside Gardens Aged Care Facility in New South Wales, Australia.',
-        achievements: [
-          'Mastered strict international healthcare compliance frameworks and adapted operational protocols to global standards while cultivating cross-cultural fluencies.',
-        ],
-        technologies: ['Healthcare Compliance', 'Clinical Operations', 'Cross-Cultural Fluency'],
+        description: `Selected for a competitive global talent scholarship to undergo intensive on-site care operations and compliance training within NV College, alongside a practical placement within NVC Group’s Riverside Gardens Aged Care Facility in New South Wales, Australia.
+
+• Mastered strict international healthcare compliance frameworks and adapted operational protocols to global standards while cultivating cross-cultural fluencies.`,
+        achievements: [],
+        technologies: [],
         order_index: 2,
       },
       {
@@ -112,12 +112,12 @@ export const seedDatabase = async (): Promise<void> => {
         start_date: '2023',
         end_date: '2023',
         is_current: false,
-        description: 'Managed client portfolios, performed risk evaluations, and translated complex financial protection structures into clear, accessible solutions for clients.',
-        achievements: [
-          'Utilized internal enterprise digital platforms and CRM software to streamline application submissions and manage data pipelines.',
-          'Maintained strict compliance with financial regulations and industry standards across all client accounts.',
-        ],
-        technologies: ['Enterprise CRM', 'Risk Evaluation', 'Portfolio Management', 'Financial Compliance'],
+        description: `Managed client portfolios, performed risk evaluations, and translated complex financial protection structures into clear, accessible solutions for clients.
+
+• Utilized internal enterprise digital platforms and CRM software to streamline application submissions and manage data pipelines.
+• Maintained strict compliance with financial regulations and industry standards across all client accounts.`,
+        achievements: [],
+        technologies: [],
         order_index: 3,
       },
       {
@@ -127,12 +127,12 @@ export const seedDatabase = async (): Promise<void> => {
         start_date: '2022',
         end_date: '2022',
         is_current: false,
-        description: 'Orchestrated end-to-end project planning, milestone scheduling, and execution for landscaping projects at Masjid Puncak Alam and Ma’ahad Tahfiz Ismail.',
-        achievements: [
-          'Formulated project budgets, executed procurement strategies, managed assets and inventories, and acted as the primary liaison for supplier and contractor negotiations.',
-          'Led and supervised a cross-cultural team of 10+ operational workers to optimize daily workflows, reporting project velocity directly to the Director.',
-        ],
-        technologies: ['Project Planning', 'Budget Formulation', 'Procurement & Inventory', 'Team Leadership'],
+        description: `Orchestrated end-to-end project planning, milestone scheduling, and execution for landscaping projects at Masjid Puncak Alam and Ma’ahad Tahfiz Ismail.
+
+• Formulated project budgets, executed procurement strategies, managed assets and inventories, and acted as the primary liaison for supplier and contractor negotiations.
+• Led and supervised a cross-cultural team of 10+ operational workers to optimize daily workflows, reporting project velocity directly to the Director.`,
+        achievements: [],
+        technologies: [],
         order_index: 4,
       },
       {
@@ -142,11 +142,11 @@ export const seedDatabase = async (): Promise<void> => {
         start_date: '2021',
         end_date: '2021',
         is_current: false,
-        description: 'Selected for a competitive agricultural technology initiative focused on deploying modern smart farming infrastructures.',
-        achievements: [
-          'Co-engineered and built a commercial one-acre chili cultivation facility from the ground up, directly installing and configuring automated fertigation delivery systems.',
-        ],
-        technologies: ['Smart Farming Systems', 'Automated Fertigation', 'Facility Engineering'],
+        description: `Selected for a competitive agricultural technology initiative focused on deploying modern smart farming infrastructures.
+
+• Co-engineered and built a commercial one-acre chili cultivation facility from the ground up, directly installing and configuring automated fertigation delivery systems.`,
+        achievements: [],
+        technologies: [],
         order_index: 5,
       },
       {
@@ -156,12 +156,12 @@ export const seedDatabase = async (): Promise<void> => {
         start_date: '2020',
         end_date: '2020',
         is_current: false,
-        description: 'Immersed in specialized training focused on exploring freelance tech ecosystems, digital marketplace onboarding, and remote delivery frameworks.',
-        achievements: [
-          'Formulated professional client outreach pipelines, digital portfolio presentation standards, and cross-border service delivery strategies.',
-          'Equipped with structured remote project execution workflows, digital asset management, and independent professional branding strategies.',
-        ],
-        technologies: ['Remote Delivery Frameworks', 'Digital Marketplaces', 'Outreach Pipelines'],
+        description: `Immersed in specialized training focused on exploring freelance tech ecosystems, digital marketplace onboarding, and remote delivery frameworks.
+
+• Formulated professional client outreach pipelines, digital portfolio presentation standards, and cross-border service delivery strategies.
+• Equipped with structured remote project execution workflows, digital asset management, and independent professional branding strategies.`,
+        achievements: [],
+        technologies: [],
         order_index: 6,
       },
     ];
@@ -191,16 +191,18 @@ export const seedDatabase = async (): Promise<void> => {
       {
         title: 'URUS — Integrated SME Operations Platform',
         tagline: 'Outbound fulfillment queue, multi-stage order lifecycles, barcode scanning, atomic order claiming (5-Member Agile Team)',
-        description: 'Integrated operational platform for stock-based small and medium enterprises (SMEs) connecting inbound procurement, inventory, outbound fulfillment, workforce activity, KPI measurement, expenses, payroll, and management intelligence within one canonical pipeline.',
-        architecture_details: 'Directed autonomous coding agents in Antigravity to build and deliver the Outbound Fulfillment & Dispatch Queue module. Constructed layered REST APIs in Node.js and Express connected to Dockerized PostgreSQL instances using connection pools (pg) and parameterization against SQL injection. Implemented stateless JWT authentication, bcrypt password hashing, and Redis caching with explicit cache-invalidation on database writes.',
-        key_features: [
-          'Directed autonomous coding agents in Antigravity to build and deliver the Outbound Fulfillment & Dispatch Queue module for an SME operations platform.',
-          'Guided the AI implementation of the multi-stage order lifecycle (READY_TO_PICK → PICKING → PACKING → FULFILLED), integrating camera-based barcode scanning for real-time SKU verification.',
-          'Prompted and validated order-claiming logic designed to prevent concurrent picking conflicts, ensuring orders could only be claimed by one worker at a time.',
-          'Configured end-to-end fulfillment workflows that trigger automatic inventory deductions and emit verified operational events upon order completion.',
-          'Verified module data flows against team schemas and API endpoints to ensure outbound completion correctly fed into downstream workforce KPI metrics.',
-        ],
-        tech_stack: ['React 19', 'TypeScript', 'TailwindCSS v4', 'Vite', 'Node.js / Express', 'PostgreSQL', 'Docker', 'Zod Validation'],
+        start_date: 'Aug 2026',
+        end_date: 'Sep 2026',
+        description: `Integrated operational platform for stock-based small and medium enterprises (SMEs) connecting inbound procurement, inventory, outbound fulfillment, workforce activity, KPI measurement, expenses, payroll, and management intelligence within one canonical pipeline.
+
+• Directed autonomous coding agents in Antigravity to build and deliver the Outbound Fulfillment & Dispatch Queue module for an SME operations platform.
+• Guided the AI implementation of the multi-stage order lifecycle (READY_TO_PICK → PICKING → PACKING → FULFILLED), integrating camera-based barcode scanning for real-time SKU verification.
+• Prompted and validated order-claiming logic designed to prevent concurrent picking conflicts, ensuring orders could only be claimed by one worker at a time.
+• Configured end-to-end fulfillment workflows that trigger automatic inventory deductions and emit verified operational events upon order completion.
+• Verified module data flows against team schemas and API endpoints to ensure outbound completion correctly fed into downstream workforce KPI metrics.`,
+        architecture_details: '',
+        key_features: [],
+        tech_stack: [],
         github_url: '',
         demo_url: '',
         featured: true,
@@ -210,11 +212,13 @@ export const seedDatabase = async (): Promise<void> => {
 
     for (const p of projects) {
       await pool.query(
-        `INSERT INTO projects (title, tagline, description, architecture_details, key_features, tech_stack, github_url, demo_url, featured, order_index)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+        `INSERT INTO projects (title, tagline, start_date, end_date, description, architecture_details, key_features, tech_stack, github_url, demo_url, featured, order_index)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
         [
           p.title,
           p.tagline,
+          p.start_date,
+          p.end_date,
           p.description,
           p.architecture_details,
           p.key_features,
@@ -233,37 +237,43 @@ export const seedDatabase = async (): Promise<void> => {
       {
         institution: 'Korea-ASEAN Digital Academy (KADA)',
         degree: 'Project KADA Participant – AI-Enabled Full-Stack Development',
+        start_date: 'Aug 2026',
+        end_date: 'Sep 2026',
         period: 'Aug 2026 – Sep 2026',
         field_of_study: 'Full-Stack Engineering & System Architecture Foundations',
         description: 'Completed comprehensive engineering training spanning domain-driven design (DDD), wireframing/Figma translation, and component-driven frontend architecture using React, Vite, Tailwind CSS, and Zustand. Directed AI workflows to construct layered REST APIs in Node.js and Express connected to Dockerized PostgreSQL instances. Implemented stateless JWT authentication, bcrypt password hashing, and Redis caching. Verified system endpoints using Postman test collections, OpenAPI 3.0/Swagger, and browser DevTools.',
-        badges: ['Domain-Driven Design', 'Layered Architecture', 'JWT & Bcrypt', 'Redis Caching', 'PostgreSQL'],
+        badges: [],
         order_index: 1,
       },
       {
         institution: '42KL',
         degree: 'Piscine Participant – Software Engineering',
+        start_date: 'Apr 2026',
+        end_date: 'May 2026',
         period: 'Apr 2026 – May 2026',
         field_of_study: 'Low-Level Logic, Imperative Logic & C Programming',
         description: 'Completed the intensive, teacherless, peer-to-peer 4-week programming pool focused on low-level logic, algorithmic thinking, and imperative logic structure using C. Developed high cognitive agility and resilience by resolving complex computing challenges under rigorous automated evaluation systems.',
-        badges: ['C Programming', 'Algorithms', 'Imperative Logic', 'Automated Evaluation'],
+        badges: [],
         order_index: 2,
       },
       {
         institution: 'Universiti Teknologi MARA (UiTM) Puncak Alam',
         degree: 'Bachelor of Dietetics (Hons.)',
+        start_date: '2020',
+        end_date: '2020',
         period: '2020',
         field_of_study: 'Clinical Healthcare, Biochemical Nutrition & Data Analysis',
         description: 'Formulated precision Medical Nutrition Therapy (MNT) by interpreting raw biochemical parameters and clinical data inputs. Utilized behavioral counseling frameworks to systematically deliver and execute clinical dietary interventions. Executed structured quantitative research methodologies to accurately track, analyze, and report on complex data trends.',
-        badges: ['Medical Nutrition Therapy', 'Clinical Data Interpretation', 'Quantitative Research'],
+        badges: [],
         order_index: 3,
       },
     ];
 
     for (const edu of education) {
       await pool.query(
-        `INSERT INTO education (institution, degree, period, field_of_study, description, badges, order_index)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        [edu.institution, edu.degree, edu.period, edu.field_of_study, edu.description, edu.badges, edu.order_index]
+        `INSERT INTO education (institution, degree, period, start_date, end_date, field_of_study, description, badges, order_index)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+        [edu.institution, edu.degree, edu.period, edu.start_date, edu.end_date, edu.field_of_study, edu.description, edu.badges, edu.order_index]
       );
     }
 

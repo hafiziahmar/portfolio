@@ -1,5 +1,5 @@
 import React from 'react';
-import { Briefcase, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
+import { Briefcase, Calendar, MapPin } from 'lucide-react';
 import { Experience } from '../types';
 
 interface ExperienceTimelineProps {
@@ -66,40 +66,9 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experien
                 </div>
 
                 {/* Description */}
-                <p className="text-sm text-sand-text leading-relaxed">
+                <div className="text-sm text-sand-text leading-relaxed whitespace-pre-line text-justify">
                   {exp.description}
-                </p>
-
-                {/* Achievements List */}
-                {exp.achievements && exp.achievements.length > 0 && (
-                  <div className="space-y-2 pt-1">
-                    <span className="text-xs font-mono font-semibold uppercase tracking-wider text-sand-text-muted">
-                      Key Impacts & Deliverables:
-                    </span>
-                    <ul className="space-y-1.5">
-                      {exp.achievements.map((item, i) => (
-                        <li key={i} className="flex items-start space-x-2.5 text-xs sm:text-sm text-sand-text-muted">
-                          <CheckCircle2 className="w-4 h-4 text-sand-moss shrink-0 mt-0.5" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Technologies */}
-                {exp.technologies && exp.technologies.length > 0 && (
-                  <div className="pt-3 border-t border-sand-border flex flex-wrap gap-1.5">
-                    {exp.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-xs font-mono px-2.5 py-1 rounded-md bg-sand-surface-muted text-sand-text-muted border border-sand-border"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                </div>
 
               </div>
 

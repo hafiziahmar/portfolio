@@ -4,7 +4,9 @@ export interface EducationRecord {
   id: number;
   institution: string;
   degree: string;
-  period: string;
+  period?: string | null;
+  start_date?: string | null;
+  end_date?: string | null;
   field_of_study: string | null;
   description: string | null;
   badges: string[];
@@ -20,12 +22,26 @@ export class EducationRepository {
     return res.rows;
   }
 
-  async createEducation(data: Omit<EducationRecord, 'id' | 'created_at'>): Promise<EducationRecord> {
+  async createEducation(data: Partial<EducationRecord>): Promise<EducationRecord> {
+    const start_date = data.start_date || '2026';
+    const end_date = data.end_date || '2026';
+    const period = data.period || (start_date === end_date ? start_date : `${start_date} – ${end_date}`);
+
     const res = await pool.query(
-      `INSERT INTO education (institution, degree, period, field_of_study, description, badges, order_index)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+      `INSERT INTO education (institution, degree, period, start_date, end_date, field_of_study, description, badges, order_index)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
        RETURNING *`,
-      [data.institution, data.degree, data.period, data.field_of_study, data.description, data.badges, data.order_index]
+      [
+        data.institution || '',
+        data.degree || '',
+        period,
+        start_date,
+        end_date,
+        data.field_of_study || null,
+        data.description || null,
+        data.badges || [],
+        data.order_index ?? 0,
+      ]
     );
     return res.rows[0];
   }
@@ -36,13 +52,26 @@ export class EducationRepository {
        SET institution = COALESCE($1, institution),
            degree = COALESCE($2, degree),
            period = COALESCE($3, period),
-           field_of_study = COALESCE($4, field_of_study),
-           description = COALESCE($5, description),
-           badges = COALESCE($6, badges),
-           order_index = COALESCE($7, order_index)
-       WHERE id = $8
+           start_date = COALESCE($4, start_date),
+           end_date = COALESCE($5, end_date),
+           field_of_study = COALESCE($6, field_of_study),
+           description = COALESCE($7, description),
+           badges = COALESCE($8, badges),
+           order_index = COALESCE($9, order_index)
+       WHERE id = $10
        RETURNING *`,
-      [data.institution, data.degree, data.period, data.field_of_study, data.description, data.badges, data.order_index, id]
+      [
+        data.institution,
+        data.degree,
+        data.period,
+        data.start_date,
+        data.end_date,
+        data.field_of_study,
+        data.description,
+        data.badges,
+        data.order_index,
+        id,
+      ]
     );
     return res.rows[0] || null;
   }

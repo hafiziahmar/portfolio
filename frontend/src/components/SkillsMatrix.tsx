@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Wrench, Star } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Wrench } from 'lucide-react';
 import { Skill } from '../types';
 
 interface SkillsMatrixProps {
@@ -9,7 +9,11 @@ interface SkillsMatrixProps {
 export const SkillsMatrix: React.FC<SkillsMatrixProps> = ({ skills }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  const categories = ['All', 'Autonomous AI Development', 'Full-Stack Technologies', 'Tools & Verification'];
+  // Derive unique categories dynamically from the database
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(skills.map((s) => s.category))).filter(Boolean);
+    return ['All', ...unique];
+  }, [skills]);
 
   const filteredSkills =
     selectedCategory === 'All'
@@ -29,7 +33,7 @@ export const SkillsMatrix: React.FC<SkillsMatrixProps> = ({ skills }) => {
           <h2 className="text-3xl sm:text-4xl font-bold text-sand-text tracking-tight">
             Categorized Skills Matrix
           </h2>
-          <p className="text-base text-sand-text-muted">
+          <p className="text-base text-sand-text-muted text-justify">
             Engineered across autonomous AI systems, modern full-stack frameworks, database architecture, and verification tooling.
           </p>
         </div>
@@ -68,12 +72,6 @@ export const SkillsMatrix: React.FC<SkillsMatrixProps> = ({ skills }) => {
                     {skill.name}
                   </h3>
                 </div>
-
-                {skill.highlight && (
-                  <span className="p-1 rounded-md bg-sand-amber/15 text-sand-amber shrink-0" title="Core Specialty">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                  </span>
-                )}
               </div>
 
               {/* Proficiency Level Bar */}

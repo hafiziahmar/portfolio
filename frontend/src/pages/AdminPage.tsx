@@ -67,6 +67,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
   // Projects State
   const [projects, setProjects] = useState<Project[]>([]);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [isNewProject, setIsNewProject] = useState(false);
   const [projFeedback, setProjFeedback] = useState<string | null>(null);
 
   // Skills State
@@ -225,12 +226,29 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
     e.preventDefault();
     if (!editingProject) return;
     try {
-      await api.adminUpdateProject(editingProject.id, editingProject);
-      setProjFeedback('Project architecture and details updated successfully!');
+      if (isNewProject) {
+        await api.adminCreateProject(editingProject);
+        setProjFeedback('New project created successfully!');
+      } else {
+        await api.adminUpdateProject(editingProject.id, editingProject);
+        setProjFeedback('Project details updated successfully!');
+      }
       setEditingProject(null);
+      setIsNewProject(false);
       await loadAllPortfolioData();
     } catch (err: any) {
-      alert(err.message || 'Failed to update project');
+      alert(err.message || 'Failed to save project');
+    }
+  };
+
+  const handleDeleteProject = async (id: number) => {
+    if (!confirm('Are you sure you want to delete this project?')) return;
+    try {
+      await api.adminDeleteProject(id);
+      setProjFeedback('Project deleted successfully!');
+      await loadAllPortfolioData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to delete project');
     }
   };
 
@@ -269,11 +287,19 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
     e.preventDefault();
     if (!editingEdu) return;
     try {
+      const start = editingEdu.start_date?.trim() || '';
+      const end = editingEdu.end_date?.trim() || '';
+      const period = (!end || start === end) ? start : `${start} – ${end}`;
+      const payload = {
+        ...editingEdu,
+        period: period || editingEdu.period || '',
+      };
+
       if (isNewEdu) {
-        await api.adminCreateEducation(editingEdu);
+        await api.adminCreateEducation(payload);
         setEduFeedback('Education credential added successfully!');
       } else {
-        await api.adminUpdateEducation(editingEdu.id, editingEdu);
+        await api.adminUpdateEducation(editingEdu.id, payload);
         setEduFeedback('Education credential updated successfully!');
       }
       setEditingEdu(null);
@@ -981,13 +1007,41 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
       {/* TAB 4: Projects */}
       {activeTab === 'projects' && (
         <div className="space-y-6 max-w-4xl">
-          <div className="space-y-1">
-            <h2 className="text-lg font-bold text-sand-text">
-              Flagship Capstone Project (URUS)
-            </h2>
-            <p className="text-xs text-sand-text-muted">
-              Configure system architecture, technical bullets, and stack details.
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <h2 className="text-lg font-bold text-sand-text">
+                Projects Management ({projects.length})
+              </h2>
+              <p className="text-xs text-sand-text-muted">
+                Manage project name, start/end dates, and description. All wording is 100% controlled by you.
+              </p>
+            </div>
+
+            <button
+              onClick={() => {
+                setEditingProject({
+                  id: 0,
+                  title: '',
+                  tagline: '',
+                  start_date: '2026',
+                  end_date: '2026',
+                  description: '',
+                  architecture_details: '',
+                  key_features: [],
+                  tech_stack: [],
+                  github_url: '',
+                  demo_url: '',
+                  featured: true,
+                  order_index: projects.length + 1,
+                });
+                setIsNewProject(true);
+              }}
+              type="button"
+              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-sand-moss text-white text-xs font-semibold hover:bg-sand-moss-hover transition-colors shadow-2xs cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Project</span>
+            </button>
           </div>
 
           {projFeedback && (
@@ -997,41 +1051,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
             </div>
           )}
 
-          {projects.map((p) => (
-            <div key={p.id} className="p-6 rounded-2xl border border-sand-border bg-sand-surface shadow-xs space-y-4">
-              <div className="flex items-center justify-between border-b border-sand-border pb-3">
-                <div>
-                  <h3 className="font-bold text-base text-sand-text">{p.title}</h3>
-                  <p className="text-xs text-sand-moss font-medium">{p.tagline}</p>
-                </div>
-                <button
-                  onClick={() => setEditingProject(p)}
-                  type="button"
-                  className="px-3.5 py-1.5 rounded-xl bg-sand-moss text-white text-xs font-semibold hover:bg-sand-moss-hover"
-                >
-                  Edit Project Details
-                </button>
-              </div>
-
-              <p className="text-xs sm:text-sm text-sand-text-muted leading-relaxed">
-                {p.description}
-              </p>
-
-              <div className="space-y-1 text-xs">
-                <span className="font-mono uppercase text-2xs text-sand-text-muted font-bold">Key Capabilities:</span>
-                <ul className="list-disc pl-5 space-y-1 text-sand-text">
-                  {p.key_features.map((f, i) => (
-                    <li key={i}>{f}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-
+          {/* Edit/Create Project Form */}
           {editingProject && (
             <div className="p-6 rounded-2xl border border-sand-moss bg-sand-surface-muted shadow-md space-y-4">
               <div className="flex items-center justify-between border-b border-sand-border pb-3">
-                <h3 className="text-sm font-bold text-sand-text">Edit Project: {editingProject.title}</h3>
+                <h3 className="text-sm font-bold text-sand-text">
+                  {isNewProject ? 'Add New Project' : `Edit: ${editingProject.title}`}
+                </h3>
                 <button
                   onClick={() => setEditingProject(null)}
                   type="button"
@@ -1043,9 +1069,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
 
               <form onSubmit={handleSaveProject} className="space-y-4">
                 <div>
-                  <label className="text-xs font-mono font-semibold text-sand-text">Title</label>
+                  <label className="text-xs font-mono font-semibold text-sand-text">Project Name</label>
                   <input
                     type="text"
+                    placeholder="e.g. URUS — Integrated SME Operations Platform"
                     value={editingProject.title}
                     onChange={(e) => setEditingProject({ ...editingProject, title: e.target.value })}
                     required
@@ -1053,32 +1080,61 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                   />
                 </div>
 
-                <div>
-                  <label className="text-xs font-mono font-semibold text-sand-text">Tagline</label>
-                  <input
-                    type="text"
-                    value={editingProject.tagline}
-                    onChange={(e) => setEditingProject({ ...editingProject, tagline: e.target.value })}
-                    required
-                    className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Start Date</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Aug 2026 or 2026"
+                      value={editingProject.start_date || ''}
+                      onChange={(e) => setEditingProject({ ...editingProject, start_date: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">End Date (same as start if single year)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Sep 2026 or 2026"
+                      value={editingProject.end_date || ''}
+                      onChange={(e) => setEditingProject({ ...editingProject, end_date: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono font-semibold text-sand-text">Description</label>
+                  <label className="text-xs font-mono font-semibold text-sand-text">
+                    Description (All project details & bullets from CV)
+                  </label>
                   <textarea
-                    rows={4}
+                    rows={6}
                     value={editingProject.description}
                     onChange={(e) => setEditingProject({ ...editingProject, description: e.target.value })}
                     required
+                    placeholder="Enter project summary and bullet points..."
                     className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
                   ></textarea>
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono font-semibold text-sand-text">Architecture & Data Design</label>
+                  <label className="text-xs font-mono font-semibold text-sand-text">Tagline / Subheading (Optional)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Outbound fulfillment queue, multi-stage order lifecycles..."
+                    value={editingProject.tagline || ''}
+                    onChange={(e) => setEditingProject({ ...editingProject, tagline: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono font-semibold text-sand-text">Architecture & Data Design (Optional)</label>
                   <textarea
                     rows={3}
+                    placeholder="Optional technical notes for modal inspection..."
                     value={editingProject.architecture_details || ''}
                     onChange={(e) => setEditingProject({ ...editingProject, architecture_details: e.target.value })}
                     className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
@@ -1097,12 +1153,63 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                     type="submit"
                     className="px-5 py-2 rounded-xl bg-sand-moss text-white text-xs font-semibold"
                   >
-                    Save Project Changes
+                    Save Project
                   </button>
                 </div>
               </form>
             </div>
           )}
+
+          {/* Project List */}
+          <div className="space-y-3">
+            {projects.map((p) => {
+              const dateText = p.start_date && p.end_date
+                ? (p.start_date.trim() === p.end_date.trim() ? p.start_date : `${p.start_date} – ${p.end_date}`)
+                : (p.start_date || p.end_date || '');
+
+              return (
+                <div
+                  key={p.id}
+                  className="p-5 rounded-2xl border border-sand-border bg-sand-surface shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <h3 className="font-bold text-sand-text text-sm sm:text-base">{p.title}</h3>
+                      {dateText && (
+                        <span className="text-xs font-mono text-sand-amber px-2 py-0.5 rounded bg-sand-surface-muted">
+                          {dateText}
+                        </span>
+                      )}
+                    </div>
+                    {p.tagline && <p className="text-xs font-medium text-sand-moss">{p.tagline}</p>}
+                    <p className="text-xs text-sand-text-muted line-clamp-2">{p.description}</p>
+                  </div>
+
+                  <div className="flex items-center space-x-2 shrink-0">
+                    <button
+                      onClick={() => {
+                        setEditingProject(p);
+                        setIsNewProject(false);
+                      }}
+                      type="button"
+                      className="p-2 rounded-lg border border-sand-border text-sand-text hover:bg-sand-surface-muted"
+                      title="Edit"
+                    >
+                      <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteProject(p.id)}
+                      type="button"
+                      className="p-2 rounded-lg border border-sand-border text-red-500 hover:bg-red-500/10"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 
@@ -1128,17 +1235,27 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
             <h3 className="text-xs font-mono font-bold uppercase text-sand-text">Add New Skill</h3>
             <form onSubmit={handleAddSkill} className="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
               <div>
-                <label className="text-xs font-mono text-sand-text-muted block mb-1">Category</label>
-                <select
+                <label className="text-xs font-mono text-sand-text-muted block mb-1">
+                  Category (Select or Type New)
+                </label>
+                <input
+                  type="text"
+                  list="skills-category-options"
+                  placeholder="Select or enter category..."
                   value={newSkillForm.category}
                   onChange={(e) => setNewSkillForm({ ...newSkillForm, category: e.target.value })}
+                  required
                   className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-xs"
-                >
-                  <option value="Autonomous AI Development & Workspaces">Autonomous AI Development & Workspaces</option>
-                  <option value="Full-Stack Technologies">Full-Stack Technologies</option>
-                  <option value="Hands-On Verification & Tools">Hands-On Verification & Tools</option>
-                  <option value="System Design & Workflows">System Design & Workflows</option>
-                </select>
+                />
+                <datalist id="skills-category-options">
+                  {Array.from(new Set(skills.map((s) => s.category))).map((cat) => (
+                    <option key={cat} value={cat} />
+                  ))}
+                  <option value="Autonomous AI Development & Workspaces" />
+                  <option value="Full-Stack Technologies" />
+                  <option value="Hands-On Verification & Tools" />
+                  <option value="System Design & Workflows" />
+                </datalist>
               </div>
 
               <div>
@@ -1205,13 +1322,20 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
       {activeTab === 'education' && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-sand-text">Education & Training Credentials ({educationList.length})</h2>
+            <div className="space-y-1">
+              <h2 className="text-lg font-bold text-sand-text">Education & Specialized Training ({educationList.length})</h2>
+              <p className="text-xs text-sand-text-muted">
+                Title, Education Provider, Dates, and Description. Only your wording is displayed.
+              </p>
+            </div>
             <button
               onClick={() => {
                 setEditingEdu({
                   id: 0,
                   institution: '',
                   degree: '',
+                  start_date: '2026',
+                  end_date: '2026',
                   period: '2026',
                   field_of_study: '',
                   description: '',
@@ -1240,7 +1364,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
             <div className="p-6 rounded-2xl border border-sand-moss bg-sand-surface-muted shadow-md space-y-4">
               <div className="flex items-center justify-between border-b border-sand-border pb-3">
                 <h3 className="text-sm font-bold text-sand-text">
-                  {isNewEdu ? 'Add Education Credential' : `Edit: ${editingEdu.institution}`}
+                  {isNewEdu ? 'Add Education Credential' : `Edit: ${editingEdu.degree}`}
                 </h3>
                 <button
                   onClick={() => setEditingEdu(null)}
@@ -1254,21 +1378,25 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
               <form onSubmit={handleSaveEducation} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-mono font-semibold text-sand-text">Institution</label>
+                    <label className="text-xs font-mono font-semibold text-sand-text">
+                      Title (Degree / Program Name)
+                    </label>
                     <input
                       type="text"
-                      value={editingEdu.institution}
-                      onChange={(e) => setEditingEdu({ ...editingEdu, institution: e.target.value })}
+                      placeholder="e.g. Bachelor of Dietetics (Hons.) or Project KADA Participant..."
+                      value={editingEdu.degree}
+                      onChange={(e) => setEditingEdu({ ...editingEdu, degree: e.target.value })}
                       required
                       className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-mono font-semibold text-sand-text">Degree / Program</label>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Education Provider</label>
                     <input
                       type="text"
-                      value={editingEdu.degree}
-                      onChange={(e) => setEditingEdu({ ...editingEdu, degree: e.target.value })}
+                      placeholder="e.g. Korea-ASEAN Digital Academy (KADA) or UiTM"
+                      value={editingEdu.institution}
+                      onChange={(e) => setEditingEdu({ ...editingEdu, institution: e.target.value })}
                       required
                       className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
                     />
@@ -1277,21 +1405,24 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-mono font-semibold text-sand-text">Period (e.g. 2020 or Aug 2026 – Sep 2026)</label>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Start Date</label>
                     <input
                       type="text"
-                      value={editingEdu.period}
-                      onChange={(e) => setEditingEdu({ ...editingEdu, period: e.target.value })}
+                      placeholder="e.g. Aug 2026 or 2020"
+                      value={editingEdu.start_date || ''}
+                      onChange={(e) => setEditingEdu({ ...editingEdu, start_date: e.target.value })}
                       required
                       className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-mono font-semibold text-sand-text">Field of Study</label>
+                    <label className="text-xs font-mono font-semibold text-sand-text">End Date (same as start if single year)</label>
                     <input
                       type="text"
-                      value={editingEdu.field_of_study || ''}
-                      onChange={(e) => setEditingEdu({ ...editingEdu, field_of_study: e.target.value })}
+                      placeholder="e.g. Sep 2026 or 2020"
+                      value={editingEdu.end_date || ''}
+                      onChange={(e) => setEditingEdu({ ...editingEdu, end_date: e.target.value })}
+                      required
                       className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
                     />
                   </div>
@@ -1300,7 +1431,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                 <div>
                   <label className="text-xs font-mono font-semibold text-sand-text">Description</label>
                   <textarea
-                    rows={3}
+                    rows={5}
+                    placeholder="Enter credential summary and clinical/technical details..."
                     value={editingEdu.description || ''}
                     onChange={(e) => setEditingEdu({ ...editingEdu, description: e.target.value })}
                     className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
@@ -1328,45 +1460,53 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
 
           {/* Education List */}
           <div className="space-y-3">
-            {educationList.map((edu) => (
-              <div
-                key={edu.id}
-                className="p-5 rounded-2xl border border-sand-border bg-sand-surface shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-              >
-                <div className="space-y-1">
-                  <div className="flex items-center space-x-2">
-                    <h3 className="font-bold text-sand-text text-sm sm:text-base">{edu.degree}</h3>
-                    <span className="text-xs font-mono text-sand-amber px-2 py-0.5 rounded bg-sand-surface-muted">
-                      {edu.period}
-                    </span>
-                  </div>
-                  <p className="text-xs font-medium text-sand-moss">{edu.institution}</p>
-                  {edu.description && <p className="text-xs text-sand-text-muted line-clamp-2">{edu.description}</p>}
-                </div>
+            {educationList.map((edu) => {
+              const dateText = edu.start_date && edu.end_date
+                ? (edu.start_date.trim() === edu.end_date.trim() ? edu.start_date : `${edu.start_date} – ${edu.end_date}`)
+                : (edu.period || edu.start_date || '');
 
-                <div className="flex items-center space-x-2 shrink-0">
-                  <button
-                    onClick={() => {
-                      setEditingEdu(edu);
-                      setIsNewEdu(false);
-                    }}
-                    type="button"
-                    className="p-2 rounded-lg border border-sand-border text-sand-text hover:bg-sand-surface-muted cursor-pointer"
-                    title="Edit"
-                  >
-                    <Edit2 className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteEducation(edu.id)}
-                    type="button"
-                    className="p-2 rounded-lg border border-sand-border text-red-500 hover:bg-red-500/10 cursor-pointer"
-                    title="Delete"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
+              return (
+                <div
+                  key={edu.id}
+                  className="p-5 rounded-2xl border border-sand-border bg-sand-surface shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <h3 className="font-bold text-sand-text text-sm sm:text-base">{edu.degree}</h3>
+                      {dateText && (
+                        <span className="text-xs font-mono text-sand-amber px-2 py-0.5 rounded bg-sand-surface-muted">
+                          {dateText}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs font-medium text-sand-moss">{edu.institution}</p>
+                    {edu.description && <p className="text-xs text-sand-text-muted line-clamp-2">{edu.description}</p>}
+                  </div>
+
+                  <div className="flex items-center space-x-2 shrink-0">
+                    <button
+                      onClick={() => {
+                        setEditingEdu(edu);
+                        setIsNewEdu(false);
+                      }}
+                      type="button"
+                      className="p-2 rounded-lg border border-sand-border text-sand-text hover:bg-sand-surface-muted"
+                      title="Edit"
+                    >
+                      <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteEducation(edu.id)}
+                      type="button"
+                      className="p-2 rounded-lg border border-sand-border text-red-500 hover:bg-red-500/10"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

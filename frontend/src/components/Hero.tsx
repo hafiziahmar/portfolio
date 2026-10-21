@@ -57,7 +57,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
             </div>
 
             {/* Executive Bio */}
-            <p className="text-base sm:text-lg text-sand-text-muted max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg text-sand-text-muted max-w-2xl leading-relaxed text-justify">
               {summary}
             </p>
 
@@ -149,7 +149,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                     <h3 className="text-sm font-semibold text-sand-text">
                       Project KADA & Full-Stack Architecture
                     </h3>
-                    <p className="text-xs text-sand-text-muted mt-0.5">
+                    <p className="text-xs text-sand-text-muted mt-0.5 text-justify">
                       Domain-driven design, layered REST APIs (Node.js/Express), stateless JWT & bcrypt authentication, and PostgreSQL data integrity.
                     </p>
                   </div>
@@ -164,7 +164,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                     <h3 className="text-sm font-semibold text-sand-text">
                       Autonomous AI Workflows & Antigravity
                     </h3>
-                    <p className="text-xs text-sand-text-muted mt-0.5">
+                    <p className="text-xs text-sand-text-muted mt-0.5 text-justify">
                       Structured prompt engineering (Role-Context-Task-Constraint), agentic workflows, iterative debugging, and non-authoritative boundaries.
                     </p>
                   </div>
@@ -179,7 +179,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                     <h3 className="text-sm font-semibold text-sand-text">
                       42KL Piscine Intensive
                     </h3>
-                    <p className="text-xs text-sand-text-muted mt-0.5">
+                    <p className="text-xs text-sand-text-muted mt-0.5 text-justify">
                       Teacherless, peer-to-peer programming pool focused on low-level logic, algorithmic thinking, and imperative logic structure in C.
                     </p>
                   </div>
@@ -194,8 +194,8 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                     <h3 className="text-sm font-semibold text-sand-text">
                       Clinical Healthcare Foundation
                     </h3>
-                    <p className="text-xs text-sand-text-muted mt-0.5">
-                      UiTM Bachelor of Dietetics (Hons.) & NVC Australia operations: Translating clinical precision and operational bottlenecks into automated systems.
+                    <p className="text-xs text-sand-text-muted mt-0.5 text-justify">
+                      UiTM Bachelor of Dietetics (Hons.) & NVC Group operations: Translating clinical precision and operational bottlenecks into automated systems.
                     </p>
                   </div>
                 </div>
