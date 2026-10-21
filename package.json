@@ -1,0 +1,30 @@
+{
+  "name": "hafizi-portfolio-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade Full-Stack Interactive CV Portfolio for Hafizi Ahmar",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:backend": "npm --workspace=backend run dev",
+    "dev:frontend": "npm --workspace=frontend run dev",
+    "build": "npm --workspace=backend run build && npm --workspace=frontend run build",
+    "db:migrate": "npm --workspace=backend run db:migrate",
+    "db:seed": "npm --workspace=backend run db:seed",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "keywords": [
+    "portfolio",
+    "react19",
+    "typescript",
+    "express",
+    "postgresql",
+    "redis",
+    "full-stack"
+  ],
+  "author": "Hafizi Ahmar",
+  "license": "MIT"
+}

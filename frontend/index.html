@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hafizi Ahmar | AI-Enabled Full-Stack Developer | Clinical Domain Expertise</title>
+    <meta name="description" content="Portfolio of Hafizi Ahmar - AI-Enabled Full-Stack Developer, Clinical Technologist, and creator of URUS SME Operations Platform." />
+    
+    <!-- Modern Web Guidance: Reflect system color scheme & support user override -->
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      (function() {
+        try {
+          const stored = localStorage.getItem('color-scheme-preference');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const isDark = stored === 'dark' || (!stored && prefersDark);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            const meta = document.querySelector('meta[name="color-scheme"]');
+            if (meta) meta.content = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            const meta = document.querySelector('meta[name="color-scheme"]');
+            if (meta) meta.content = 'light';
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-sand-bg text-sand-text transition-colors duration-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

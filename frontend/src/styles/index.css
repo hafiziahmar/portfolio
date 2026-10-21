@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light dark;
+
+  --color-sand-bg: #F7F4EE;
+  --color-sand-surface: #FFFFFF;
+  --color-sand-surface-muted: #EFEAE1;
+  --color-sand-text: #2C2B29;
+  --color-sand-text-muted: #66635B;
+  --color-sand-border: #E3DDD2;
+  --color-sand-moss: #5E6C5B;
+  --color-sand-moss-hover: #4D594B;
+  --color-sand-amber: #C27803;
+  --color-sand-amber-hover: #A36402;
+  --color-badge-bg: #EAE6DC;
+}
+
+:root.dark {
+  color-scheme: dark;
+
+  --color-sand-bg: #171C18;
+  --color-sand-surface: #222923;
+  --color-sand-surface-muted: #1B211C;
+  --color-sand-text: #EBE7DF;
+  --color-sand-text-muted: #A8A296;
+  --color-sand-border: #2E382F;
+  --color-sand-moss: #83967F;
+  --color-sand-moss-hover: #98AA94;
+  --color-sand-amber: #F59E0B;
+  --color-sand-amber-hover: #FBBF24;
+  --color-badge-bg: #2B332B;
+}
+
+@theme {
+  --color-sand-bg: var(--color-sand-bg);
+  --color-sand-surface: var(--color-sand-surface);
+  --color-sand-surface-muted: var(--color-sand-surface-muted);
+  --color-sand-text: var(--color-sand-text);
+  --color-sand-text-muted: var(--color-sand-text-muted);
+  --color-sand-border: var(--color-sand-border);
+  --color-sand-moss: var(--color-sand-moss);
+  --color-sand-moss-hover: var(--color-sand-moss-hover);
+  --color-sand-amber: var(--color-sand-amber);
+  --color-sand-amber-hover: var(--color-sand-amber-hover);
+  --color-badge-bg: var(--color-badge-bg);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-sand-bg);
+  color: var(--color-sand-text);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Modern Web Guidance: Form Interaction Pseudo-Classes (:user-invalid / :user-valid) */
+input:user-invalid,
+textarea:user-invalid {
+  border-color: #D93025 !important;
+  background-color: rgba(217, 48, 37, 0.05);
+}
+
+input:user-valid:not(:placeholder-shown),
+textarea:user-valid:not(:placeholder-shown) {
+  border-color: var(--color-sand-moss);
+}
+
+.error-hint {
+  display: none;
+}
+
+input:user-invalid ~ .error-hint,
+textarea:user-invalid ~ .error-hint {
+  display: flex;
+}
+
+/* Modern Web Guidance: Dialog Backdrop & Light Dismiss */
+dialog::backdrop {
+  background-color: rgba(15, 18, 16, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+/* Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-sand-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-sand-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-sand-moss);
+}
