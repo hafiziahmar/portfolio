@@ -139,7 +139,7 @@ Always respond concisely, authoritatively, and professionally.`;
     if (q.includes('contact') || q.includes('hire') || q.includes('available') || q.includes('interview') || q.includes('location') || q.includes('email') || q.includes('remote')) {
       return `Hafizi Ahmar is currently **${portfolio.profile?.status_badge || 'Open for Full-Stack & AI Roles'}**!\n\n` +
         `- **Location:** ${portfolio.profile?.location || 'Malaysia (Available for Global Remote Roles)'}.\n` +
-        `- **Direct Inquiries:** To protect against web scraping and spam, personal phone numbers and direct emails are not publicly published. Please send a message through the **Interactive Contact Queue Form** right below on this portfolio, or connect via [LinkedIn](${portfolio.profile?.linkedin_url || 'https://www.linkedin.com/in/hafizi-ahmar/'}). All inquiries are immediately delivered to Hafizi's secure review queue!`;
+        `- **Direct Inquiries:** To protect against web scraping and spam, personal phone numbers and direct emails are not publicly published. Please send a message through the **Interactive Contact Queue Form** right below on this portfolio, or connect via [LinkedIn](${portfolio.profile?.linkedin_url || 'https://www.linkedin.com/in/ahmad-hafizi-ahmar'}). All inquiries are immediately delivered to Hafizi's secure review queue!`;
     }
 
     // Default friendly overview

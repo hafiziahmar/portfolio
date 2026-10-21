@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { X, CheckCircle2, Terminal, ExternalLink, Github } from 'lucide-react';
+import { X, CheckCircle2, Terminal } from 'lucide-react';
 import { Project } from '../types';
 
 interface ProjectModalProps {
@@ -136,37 +136,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="pt-4 border-t border-sand-border flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center space-x-3">
-            {project.github_url && (
-              <a
-                href={project.github_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 text-xs font-medium text-sand-text hover:text-sand-moss transition-colors"
-              >
-                <Github className="w-4 h-4" />
-                <span>View Source</span>
-              </a>
-            )}
-            {project.demo_url && (
-              <a
-                href={project.demo_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 text-xs font-medium text-sand-amber hover:underline transition-colors"
-              >
-                <ExternalLink className="w-4 h-4" />
-                <span>Live Demonstration</span>
-              </a>
-            )}
-          </div>
-
+        {/* Action Button */}
+        <div className="pt-4 border-t border-sand-border flex justify-end">
           <button
             onClick={onClose}
             type="button"
-            className="px-4 py-2 rounded-xl bg-sand-moss text-white text-xs font-semibold hover:bg-sand-moss-hover transition-colors cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-sand-moss text-white text-xs font-semibold hover:bg-sand-moss-hover transition-colors cursor-pointer"
           >
             Done
           </button>

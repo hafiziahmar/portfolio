@@ -12,6 +12,52 @@ interface ChatEntry {
   content: string;
 }
 
+const renderFormattedMessage = (text: string) => {
+  const lines = text.split('\n');
+  return lines.map((line, lineIdx) => {
+    const renderInline = (str: string) => {
+      const parts = str.split(/(\*\*.*?\*\*|`.*?`)/g);
+      return parts.map((part, pIdx) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return (
+            <strong key={pIdx} className="font-bold underline-offset-2">
+              {part.slice(2, -2)}
+            </strong>
+          );
+        }
+        if (part.startsWith('`') && part.endsWith('`')) {
+          return (
+            <code key={pIdx} className="font-mono text-xs px-1.5 py-0.5 rounded bg-sand-surface border border-sand-border text-sand-moss">
+              {part.slice(1, -1)}
+            </code>
+          );
+        }
+        return part;
+      });
+    };
+
+    const trimmed = line.trim();
+    if (trimmed.startsWith('- ') || trimmed.startsWith('• ') || trimmed.startsWith('* ')) {
+      return (
+        <div key={lineIdx} className="flex items-start space-x-2 ml-2 my-1">
+          <span className="text-sand-moss font-bold text-xs select-none">&bull;</span>
+          <span className="text-xs sm:text-sm leading-relaxed">{renderInline(trimmed.slice(2))}</span>
+        </div>
+      );
+    }
+
+    if (!trimmed) {
+      return <div key={lineIdx} className="h-2" />;
+    }
+
+    return (
+      <p key={lineIdx} className="text-xs sm:text-sm leading-relaxed">
+        {renderInline(line)}
+      </p>
+    );
+  });
+};
+
 export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState<ChatEntry[]>([
     {
@@ -120,8 +166,8 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
                     : 'bg-sand-surface-muted text-sand-text border border-sand-border rounded-bl-xs'
                 }`}
               >
-                <div className="whitespace-pre-line space-y-1">
-                  {m.content}
+                <div className="space-y-1">
+                  {renderFormattedMessage(m.content)}
                 </div>
               </div>
 

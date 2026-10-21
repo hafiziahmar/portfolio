@@ -25,6 +25,11 @@ router.post('/projects', adminController.createProject.bind(adminController));
 router.put('/projects/:id', adminController.updateProject.bind(adminController));
 router.delete('/projects/:id', adminController.deleteProject.bind(adminController));
 
+// Education
+router.post('/education', adminController.createEducation.bind(adminController));
+router.put('/education/:id', adminController.updateEducation.bind(adminController));
+router.delete('/education/:id', adminController.deleteEducation.bind(adminController));
+
 // Messages Queue
 router.get('/messages', adminController.getMessages.bind(adminController));
 router.patch('/messages/:id/status', adminController.updateMessageStatus.bind(adminController));

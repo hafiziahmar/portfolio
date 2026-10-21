@@ -8,11 +8,11 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
-  const name = profile?.name || 'Hafizi Ahmar';
-  const title = profile?.title || 'AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Domain Expertise';
-  const summary = profile?.summary || 'Clinical-domain technologist turned AI-enabled full-stack engineer. Combines healthcare operations discipline with 42KL systems programming, Project KADA, and Antigravity autonomous workflows.';
-  const linkedinUrl = profile?.linkedin_url || 'https://www.linkedin.com/in/hafizi-ahmar/';
-  const githubUrl = profile?.github_url || 'https://github.com/hafizi-ahmar';
+  const name = profile?.name || 'Ahmad Hafizi Bin Ahmar';
+  const title = profile?.title || 'AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Domain Expertise (Dietetics Hons.)';
+  const summary = profile?.summary || 'AI-Enabled Full-Stack Developer with a foundation in clinical healthcare and enterprise operations. Skilled at directing autonomous AI agent platforms to rapidly build, test, and ship production-ready web applications. Combines algorithmic thinking from 42KL Piscine with modern full-stack training from Project KADA to translate operational bottlenecks into clean user interfaces, dependable APIs, and structured database systems.';
+  const linkedinUrl = profile?.linkedin_url || 'https://www.linkedin.com/in/ahmad-hafizi-ahmar';
+  const githubUrl = profile?.github_url || 'https://github.com/hafiziahmar';
 
   return (
     <section id="about" className="pt-12 pb-20 md:pt-20 md:pb-28">
@@ -128,12 +128,12 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                     <Sparkles className="w-5 h-5" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-semibold text-sand-text">Engineering Pedigree</h2>
+                    <h2 className="text-sm font-semibold text-sand-text">Core Qualifications</h2>
                     <p className="text-xs text-sand-text-muted">Verified Technical & Clinical Credentials</p>
                   </div>
                 </div>
                 <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-sand-surface-muted text-sand-text-muted border border-sand-border">
-                  42KL &bull; KADA
+                  42KL &bull; KADA &bull; UiTM
                 </span>
               </div>
 
@@ -147,10 +147,10 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                   </div>
                   <div>
                     <h3 className="text-sm font-semibold text-sand-text">
-                      URUS Operations Engine
+                      Project KADA & Full-Stack Architecture
                     </h3>
                     <p className="text-xs text-sand-text-muted mt-0.5">
-                      PostgreSQL atomic order claiming (<code className="text-xs font-mono text-sand-moss">FOR UPDATE SKIP LOCKED</code>), barcode scanning pipeline, Redis pick cache.
+                      Domain-driven design, layered REST APIs (Node.js/Express), stateless JWT & bcrypt authentication, and PostgreSQL data integrity.
                     </p>
                   </div>
                 </div>
@@ -162,10 +162,10 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                   </div>
                   <div>
                     <h3 className="text-sm font-semibold text-sand-text">
-                      Project KADA & Antigravity
+                      Autonomous AI Workflows & Antigravity
                     </h3>
                     <p className="text-xs text-sand-text-muted mt-0.5">
-                      Autonomous agentic orchestration, distributed subagent decomposition, and defensive runtime schema contracts.
+                      Structured prompt engineering (Role-Context-Task-Constraint), agentic workflows, iterative debugging, and non-authoritative boundaries.
                     </p>
                   </div>
                 </div>
@@ -180,7 +180,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                       42KL Piscine Intensive
                     </h3>
                     <p className="text-xs text-sand-text-muted mt-0.5">
-                      Systems programming in pure C, dynamic memory allocation, pointer arithmetic, and dependency-free Unix algorithms.
+                      Teacherless, peer-to-peer programming pool focused on low-level logic, algorithmic thinking, and imperative logic structure in C.
                     </p>
                   </div>
                 </div>
@@ -192,24 +192,24 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                   </div>
                   <div>
                     <h3 className="text-sm font-semibold text-sand-text">
-                      Clinical Operations Discipline
+                      Clinical Healthcare Foundation
                     </h3>
                     <p className="text-xs text-sand-text-muted mt-0.5">
-                      UiTM Dietetics Hons & NVC Australia: Rigorous zero-tolerance protocols, automated care scheduling cutting latency by 40%.
+                      UiTM Bachelor of Dietetics (Hons.) & NVC Australia operations: Translating clinical precision and operational bottlenecks into automated systems.
                     </p>
                   </div>
                 </div>
 
               </div>
 
-              {/* Verified pill */}
-              <div className="pt-2 border-t border-sand-border flex items-center justify-between text-xs text-sand-text-muted">
+              {/* Verified Status */}
+              <div className="pt-3 border-t border-sand-border flex items-center justify-between text-xs text-sand-text-muted">
                 <span className="flex items-center space-x-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-sand-moss" />
-                  <span>PostgreSQL Database-Driven</span>
+                  <span>Verified Academic & Professional Credentials</span>
                 </span>
-                <span className="font-mono text-sand-amber font-medium">
-                  Approach B CMS
+                <span className="font-mono text-sand-moss font-semibold text-2xs">
+                  Active
                 </span>
               </div>
 

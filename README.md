@@ -1,10 +1,10 @@
-# Hafizi Ahmar — Full-Stack Interactive CV Portfolio & CMS Engine
+# Ahmad Hafizi Bin Ahmar — Full-Stack Interactive CV Portfolio & CMS Engine
 
-[![Tech Stack](https://img.shields.io/badge/Stack-React_19_|_TypeScript_|_Tailwind_v4_|_Node_|_PostgreSQL_|_Redis-5E6C5B?style=for-the-badge)](https://github.com/hafizi-ahmar)
-[![Architecture](https://img.shields.io/badge/Architecture-Approach_B_Database--Driven_CMS-C27803?style=for-the-badge)](https://github.com/hafizi-ahmar)
-[![Verification](https://img.shields.io/badge/Verification-42KL_|_Project_KADA_|_Antigravity-2C2B29?style=for-the-badge)](https://github.com/hafizi-ahmar)
+[![Tech Stack](https://img.shields.io/badge/Stack-React_19_|_TypeScript_|_Tailwind_v4_|_Node_|_PostgreSQL_|_Redis-5E6C5B?style=for-the-badge)](https://github.com/hafiziahmar)
+[![Architecture](https://img.shields.io/badge/Architecture-Database--Driven_CMS-C27803?style=for-the-badge)](https://github.com/hafiziahmar)
+[![Verification](https://img.shields.io/badge/Verification-42KL_|_Project_KADA_|_Antigravity-2C2B29?style=for-the-badge)](https://github.com/hafiziahmar)
 
-> **AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Domain Expertise**  
+> **AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Domain Expertise (Dietetics Hons.)**  
 > *Bridging clinical operations discipline with algorithmic systems engineering, autonomous agentic workflows, and high-concurrency database architectures.*
 
 ---
@@ -256,13 +256,13 @@ git init
 git add .
 
 # 3. Create initial commit
-git commit -m "feat: complete production-grade full-stack portfolio & CMS for Hafizi Ahmar"
+git commit -m "feat: complete production-grade full-stack portfolio & CMS for Ahmad Hafizi"
 
 # 4. Set default branch to main
 git branch -M main
 
 # 5. Add remote GitHub repository
-git remote add origin https://github.com/hafizi-ahmar/hafizi-portfolio.git
+git remote add origin https://github.com/hafiziahmar/portfolio.git
 
 # 6. Push to GitHub
 git push -u origin main
@@ -272,10 +272,11 @@ git push -u origin main
 
 ## 👨‍💻 Author & Contact
 
-**Hafizi Ahmar**  
-*AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Domain Expertise*  
-- **LinkedIn**: [linkedin.com/in/hafizi-ahmar/](https://www.linkedin.com/in/hafizi-ahmar/)  
-- **GitHub**: [github.com/hafizi-ahmar](https://github.com/hafizi-ahmar)  
+**Ahmad Hafizi Bin Ahmar**  
+*AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Domain Expertise (Dietetics Hons.)*  
+- **LinkedIn**: [linkedin.com/in/ahmad-hafizi-ahmar](https://www.linkedin.com/in/ahmad-hafizi-ahmar)  
+- **GitHub**: [github.com/hafiziahmar](https://github.com/hafiziahmar)  
+- **Location**: Telok Panglima Garang, Selangor, Malaysia  
 - **Portfolio & Contact Queue**: Send inquiries securely through the portfolio contact form.
 
 ---

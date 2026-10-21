@@ -51,6 +51,31 @@ export class AuthController {
       next(err);
     }
   }
+
+  async changePassword(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if (!req.admin) {
+        res.status(401).json({ error: 'Not authenticated' });
+        return;
+      }
+
+      const { currentPassword, newPassword } = req.body;
+      if (!currentPassword || !newPassword) {
+        res.status(400).json({ error: 'Current password and new password are required' });
+        return;
+      }
+
+      const result = await authService.changePassword(req.admin.adminId, currentPassword, newPassword);
+      if (!result.success) {
+        res.status(400).json({ error: result.error });
+        return;
+      }
+
+      res.json({ success: true, message: 'Password updated successfully' });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export const authController = new AuthController();

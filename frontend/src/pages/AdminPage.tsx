@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../api/client';
-import { RecruiterMessage } from '../types';
+import { RecruiterMessage, Experience, Skill, Project, Education } from '../types';
 import {
   Shield,
   Lock,
@@ -9,12 +9,19 @@ import {
   User,
   Trash2,
   CheckCircle,
-  RefreshCw,
   LogOut,
   Save,
   AlertCircle,
   Eye,
-  ArrowLeft
+  ArrowLeft,
+  Briefcase,
+  Layers,
+  Wrench,
+  GraduationCap,
+  KeyRound,
+  Plus,
+  Edit2,
+  X
 } from 'lucide-react';
 
 interface AdminPageProps {
@@ -24,38 +31,74 @@ interface AdminPageProps {
 export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
   const { admin, isAuthenticated, login, logout } = useAuth();
 
-  // Login form state
-  const [username, setUsername] = useState('hafizi_admin');
-  const [password, setPassword] = useState('your_secure_admin_password_here2026!');
+  // Login form state - Clean & Empty by default
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  // Admin Dashboard State
-  const [activeTab, setActiveTab] = useState<'messages' | 'profile' | 'cache'>('messages');
+  // Active Admin Tabs
+  const [activeTab, setActiveTab] = useState<'messages' | 'profile' | 'experiences' | 'projects' | 'skills' | 'education' | 'security'>('messages');
+
+  // Messages State
   const [messages, setMessages] = useState<RecruiterMessage[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState<RecruiterMessage | null>(null);
-  const [cacheMessage, setCacheMessage] = useState<string | null>(null);
-  const [isFlushing, setIsFlushing] = useState(false);
 
   // Profile Edit State
   const [profileForm, setProfileForm] = useState({
-    name: 'Hafizi Ahmar',
-    title: 'AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Domain Expertise',
+    name: '',
+    title: '',
     summary: '',
-    status_badge: 'Open for Full-Stack & AI Roles',
-    location: 'Malaysia (Available for Global Remote Roles)',
-    linkedin_url: 'https://www.linkedin.com/in/hafizi-ahmar/',
-    github_url: 'https://github.com/hafizi-ahmar',
+    status_badge: '',
+    location: '',
+    linkedin_url: '',
+    github_url: '',
   });
   const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [profileFeedback, setProfileFeedback] = useState<string | null>(null);
 
-  // Load initial dashboard data
+  // Experiences State
+  const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [editingExp, setEditingExp] = useState<Experience | null>(null);
+  const [isNewExp, setIsNewExp] = useState(false);
+  const [expFeedback, setExpFeedback] = useState<string | null>(null);
+
+  // Projects State
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [projFeedback, setProjFeedback] = useState<string | null>(null);
+
+  // Skills State
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [newSkillForm, setNewSkillForm] = useState({
+    category: 'Full-Stack Technologies',
+    name: '',
+    proficiency_level: 5,
+    highlight: false,
+    order_index: 0,
+  });
+  const [skillFeedback, setSkillFeedback] = useState<string | null>(null);
+
+  // Education State
+  const [educationList, setEducationList] = useState<Education[]>([]);
+  const [editingEdu, setEditingEdu] = useState<Education | null>(null);
+  const [isNewEdu, setIsNewEdu] = useState(false);
+  const [eduFeedback, setEduFeedback] = useState<string | null>(null);
+
+  // Security & Password Change State
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordFeedback, setPasswordFeedback] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+
+  // Load all dashboard data
   useEffect(() => {
     if (isAuthenticated) {
       loadMessages();
-      loadProfileData();
+      loadAllPortfolioData();
     }
   }, [isAuthenticated]);
 
@@ -71,7 +114,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
     }
   };
 
-  const loadProfileData = async () => {
+  const loadAllPortfolioData = async () => {
     try {
       const data = await api.getPortfolio(true);
       if (data.profile) {
@@ -79,14 +122,18 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
           name: data.profile.name,
           title: data.profile.title,
           summary: data.profile.summary,
-          status_badge: data.profile.status_badge || 'Open for Full-Stack & AI Roles',
-          location: data.profile.location || 'Malaysia (Available for Global Remote Roles)',
+          status_badge: data.profile.status_badge || '',
+          location: data.profile.location || '',
           linkedin_url: data.profile.linkedin_url || '',
           github_url: data.profile.github_url || '',
         });
       }
+      setExperiences(data.experiences || []);
+      setProjects(data.projects || []);
+      setSkills(data.skills || []);
+      setEducationList(data.education || []);
     } catch (err) {
-      console.error('Failed to load profile for admin', err);
+      console.error('Failed to load portfolio data for admin', err);
     }
   };
 
@@ -134,7 +181,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
     setProfileFeedback(null);
     try {
       await api.adminUpdateProfile(profileForm);
-      setProfileFeedback('Profile records updated in PostgreSQL and Redis cache cleared successfully!');
+      setProfileFeedback('Profile records successfully updated in the database!');
+      await loadAllPortfolioData();
     } catch (err: any) {
       setProfileFeedback(err.message || 'Failed to update profile.');
     } finally {
@@ -142,20 +190,141 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
     }
   };
 
-  const handleFlushCache = async () => {
-    setIsFlushing(true);
-    setCacheMessage(null);
+  // Experience handlers
+  const handleSaveExperience = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingExp) return;
     try {
-      const res = await api.adminFlushCache();
-      setCacheMessage(res.message || 'Redis cache flushed successfully.');
+      if (isNewExp) {
+        await api.adminCreateExperience(editingExp);
+        setExpFeedback('New experience record created successfully!');
+      } else {
+        await api.adminUpdateExperience(editingExp.id, editingExp);
+        setExpFeedback('Experience record updated successfully!');
+      }
+      setEditingExp(null);
+      setIsNewExp(false);
+      await loadAllPortfolioData();
     } catch (err: any) {
-      setCacheMessage('Failed to flush Redis cache.');
-    } finally {
-      setIsFlushing(false);
+      alert(err.message || 'Failed to save experience');
     }
   };
 
-  // If not logged in, render secure login view
+  const handleDeleteExperience = async (id: number) => {
+    if (!confirm('Delete this experience entry?')) return;
+    try {
+      await api.adminDeleteExperience(id);
+      await loadAllPortfolioData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to delete experience');
+    }
+  };
+
+  // Project handlers
+  const handleSaveProject = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingProject) return;
+    try {
+      await api.adminUpdateProject(editingProject.id, editingProject);
+      setProjFeedback('Project architecture and details updated successfully!');
+      setEditingProject(null);
+      await loadAllPortfolioData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to update project');
+    }
+  };
+
+  // Skills handlers
+  const handleAddSkill = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newSkillForm.name.trim()) return;
+    try {
+      await api.adminCreateSkill(newSkillForm);
+      setNewSkillForm({
+        category: 'Full-Stack Technologies',
+        name: '',
+        proficiency_level: 5,
+        highlight: false,
+        order_index: skills.length + 1,
+      });
+      setSkillFeedback('Skill added successfully!');
+      await loadAllPortfolioData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to add skill');
+    }
+  };
+
+  const handleDeleteSkill = async (id: number) => {
+    if (!confirm('Delete this skill?')) return;
+    try {
+      await api.adminDeleteSkill(id);
+      await loadAllPortfolioData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to delete skill');
+    }
+  };
+
+  // Education handlers
+  const handleSaveEducation = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingEdu) return;
+    try {
+      if (isNewEdu) {
+        await api.adminCreateEducation(editingEdu);
+        setEduFeedback('Education credential added successfully!');
+      } else {
+        await api.adminUpdateEducation(editingEdu.id, editingEdu);
+        setEduFeedback('Education credential updated successfully!');
+      }
+      setEditingEdu(null);
+      setIsNewEdu(false);
+      await loadAllPortfolioData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to save education record');
+    }
+  };
+
+  const handleDeleteEducation = async (id: number) => {
+    if (!confirm('Delete this education credential?')) return;
+    try {
+      await api.adminDeleteEducation(id);
+      await loadAllPortfolioData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to delete education record');
+    }
+  };
+
+  // Password change handler
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordError(null);
+    setPasswordFeedback(null);
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError('New password and confirmation do not match.');
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      setPasswordError('New password must be at least 8 characters long.');
+      return;
+    }
+
+    setIsChangingPassword(true);
+    try {
+      const res = await api.adminChangePassword(currentPassword, newPassword);
+      setPasswordFeedback(res.message || 'Password successfully updated in the database!');
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (err: any) {
+      setPasswordError(err.message || 'Failed to update password.');
+    } finally {
+      setIsChangingPassword(false);
+    }
+  };
+
+  // If not logged in, render clean login form with zero hints
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen py-16 px-4 flex flex-col justify-center items-center">
@@ -167,7 +336,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
             </div>
             <h2 className="text-2xl font-bold text-sand-text">Admin CMS Login</h2>
             <p className="text-xs text-sand-text-muted">
-              Secure JWT authentication & bcrypt credential verification
+              Secure authentication & credential verification
             </p>
           </div>
 
@@ -190,7 +359,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="w-full pl-10 pr-3.5 py-2 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text focus:outline-none focus:ring-2 focus:ring-sand-moss"
+                  placeholder="Enter username"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text focus:outline-none focus:ring-2 focus:ring-sand-moss"
                 />
               </div>
             </div>
@@ -206,7 +376,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-10 pr-3.5 py-2 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text focus:outline-none focus:ring-2 focus:ring-sand-moss"
+                  placeholder="Enter password"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text focus:outline-none focus:ring-2 focus:ring-sand-moss"
                 />
               </div>
             </div>
@@ -219,17 +390,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
               {isLoggingIn ? 'Authenticating...' : 'Sign In to Dashboard'}
             </button>
           </form>
-
-          {/* Quick Demo Credentials Reminder */}
-          <div className="p-3 rounded-xl bg-sand-surface-muted border border-sand-border text-2xs space-y-1">
-            <div className="font-semibold text-sand-moss font-mono uppercase">
-              Demo Credentials Hint:
-            </div>
-            <div className="text-sand-text-muted font-mono">
-              Username: <span className="text-sand-text font-bold">hafizi_admin</span><br />
-              Password: <span className="text-sand-text font-bold">your_secure_admin_password_here2026!</span>
-            </div>
-          </div>
 
           <div className="text-center pt-2">
             <button
@@ -264,7 +424,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
             Admin Management Console
           </h1>
           <p className="text-xs text-sand-text-muted">
-            Signed in as <span className="font-semibold text-sand-text">{admin?.username}</span> ({admin?.email})
+            Signed in as <span className="font-semibold text-sand-text">{admin?.username}</span>
           </p>
         </div>
 
@@ -293,14 +453,14 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
         <button
           onClick={() => setActiveTab('messages')}
           type="button"
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
             activeTab === 'messages'
               ? 'bg-sand-moss text-white shadow-2xs'
               : 'bg-sand-surface border border-sand-border text-sand-text-muted hover:text-sand-text'
           }`}
         >
           <Mail className="w-4 h-4" />
-          <span>Recruiter Inquiries</span>
+          <span>Inquiries</span>
           {unreadCount > 0 && (
             <span className="px-1.5 py-0.2 rounded-full bg-sand-amber text-white text-3xs font-bold">
               {unreadCount}
@@ -311,53 +471,94 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
         <button
           onClick={() => setActiveTab('profile')}
           type="button"
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
             activeTab === 'profile'
               ? 'bg-sand-moss text-white shadow-2xs'
               : 'bg-sand-surface border border-sand-border text-sand-text-muted hover:text-sand-text'
           }`}
         >
           <User className="w-4 h-4" />
-          <span>Edit Profile & Headline</span>
+          <span>Profile & Bio</span>
         </button>
 
         <button
-          onClick={() => setActiveTab('cache')}
+          onClick={() => setActiveTab('experiences')}
           type="button"
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
-            activeTab === 'cache'
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+            activeTab === 'experiences'
               ? 'bg-sand-moss text-white shadow-2xs'
               : 'bg-sand-surface border border-sand-border text-sand-text-muted hover:text-sand-text'
           }`}
         >
-          <RefreshCw className="w-4 h-4" />
-          <span>Redis Cache & System</span>
+          <Briefcase className="w-4 h-4" />
+          <span>Experiences ({experiences.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('projects')}
+          type="button"
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+            activeTab === 'projects'
+              ? 'bg-sand-moss text-white shadow-2xs'
+              : 'bg-sand-surface border border-sand-border text-sand-text-muted hover:text-sand-text'
+          }`}
+        >
+          <Layers className="w-4 h-4" />
+          <span>Projects ({projects.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('skills')}
+          type="button"
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+            activeTab === 'skills'
+              ? 'bg-sand-moss text-white shadow-2xs'
+              : 'bg-sand-surface border border-sand-border text-sand-text-muted hover:text-sand-text'
+          }`}
+        >
+          <Wrench className="w-4 h-4" />
+          <span>Skills ({skills.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('education')}
+          type="button"
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+            activeTab === 'education'
+              ? 'bg-sand-moss text-white shadow-2xs'
+              : 'bg-sand-surface border border-sand-border text-sand-text-muted hover:text-sand-text'
+          }`}
+        >
+          <GraduationCap className="w-4 h-4" />
+          <span>Education ({educationList.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('security')}
+          type="button"
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+            activeTab === 'security'
+              ? 'bg-sand-amber text-white shadow-2xs'
+              : 'bg-sand-surface border border-sand-border text-sand-text-muted hover:text-sand-text'
+          }`}
+        >
+          <KeyRound className="w-4 h-4" />
+          <span>Change Password</span>
         </button>
       </div>
 
       {/* TAB 1: Recruiter Messages Queue */}
       {activeTab === 'messages' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
-          {/* List */}
           <div className="lg:col-span-6 rounded-2xl border border-sand-border bg-sand-surface p-5 shadow-xs space-y-4">
-            <div className="flex items-center justify-between border-b border-sand-border pb-3">
-              <h2 className="text-base font-bold text-sand-text">
-                Incoming Recruiter Queue ({messages.length})
-              </h2>
-              <button
-                onClick={loadMessages}
-                type="button"
-                className="p-1.5 rounded-lg text-sand-text-muted hover:text-sand-text hover:bg-sand-surface-muted transition-colors cursor-pointer"
-                title="Refresh messages"
-              >
-                <RefreshCw className={`w-4 h-4 ${loadingMessages ? 'animate-spin' : ''}`} />
-              </button>
-            </div>
+            <h2 className="text-base font-bold text-sand-text border-b border-sand-border pb-3 flex items-center justify-between">
+              <span>Incoming Recruiter Queue ({messages.length})</span>
+              {loadingMessages && <span className="text-xs font-mono text-sand-moss">Refreshing...</span>}
+            </h2>
 
             {messages.length === 0 ? (
               <p className="text-xs text-sand-text-muted py-8 text-center">
-                No recruiter inquiries received yet. Submit a test inquiry via the public portfolio form!
+                No recruiter inquiries received yet.
               </p>
             ) : (
               <div className="space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
@@ -403,7 +604,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
             )}
           </div>
 
-          {/* Details Pane */}
           <div className="lg:col-span-6 rounded-2xl border border-sand-border bg-sand-surface p-5 sm:p-6 shadow-xs">
             {selectedMessage ? (
               <div className="space-y-6">
@@ -432,7 +632,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                   </button>
                 </div>
 
-                {/* Message Content */}
                 <div className="space-y-2">
                   <span className="text-2xs font-mono font-semibold uppercase text-sand-text-muted">
                     Message Body:
@@ -442,7 +641,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                   </div>
                 </div>
 
-                {/* Status Updater Buttons */}
                 <div className="pt-2 flex flex-wrap gap-2 items-center">
                   <span className="text-xs font-mono text-sand-text-muted mr-2">
                     Update Status:
@@ -473,11 +671,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
             ) : (
               <div className="h-64 flex flex-col items-center justify-center text-center space-y-2 text-sand-text-muted">
                 <Eye className="w-8 h-8 opacity-40" />
-                <p className="text-xs">Select a recruiter inquiry from the queue to view full content.</p>
+                <p className="text-xs">Select an inquiry to view full message.</p>
               </div>
             )}
           </div>
-
         </div>
       )}
 
@@ -486,10 +683,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
         <div className="max-w-3xl rounded-2xl border border-sand-border bg-sand-surface p-6 sm:p-8 shadow-xs space-y-6">
           <div className="space-y-1">
             <h2 className="text-lg font-bold text-sand-text">
-              Database Profile Records (Approach B CMS)
+              Profile & Headline Information
             </h2>
             <p className="text-xs text-sand-text-muted">
-              Directly updates PostgreSQL 'profile' table and triggers automatic Redis cache eviction.
+              Updates your live personal profile and bio stored in PostgreSQL.
             </p>
           </div>
 
@@ -509,7 +706,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                   value={profileForm.name}
                   onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
                   required
-                  className="w-full px-3.5 py-2 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
                 />
               </div>
 
@@ -519,7 +716,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                   type="text"
                   value={profileForm.status_badge}
                   onChange={(e) => setProfileForm({ ...profileForm, status_badge: e.target.value })}
-                  className="w-full px-3.5 py-2 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
                 />
               </div>
             </div>
@@ -531,18 +728,29 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                 value={profileForm.title}
                 onChange={(e) => setProfileForm({ ...profileForm, title: e.target.value })}
                 required
-                className="w-full px-3.5 py-2 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-mono font-semibold text-sand-text">Location</label>
+              <input
+                type="text"
+                value={profileForm.location}
+                onChange={(e) => setProfileForm({ ...profileForm, location: e.target.value })}
+                required
+                className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
               />
             </div>
 
             <div className="space-y-1">
               <label className="text-xs font-mono font-semibold text-sand-text">Professional Summary</label>
               <textarea
-                rows={4}
+                rows={5}
                 value={profileForm.summary}
                 onChange={(e) => setProfileForm({ ...profileForm, summary: e.target.value })}
                 required
-                className="w-full px-3.5 py-2 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
               ></textarea>
             </div>
 
@@ -553,7 +761,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                   type="url"
                   value={profileForm.linkedin_url}
                   onChange={(e) => setProfileForm({ ...profileForm, linkedin_url: e.target.value })}
-                  className="w-full px-3.5 py-2 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
                 />
               </div>
 
@@ -563,7 +771,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
                   type="url"
                   value={profileForm.github_url}
                   onChange={(e) => setProfileForm({ ...profileForm, github_url: e.target.value })}
-                  className="w-full px-3.5 py-2 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text"
                 />
               </div>
             </div>
@@ -580,43 +788,670 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
         </div>
       )}
 
-      {/* TAB 3: Redis Cache & System Status */}
-      {activeTab === 'cache' && (
-        <div className="max-w-2xl rounded-2xl border border-sand-border bg-sand-surface p-6 sm:p-8 shadow-xs space-y-6">
-          <div className="space-y-1">
-            <h2 className="text-lg font-bold text-sand-text">Redis Caching & Invalidation Control</h2>
-            <p className="text-xs text-sand-text-muted">
-              Manage high-speed in-memory cache keys. Writes automatically invalidate stale keys, but you can force an explicit flush here.
-            </p>
+      {/* TAB 3: Experiences */}
+      {activeTab === 'experiences' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-sand-text">
+              Work Experiences ({experiences.length})
+            </h2>
+            <button
+              onClick={() => {
+                setEditingExp({
+                  id: 0,
+                  company: '',
+                  role: '',
+                  location: 'Malaysia',
+                  start_date: '2025',
+                  end_date: '2026',
+                  is_current: false,
+                  description: '',
+                  achievements: [],
+                  technologies: [],
+                  order_index: experiences.length + 1,
+                });
+                setIsNewExp(true);
+              }}
+              type="button"
+              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-sand-moss text-white text-xs font-semibold hover:bg-sand-moss-hover transition-colors shadow-2xs cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Experience</span>
+            </button>
           </div>
 
-          {cacheMessage && (
-            <div className="p-3.5 rounded-xl bg-sand-amber/10 border border-sand-amber/20 text-sand-amber text-xs flex items-center space-x-2">
+          {expFeedback && (
+            <div className="p-3.5 rounded-xl bg-sand-moss/10 border border-sand-moss/20 text-sand-moss text-xs flex items-center space-x-2">
               <CheckCircle className="w-4 h-4 shrink-0" />
-              <span>{cacheMessage}</span>
+              <span>{expFeedback}</span>
             </div>
           )}
 
-          <div className="p-4 rounded-xl bg-sand-surface-muted border border-sand-border space-y-3">
-            <h3 className="text-xs font-mono font-bold uppercase text-sand-text">
-              Active Strategy:
-            </h3>
-            <ul className="text-xs text-sand-text-muted space-y-1.5 list-disc pl-4">
-              <li>Key: <code className="font-mono text-sand-moss">portfolio:full_data</code> (TTL: 300 seconds)</li>
-              <li>Auto-invalidation on any CMS write (POST, PUT, DELETE)</li>
-              <li>Resilient fallbacks to in-memory cache if standalone Redis cluster is unavailable</li>
-            </ul>
+          {/* Edit/Create Modal */}
+          {editingExp && (
+            <div className="p-6 rounded-2xl border border-sand-moss bg-sand-surface-muted shadow-md space-y-4">
+              <div className="flex items-center justify-between border-b border-sand-border pb-3">
+                <h3 className="text-sm font-bold text-sand-text">
+                  {isNewExp ? 'Add New Experience' : `Edit: ${editingExp.company}`}
+                </h3>
+                <button
+                  onClick={() => setEditingExp(null)}
+                  type="button"
+                  className="p-1 rounded-lg text-sand-text-muted hover:text-sand-text"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveExperience} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Company</label>
+                    <input
+                      type="text"
+                      value={editingExp.company}
+                      onChange={(e) => setEditingExp({ ...editingExp, company: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Role</label>
+                    <input
+                      type="text"
+                      value={editingExp.role}
+                      onChange={(e) => setEditingExp({ ...editingExp, role: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Start Date</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. May 2025 or 2024"
+                      value={editingExp.start_date}
+                      onChange={(e) => setEditingExp({ ...editingExp, start_date: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">End Date (same as start if single year)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Mar 2026 or 2024"
+                      value={editingExp.end_date}
+                      onChange={(e) => setEditingExp({ ...editingExp, end_date: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Location</label>
+                    <input
+                      type="text"
+                      value={editingExp.location || ''}
+                      onChange={(e) => setEditingExp({ ...editingExp, location: e.target.value })}
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono font-semibold text-sand-text">Description</label>
+                  <textarea
+                    rows={3}
+                    value={editingExp.description}
+                    onChange={(e) => setEditingExp({ ...editingExp, description: e.target.value })}
+                    required
+                    className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                  ></textarea>
+                </div>
+
+                <div className="flex justify-end space-x-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditingExp(null)}
+                    className="px-4 py-2 rounded-xl border border-sand-border text-xs font-semibold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 rounded-xl bg-sand-moss text-white text-xs font-semibold"
+                  >
+                    Save Experience
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* Experience Cards */}
+          <div className="space-y-3">
+            {experiences.map((exp) => (
+              <div
+                key={exp.id}
+                className="p-5 rounded-2xl border border-sand-border bg-sand-surface shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <h3 className="font-bold text-sand-text text-sm sm:text-base">{exp.role}</h3>
+                    <span className="text-xs font-mono text-sand-amber px-2 py-0.5 rounded bg-sand-surface-muted">
+                      {!exp.end_date || exp.start_date.trim() === exp.end_date.trim()
+                        ? exp.start_date
+                        : `${exp.start_date} – ${exp.end_date}`}
+                    </span>
+                  </div>
+                  <p className="text-xs font-medium text-sand-moss">{exp.company}</p>
+                  <p className="text-xs text-sand-text-muted line-clamp-2">{exp.description}</p>
+                </div>
+
+                <div className="flex items-center space-x-2 shrink-0">
+                  <button
+                    onClick={() => {
+                      setEditingExp(exp);
+                      setIsNewExp(false);
+                    }}
+                    type="button"
+                    className="p-2 rounded-lg border border-sand-border text-sand-text hover:bg-sand-surface-muted"
+                    title="Edit"
+                  >
+                    <Edit2 className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteExperience(exp.id)}
+                    type="button"
+                    className="p-2 rounded-lg border border-sand-border text-red-500 hover:bg-red-500/10"
+                    title="Delete"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 4: Projects */}
+      {activeTab === 'projects' && (
+        <div className="space-y-6 max-w-4xl">
+          <div className="space-y-1">
+            <h2 className="text-lg font-bold text-sand-text">
+              Flagship Capstone Project (URUS)
+            </h2>
+            <p className="text-xs text-sand-text-muted">
+              Configure system architecture, technical bullets, and stack details.
+            </p>
           </div>
 
-          <button
-            onClick={handleFlushCache}
-            disabled={isFlushing}
-            type="button"
-            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-sand-amber text-white text-xs font-semibold hover:bg-sand-amber-hover disabled:opacity-50 transition-colors shadow-2xs cursor-pointer"
-          >
-            <RefreshCw className={`w-4 h-4 ${isFlushing ? 'animate-spin' : ''}`} />
-            <span>{isFlushing ? 'Flushing Redis...' : 'Flush Redis In-Memory Cache'}</span>
-          </button>
+          {projFeedback && (
+            <div className="p-3.5 rounded-xl bg-sand-moss/10 border border-sand-moss/20 text-sand-moss text-xs flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4 shrink-0" />
+              <span>{projFeedback}</span>
+            </div>
+          )}
+
+          {projects.map((p) => (
+            <div key={p.id} className="p-6 rounded-2xl border border-sand-border bg-sand-surface shadow-xs space-y-4">
+              <div className="flex items-center justify-between border-b border-sand-border pb-3">
+                <div>
+                  <h3 className="font-bold text-base text-sand-text">{p.title}</h3>
+                  <p className="text-xs text-sand-moss font-medium">{p.tagline}</p>
+                </div>
+                <button
+                  onClick={() => setEditingProject(p)}
+                  type="button"
+                  className="px-3.5 py-1.5 rounded-xl bg-sand-moss text-white text-xs font-semibold hover:bg-sand-moss-hover"
+                >
+                  Edit Project Details
+                </button>
+              </div>
+
+              <p className="text-xs sm:text-sm text-sand-text-muted leading-relaxed">
+                {p.description}
+              </p>
+
+              <div className="space-y-1 text-xs">
+                <span className="font-mono uppercase text-2xs text-sand-text-muted font-bold">Key Capabilities:</span>
+                <ul className="list-disc pl-5 space-y-1 text-sand-text">
+                  {p.key_features.map((f, i) => (
+                    <li key={i}>{f}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+
+          {editingProject && (
+            <div className="p-6 rounded-2xl border border-sand-moss bg-sand-surface-muted shadow-md space-y-4">
+              <div className="flex items-center justify-between border-b border-sand-border pb-3">
+                <h3 className="text-sm font-bold text-sand-text">Edit Project: {editingProject.title}</h3>
+                <button
+                  onClick={() => setEditingProject(null)}
+                  type="button"
+                  className="p-1 rounded-lg text-sand-text-muted hover:text-sand-text"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveProject} className="space-y-4">
+                <div>
+                  <label className="text-xs font-mono font-semibold text-sand-text">Title</label>
+                  <input
+                    type="text"
+                    value={editingProject.title}
+                    onChange={(e) => setEditingProject({ ...editingProject, title: e.target.value })}
+                    required
+                    className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono font-semibold text-sand-text">Tagline</label>
+                  <input
+                    type="text"
+                    value={editingProject.tagline}
+                    onChange={(e) => setEditingProject({ ...editingProject, tagline: e.target.value })}
+                    required
+                    className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono font-semibold text-sand-text">Description</label>
+                  <textarea
+                    rows={4}
+                    value={editingProject.description}
+                    onChange={(e) => setEditingProject({ ...editingProject, description: e.target.value })}
+                    required
+                    className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                  ></textarea>
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono font-semibold text-sand-text">Architecture & Data Design</label>
+                  <textarea
+                    rows={3}
+                    value={editingProject.architecture_details || ''}
+                    onChange={(e) => setEditingProject({ ...editingProject, architecture_details: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                  ></textarea>
+                </div>
+
+                <div className="flex justify-end space-x-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditingProject(null)}
+                    className="px-4 py-2 rounded-xl border border-sand-border text-xs font-semibold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 rounded-xl bg-sand-moss text-white text-xs font-semibold"
+                  >
+                    Save Project Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* TAB 5: Skills Matrix */}
+      {activeTab === 'skills' && (
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-bold text-sand-text">Technical Skills Inventory ({skills.length})</h2>
+              <p className="text-xs text-sand-text-muted">Directly manage skills, categories, and ratings.</p>
+            </div>
+          </div>
+
+          {skillFeedback && (
+            <div className="p-3.5 rounded-xl bg-sand-moss/10 border border-sand-moss/20 text-sand-moss text-xs flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4 shrink-0" />
+              <span>{skillFeedback}</span>
+            </div>
+          )}
+
+          {/* Add Skill Form */}
+          <div className="p-5 rounded-2xl border border-sand-border bg-sand-surface-muted space-y-3">
+            <h3 className="text-xs font-mono font-bold uppercase text-sand-text">Add New Skill</h3>
+            <form onSubmit={handleAddSkill} className="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
+              <div>
+                <label className="text-xs font-mono text-sand-text-muted block mb-1">Category</label>
+                <select
+                  value={newSkillForm.category}
+                  onChange={(e) => setNewSkillForm({ ...newSkillForm, category: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-xs"
+                >
+                  <option value="Autonomous AI Development & Workspaces">Autonomous AI Development & Workspaces</option>
+                  <option value="Full-Stack Technologies">Full-Stack Technologies</option>
+                  <option value="Hands-On Verification & Tools">Hands-On Verification & Tools</option>
+                  <option value="System Design & Workflows">System Design & Workflows</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-sand-text-muted block mb-1">Skill Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Docker, GraphQL"
+                  value={newSkillForm.name}
+                  onChange={(e) => setNewSkillForm({ ...newSkillForm, name: e.target.value })}
+                  required
+                  className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-xs"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-sand-text-muted block mb-1">Proficiency (1–5)</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={5}
+                  value={newSkillForm.proficiency_level}
+                  onChange={(e) => setNewSkillForm({ ...newSkillForm, proficiency_level: parseInt(e.target.value, 10) || 5 })}
+                  className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-xs"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="px-4 py-2 rounded-xl bg-sand-moss text-white text-xs font-semibold hover:bg-sand-moss-hover h-[38px] cursor-pointer"
+              >
+                Add Skill
+              </button>
+            </form>
+          </div>
+
+          {/* Skills Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {skills.map((s) => (
+              <div
+                key={s.id}
+                className="p-3.5 rounded-xl border border-sand-border bg-sand-surface flex items-center justify-between"
+              >
+                <div>
+                  <div className="text-3xs font-mono text-sand-moss uppercase">{s.category}</div>
+                  <div className="text-xs font-bold text-sand-text">{s.name}</div>
+                  <div className="text-2xs font-mono text-sand-text-muted">Proficiency: {s.proficiency_level}/5</div>
+                </div>
+
+                <button
+                  onClick={() => handleDeleteSkill(s.id)}
+                  type="button"
+                  className="p-1.5 rounded-lg text-red-500 hover:bg-red-500/10 cursor-pointer"
+                  title="Delete"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 6: Education */}
+      {activeTab === 'education' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-sand-text">Education & Training Credentials ({educationList.length})</h2>
+            <button
+              onClick={() => {
+                setEditingEdu({
+                  id: 0,
+                  institution: '',
+                  degree: '',
+                  period: '2026',
+                  field_of_study: '',
+                  description: '',
+                  badges: [],
+                  order_index: educationList.length + 1,
+                });
+                setIsNewEdu(true);
+              }}
+              type="button"
+              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-sand-moss text-white text-xs font-semibold hover:bg-sand-moss-hover transition-colors shadow-2xs cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Credential</span>
+            </button>
+          </div>
+
+          {eduFeedback && (
+            <div className="p-3.5 rounded-xl bg-sand-moss/10 border border-sand-moss/20 text-sand-moss text-xs flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4 shrink-0" />
+              <span>{eduFeedback}</span>
+            </div>
+          )}
+
+          {/* Edit/Create Form */}
+          {editingEdu && (
+            <div className="p-6 rounded-2xl border border-sand-moss bg-sand-surface-muted shadow-md space-y-4">
+              <div className="flex items-center justify-between border-b border-sand-border pb-3">
+                <h3 className="text-sm font-bold text-sand-text">
+                  {isNewEdu ? 'Add Education Credential' : `Edit: ${editingEdu.institution}`}
+                </h3>
+                <button
+                  onClick={() => setEditingEdu(null)}
+                  type="button"
+                  className="p-1 rounded-lg text-sand-text-muted hover:text-sand-text"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveEducation} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Institution</label>
+                    <input
+                      type="text"
+                      value={editingEdu.institution}
+                      onChange={(e) => setEditingEdu({ ...editingEdu, institution: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Degree / Program</label>
+                    <input
+                      type="text"
+                      value={editingEdu.degree}
+                      onChange={(e) => setEditingEdu({ ...editingEdu, degree: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Period (e.g. 2020 or Aug 2026 – Sep 2026)</label>
+                    <input
+                      type="text"
+                      value={editingEdu.period}
+                      onChange={(e) => setEditingEdu({ ...editingEdu, period: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-mono font-semibold text-sand-text">Field of Study</label>
+                    <input
+                      type="text"
+                      value={editingEdu.field_of_study || ''}
+                      onChange={(e) => setEditingEdu({ ...editingEdu, field_of_study: e.target.value })}
+                      className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono font-semibold text-sand-text">Description</label>
+                  <textarea
+                    rows={3}
+                    value={editingEdu.description || ''}
+                    onChange={(e) => setEditingEdu({ ...editingEdu, description: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-sand-border bg-sand-surface text-sm"
+                  ></textarea>
+                </div>
+
+                <div className="flex justify-end space-x-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditingEdu(null)}
+                    className="px-4 py-2 rounded-xl border border-sand-border text-xs font-semibold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 rounded-xl bg-sand-moss text-white text-xs font-semibold"
+                  >
+                    Save Credential
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* Education List */}
+          <div className="space-y-3">
+            {educationList.map((edu) => (
+              <div
+                key={edu.id}
+                className="p-5 rounded-2xl border border-sand-border bg-sand-surface shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <h3 className="font-bold text-sand-text text-sm sm:text-base">{edu.degree}</h3>
+                    <span className="text-xs font-mono text-sand-amber px-2 py-0.5 rounded bg-sand-surface-muted">
+                      {edu.period}
+                    </span>
+                  </div>
+                  <p className="text-xs font-medium text-sand-moss">{edu.institution}</p>
+                  {edu.description && <p className="text-xs text-sand-text-muted line-clamp-2">{edu.description}</p>}
+                </div>
+
+                <div className="flex items-center space-x-2 shrink-0">
+                  <button
+                    onClick={() => {
+                      setEditingEdu(edu);
+                      setIsNewEdu(false);
+                    }}
+                    type="button"
+                    className="p-2 rounded-lg border border-sand-border text-sand-text hover:bg-sand-surface-muted cursor-pointer"
+                    title="Edit"
+                  >
+                    <Edit2 className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteEducation(edu.id)}
+                    type="button"
+                    className="p-2 rounded-lg border border-sand-border text-red-500 hover:bg-red-500/10 cursor-pointer"
+                    title="Delete"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 7: Security & Change Password */}
+      {activeTab === 'security' && (
+        <div className="max-w-xl rounded-2xl border border-sand-border bg-sand-surface p-6 sm:p-8 shadow-xs space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-lg font-bold text-sand-text flex items-center space-x-2">
+              <KeyRound className="w-5 h-5 text-sand-amber" />
+              <span>Change Administrator Password</span>
+            </h2>
+            <p className="text-xs text-sand-text-muted">
+              Update your account password. This will hash your new password with bcrypt and save it directly to the PostgreSQL database.
+            </p>
+          </div>
+
+          {passwordFeedback && (
+            <div className="p-3.5 rounded-xl bg-sand-moss/10 border border-sand-moss/20 text-sand-moss text-xs flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4 shrink-0" />
+              <span>{passwordFeedback}</span>
+            </div>
+          )}
+
+          {passwordError && (
+            <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs flex items-center space-x-2">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{passwordError}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleChangePassword} className="space-y-4">
+            <div className="space-y-1">
+              <label className="text-xs font-mono font-semibold text-sand-text">
+                Current Password <span className="text-sand-amber">*</span>
+              </label>
+              <input
+                type="password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                required
+                placeholder="Enter current password"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text focus:outline-none focus:ring-2 focus:ring-sand-moss"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-mono font-semibold text-sand-text">
+                New Password (minimum 8 characters) <span className="text-sand-amber">*</span>
+              </label>
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                minLength={8}
+                placeholder="Enter your new real password"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text focus:outline-none focus:ring-2 focus:ring-sand-moss"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-mono font-semibold text-sand-text">
+                Confirm New Password <span className="text-sand-amber">*</span>
+              </label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                minLength={8}
+                placeholder="Confirm your new real password"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text focus:outline-none focus:ring-2 focus:ring-sand-moss"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isChangingPassword}
+              className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-sand-amber text-white text-xs font-semibold hover:bg-sand-amber-hover disabled:opacity-50 transition-colors shadow-2xs cursor-pointer"
+            >
+              <KeyRound className="w-4 h-4" />
+              <span>{isChangingPassword ? 'Updating Password...' : 'Save New Password'}</span>
+            </button>
+          </form>
         </div>
       )}
 

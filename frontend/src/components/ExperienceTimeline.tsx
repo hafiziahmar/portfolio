@@ -50,7 +50,11 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experien
                   <div className="flex flex-wrap items-center gap-3 text-xs text-sand-text-muted font-mono">
                     <span className="inline-flex items-center space-x-1.5 bg-sand-surface-muted px-2.5 py-1 rounded-md border border-sand-border">
                       <Calendar className="w-3.5 h-3.5 text-sand-amber" />
-                      <span>{exp.start_date} &ndash; {exp.end_date}</span>
+                      <span>
+                        {!exp.end_date || exp.start_date.trim() === exp.end_date.trim()
+                          ? exp.start_date
+                          : `${exp.start_date} – ${exp.end_date}`}
+                      </span>
                     </span>
                     {exp.location && (
                       <span className="inline-flex items-center space-x-1 text-sand-text-muted">
