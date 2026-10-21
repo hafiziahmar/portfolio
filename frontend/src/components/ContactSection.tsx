@@ -87,7 +87,7 @@ export const ContactSection: React.FC = () => {
               </span>
               <div className="flex items-center space-x-4">
                 <a
-                  href="https://www.linkedin.com/in/hafizi-ahmar/"
+                  href="https://www.linkedin.com/in/ahmad-hafizi-ahmar"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl border border-sand-border bg-sand-surface text-xs font-medium text-sand-text hover:bg-sand-surface-muted transition-colors shadow-2xs"
@@ -96,7 +96,7 @@ export const ContactSection: React.FC = () => {
                   <span>LinkedIn Profile</span>
                 </a>
                 <a
-                  href="https://github.com/hafizi-ahmar"
+                  href="https://github.com/hafiziahmar"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl border border-sand-border bg-sand-surface text-xs font-medium text-sand-text hover:bg-sand-surface-muted transition-colors shadow-2xs"

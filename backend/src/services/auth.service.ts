@@ -48,6 +48,25 @@ export class AuthService {
   async verifyAdmin(adminId: number): Promise<AdminRecord | null> {
     return await adminRepo.findById(adminId);
   }
+
+  async changePassword(adminId: number, currentPass: string, newPass: string): Promise<{ success: boolean; error?: string }> {
+    const admin = await adminRepo.findById(adminId);
+    if (!admin) return { success: false, error: 'Admin record not found' };
+
+    const isMatch = await comparePassword(currentPass, admin.password_hash);
+    if (!isMatch) return { success: false, error: 'Current password is incorrect' };
+
+    if (!newPass || newPass.length < 8) {
+      return { success: false, error: 'New password must be at least 8 characters long' };
+    }
+
+    const newHash = await hashPassword(newPass);
+    const updated = await adminRepo.updatePassword(adminId, newHash);
+    if (!updated) return { success: false, error: 'Failed to update password' };
+
+    logger.info(`Admin password successfully changed for user: ${admin.username}`);
+    return { success: true };
+  }
 }
 
 export const authService = new AuthService();

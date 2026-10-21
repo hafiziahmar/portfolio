@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layers, ArrowRight, Github, Zap, ShieldCheck, QrCode, Cpu, Terminal } from 'lucide-react';
+import { Layers, ArrowRight, Zap, ShieldCheck, QrCode, Cpu, Terminal } from 'lucide-react';
 import { Project } from '../types';
 import { ProjectModal } from './ProjectModal';
 
@@ -60,17 +60,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     <span>Inspect Architecture</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
-                  {urusProject.github_url && (
-                    <a
-                      href={urusProject.github_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-xl border border-sand-border text-sand-text hover:bg-sand-surface-muted transition-colors cursor-pointer"
-                      title="View GitHub Repository"
-                    >
-                      <Github className="w-4 h-4" />
-                    </a>
-                  )}
                 </div>
               </div>
 
@@ -144,17 +133,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     <div className="p-2 rounded-lg bg-sand-moss/10 text-sand-moss">
                       <Terminal className="w-5 h-5" />
                     </div>
-                    {p.github_url && (
-                      <a
-                        href={p.github_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1.5 rounded-lg text-sand-text-muted hover:text-sand-text transition-colors"
-                        title="View Code"
-                      >
-                        <Github className="w-4 h-4" />
-                      </a>
-                    )}
                   </div>
 
                   <h3 className="text-lg font-bold text-sand-text">

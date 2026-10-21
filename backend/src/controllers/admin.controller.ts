@@ -142,6 +142,47 @@ export class AdminController {
     }
   }
 
+  // Education
+  async createEducation(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const created = await educationRepo.createEducation(req.body);
+      await portfolioService.invalidateCache();
+      res.status(201).json(created);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async updateEducation(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const id = parseInt(String(req.params.id), 10);
+      const updated = await educationRepo.updateEducation(id, req.body);
+      if (!updated) {
+        res.status(404).json({ error: 'Education record not found' });
+        return;
+      }
+      await portfolioService.invalidateCache();
+      res.json(updated);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async deleteEducation(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const id = parseInt(String(req.params.id), 10);
+      const success = await educationRepo.deleteEducation(id);
+      if (!success) {
+        res.status(404).json({ error: 'Education record not found' });
+        return;
+      }
+      await portfolioService.invalidateCache();
+      res.json({ success: true, message: 'Education record deleted' });
+    } catch (err) {
+      next(err);
+    }
+  }
+
   // Messages Queue
   async getMessages(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

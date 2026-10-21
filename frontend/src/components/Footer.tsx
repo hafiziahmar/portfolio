@@ -13,17 +13,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAdmin }) => {
         {/* Brand & Copy */}
         <div className="space-y-1 text-center sm:text-left">
           <p className="font-semibold text-sand-text text-sm">
-            Hafizi Ahmar &bull; Portfolio
+            Ahmad Hafizi Bin Ahmar &bull; Portfolio
           </p>
           <p className="text-2xs text-sand-text-muted">
-            Engineered with React 19, TypeScript, PostgreSQL, Redis, and natural earth aesthetics.
+            Engineered with React 19, TypeScript, PostgreSQL, and natural earth ergonomics.
           </p>
         </div>
 
         {/* Links */}
         <div className="flex items-center space-x-6">
           <a
-            href="https://www.linkedin.com/in/hafizi-ahmar/"
+            href="https://www.linkedin.com/in/ahmad-hafizi-ahmar"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center space-x-1.5 hover:text-sand-text transition-colors"
@@ -33,7 +33,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAdmin }) => {
           </a>
 
           <a
-            href="https://github.com/hafizi-ahmar"
+            href="https://github.com/hafiziahmar"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center space-x-1.5 hover:text-sand-text transition-colors"

@@ -19,4 +19,10 @@ router.get(
   authController.me.bind(authController)
 );
 
+router.put(
+  '/password',
+  requireAuth as any,
+  authController.changePassword.bind(authController)
+);
+
 export default router;

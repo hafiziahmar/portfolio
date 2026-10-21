@@ -71,6 +71,19 @@ export const api = {
     return json;
   },
 
+  async adminChangePassword(currentPassword: string, newPassword: string): Promise<{ success: boolean; message: string }> {
+    const res = await fetch(`${API_BASE_URL}/auth/password`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ currentPassword, newPassword }),
+    });
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(json.error || 'Failed to update password');
+    }
+    return json;
+  },
+
   async adminGetMe(): Promise<AdminUser> {
     const res = await fetch(`${API_BASE_URL}/auth/me`, {
       headers: getAuthHeaders(),
@@ -92,6 +105,37 @@ export const api = {
     return res.json();
   },
 
+  // Skills
+  async adminCreateSkill(data: any) {
+    const res = await fetch(`${API_BASE_URL}/admin/skills`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to create skill');
+    return res.json();
+  },
+
+  async adminUpdateSkill(id: number, data: any) {
+    const res = await fetch(`${API_BASE_URL}/admin/skills/${id}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to update skill');
+    return res.json();
+  },
+
+  async adminDeleteSkill(id: number) {
+    const res = await fetch(`${API_BASE_URL}/admin/skills/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to delete skill');
+    return res.json();
+  },
+
+  // Experiences
   async adminCreateExperience(data: any) {
     const res = await fetch(`${API_BASE_URL}/admin/experiences`, {
       method: 'POST',
@@ -118,6 +162,66 @@ export const api = {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to delete experience');
+    return res.json();
+  },
+
+  // Projects
+  async adminCreateProject(data: any) {
+    const res = await fetch(`${API_BASE_URL}/admin/projects`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to create project');
+    return res.json();
+  },
+
+  async adminUpdateProject(id: number, data: any) {
+    const res = await fetch(`${API_BASE_URL}/admin/projects/${id}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to update project');
+    return res.json();
+  },
+
+  async adminDeleteProject(id: number) {
+    const res = await fetch(`${API_BASE_URL}/admin/projects/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to delete project');
+    return res.json();
+  },
+
+  // Education
+  async adminCreateEducation(data: any) {
+    const res = await fetch(`${API_BASE_URL}/admin/education`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to create education record');
+    return res.json();
+  },
+
+  async adminUpdateEducation(id: number, data: any) {
+    const res = await fetch(`${API_BASE_URL}/admin/education/${id}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to update education record');
+    return res.json();
+  },
+
+  async adminDeleteEducation(id: number) {
+    const res = await fetch(`${API_BASE_URL}/admin/education/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to delete education record');
     return res.json();
   },
 
