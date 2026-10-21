@@ -38,26 +38,30 @@ export interface Experience {
 export interface Project {
   id: number;
   title: string;
-  tagline: string;
+  tagline?: string;
+  start_date?: string | null;
+  end_date?: string | null;
   description: string;
   architecture_details?: string | null;
-  key_features: string[];
-  tech_stack: string[];
+  key_features?: string[];
+  tech_stack?: string[];
   github_url?: string | null;
   demo_url?: string | null;
-  featured: boolean;
-  order_index: number;
+  featured?: boolean;
+  order_index?: number;
 }
 
 export interface Education {
   id: number;
   institution: string;
   degree: string;
-  period: string;
+  period?: string | null;
+  start_date?: string | null;
+  end_date?: string | null;
   field_of_study?: string | null;
   description?: string | null;
-  badges: string[];
-  order_index: number;
+  badges?: string[];
+  order_index?: number;
 }
 
 export interface RecruiterMessage {

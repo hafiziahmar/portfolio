@@ -72,7 +72,7 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
 
   const quickPrompts = [
     'How does URUS prevent race conditions?',
-    'Tell me about his clinical operations at NVC Australia.',
+    'Tell me about his clinical operations at NVC Group.',
     'What are his Antigravity & Agentic AI skills?',
     'What was his training at 42KL Piscine?',
   ];

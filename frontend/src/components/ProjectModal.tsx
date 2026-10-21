@@ -82,11 +82,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         {/* Overview Description */}
         <div className="space-y-2">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-sand-text-muted font-mono">
-            System Purpose & Problem Solved
+            System Overview & Details
           </h3>
-          <p className="text-sm text-sand-text-muted leading-relaxed">
+          <div className="text-sm text-sand-text-muted leading-relaxed whitespace-pre-line text-justify">
             {project.description}
-          </p>
+          </div>
         </div>
 
         {/* Architecture Details */}
@@ -98,43 +98,47 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 Concurrency & Data Pipeline Design
               </h3>
             </div>
-            <p className="text-xs sm:text-sm text-sand-text-muted leading-relaxed font-sans">
+            <p className="text-xs sm:text-sm text-sand-text-muted leading-relaxed font-sans text-justify whitespace-pre-line">
               {project.architecture_details}
             </p>
           </div>
         )}
 
         {/* Key Features */}
-        <div className="space-y-3">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-sand-text-muted font-mono">
-            Core Technical Capabilities
-          </h3>
-          <ul className="space-y-2">
-            {project.key_features.map((feature, idx) => (
-              <li key={idx} className="flex items-start space-x-2.5 text-xs sm:text-sm text-sand-text-muted">
-                <CheckCircle2 className="w-4 h-4 text-sand-moss shrink-0 mt-0.5" />
-                <span>{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {project.key_features && project.key_features.length > 0 && (
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-sand-text-muted font-mono">
+              Core Technical Capabilities
+            </h3>
+            <ul className="space-y-2">
+              {project.key_features.map((feature, idx) => (
+                <li key={idx} className="flex items-start space-x-2.5 text-xs sm:text-sm text-sand-text-muted text-justify">
+                  <CheckCircle2 className="w-4 h-4 text-sand-moss shrink-0 mt-0.5" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* Tech Stack Pills */}
-        <div className="space-y-2">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-sand-text-muted font-mono">
-            Integrated Tech Stack
-          </h3>
-          <div className="flex flex-wrap gap-1.5">
-            {project.tech_stack.map((tech) => (
-              <span
-                key={tech}
-                className="text-xs font-mono px-2.5 py-1 rounded-md bg-sand-surface border border-sand-border text-sand-moss font-medium"
-              >
-                {tech}
-              </span>
-            ))}
+        {project.tech_stack && project.tech_stack.length > 0 && (
+          <div className="space-y-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-sand-text-muted font-mono">
+              Integrated Tech Stack
+            </h3>
+            <div className="flex flex-wrap gap-1.5">
+              {project.tech_stack.map((tech) => (
+                <span
+                  key={tech}
+                  className="text-xs font-mono px-2.5 py-1 rounded-md bg-sand-surface border border-sand-border text-sand-moss font-medium"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Action Button */}
         <div className="pt-4 border-t border-sand-border flex justify-end">

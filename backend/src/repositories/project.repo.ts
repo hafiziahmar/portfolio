@@ -3,17 +3,19 @@ import { pool } from '../config/db.js';
 export interface ProjectRecord {
   id: number;
   title: string;
-  tagline: string;
+  tagline?: string;
+  start_date?: string;
+  end_date?: string;
   description: string;
-  architecture_details: string | null;
-  key_features: string[];
-  tech_stack: string[];
-  github_url: string | null;
-  demo_url: string | null;
-  featured: boolean;
-  order_index: number;
-  created_at: string;
-  updated_at: string;
+  architecture_details?: string | null;
+  key_features?: string[];
+  tech_stack?: string[];
+  github_url?: string | null;
+  demo_url?: string | null;
+  featured?: boolean;
+  order_index?: number;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export class ProjectRepository {
@@ -36,22 +38,24 @@ export class ProjectRepository {
     return res.rows[0] || null;
   }
 
-  async createProject(data: Omit<ProjectRecord, 'id' | 'created_at' | 'updated_at'>): Promise<ProjectRecord> {
+  async createProject(data: Partial<ProjectRecord>): Promise<ProjectRecord> {
     const res = await pool.query(
-      `INSERT INTO projects (title, tagline, description, architecture_details, key_features, tech_stack, github_url, demo_url, featured, order_index)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      `INSERT INTO projects (title, tagline, start_date, end_date, description, architecture_details, key_features, tech_stack, github_url, demo_url, featured, order_index)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
        RETURNING *`,
       [
         data.title,
-        data.tagline,
-        data.description,
-        data.architecture_details,
-        data.key_features,
-        data.tech_stack,
-        data.github_url,
-        data.demo_url,
-        data.featured,
-        data.order_index,
+        data.tagline || '',
+        data.start_date || '2026',
+        data.end_date || '2026',
+        data.description || '',
+        data.architecture_details || '',
+        data.key_features || [],
+        data.tech_stack || [],
+        data.github_url || '',
+        data.demo_url || '',
+        data.featured ?? true,
+        data.order_index ?? 0,
       ]
     );
     return res.rows[0];
@@ -63,14 +67,16 @@ export class ProjectRepository {
 
     const res = await pool.query(
       `UPDATE projects
-       SET title = $1, tagline = $2, description = $3, architecture_details = $4,
-           key_features = $5, tech_stack = $6, github_url = $7, demo_url = $8,
-           featured = $9, order_index = $10, updated_at = NOW()
-       WHERE id = $11
+       SET title = $1, tagline = $2, start_date = $3, end_date = $4, description = $5,
+           architecture_details = $6, key_features = $7, tech_stack = $8,
+           github_url = $9, demo_url = $10, featured = $11, order_index = $12, updated_at = NOW()
+       WHERE id = $13
        RETURNING *`,
       [
         data.title ?? current.title,
         data.tagline ?? current.tagline,
+        data.start_date ?? current.start_date,
+        data.end_date ?? current.end_date,
         data.description ?? current.description,
         data.architecture_details ?? current.architecture_details,
         data.key_features ?? current.key_features,
