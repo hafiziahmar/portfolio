@@ -24,7 +24,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
             Production Systems & Projects
           </h2>
           <p className="text-base text-sand-text-muted text-justify">
-            Full-stack platforms, autonomous agentic implementations, and enterprise software systems engineered by Ahmad Hafizi.
+            Full-stack platforms, autonomous agentic implementations, and enterprise software systems engineered by Hafizi Ahmar.
           </p>
         </div>
 

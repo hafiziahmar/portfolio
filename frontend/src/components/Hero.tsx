@@ -67,7 +67,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenCopilot }) => {
                 href="#projects"
                 className="inline-flex items-center space-x-2 px-5 py-3 rounded-xl bg-sand-moss text-white font-medium hover:bg-sand-moss-hover transition-all shadow-xs cursor-pointer"
               >
-                <span>Explore URUS Platform</span>
+                <span>Explore Projects</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
 
