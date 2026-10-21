@@ -63,7 +63,7 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
     {
       role: 'assistant',
       content:
-        "Hello! I am Hafizi's **AI CV Copilot**. I have full context on his clinical healthcare background, 42KL systems programming training, Project KADA fellowship, and the architectural design of his flagship **URUS Platform**.\n\nWhat would you like to know?",
+        "Hello! I am Toph. I have full context on Hafizi Ahmar's professional background.\n\nHow may I help you?",
     },
   ]);
   const [input, setInput] = useState('');
@@ -132,7 +132,6 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
                   LIVE
                 </span>
               </div>
-              <p className="text-2xs text-sand-text-muted">Ask anything about Hafizi's background & code</p>
             </div>
           </div>
 
