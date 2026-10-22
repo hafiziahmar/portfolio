@@ -63,7 +63,7 @@ export const ContactSection: React.FC = () => {
                 Get In Touch
               </h2>
               <p className="text-base text-sand-text-muted leading-relaxed text-justify">
-                Recruiters, hiring leaders, and engineering teams can reach Hafizi directly through this queue. Inquiries are stored in a dedicated PostgreSQL database queue and triaged immediately.
+                Recruiters, hiring leaders, and engineering teams can reach Hafizi Ahmar directly through this queue. Inquiries are stored in a dedicated PostgreSQL database queue and triaged immediately.
               </p>
             </div>
 
@@ -76,7 +76,7 @@ export const ContactSection: React.FC = () => {
                 </h3>
               </div>
               <p className="text-xs text-sand-text-muted leading-relaxed text-justify">
-                Raw personal contact numbers and personal emails are intentionally not published to prevent automated bots and telephone scrapers. Submitting through this verified form routes directly to Hafizi's authenticated priority dashboard.
+                Raw personal contact numbers and personal emails are intentionally not published to prevent automated bots and telephone scrapers. Submitting through this verified form routes directly to Hafizi Ahmar's authenticated priority dashboard.
               </p>
             </div>
 
