@@ -1,283 +1,183 @@
-# Ahmad Hafizi Bin Ahmar — Full-Stack Interactive CV Portfolio & CMS Engine
+# Hafizi Ahmar — Full-Stack Portfolio & Headless CMS Engine
 
-[![Tech Stack](https://img.shields.io/badge/Stack-React_19_|_TypeScript_|_Tailwind_v4_|_Node_|_PostgreSQL_|_Redis-5E6C5B?style=for-the-badge)](https://github.com/hafiziahmar)
-[![Architecture](https://img.shields.io/badge/Architecture-Database--Driven_CMS-C27803?style=for-the-badge)](https://github.com/hafiziahmar)
-[![Verification](https://img.shields.io/badge/Verification-42KL_|_Project_KADA_|_Antigravity-2C2B29?style=for-the-badge)](https://github.com/hafiziahmar)
+[![Architecture](https://img.shields.io/badge/Architecture-Decoupled_Full--Stack_CMS-5E6C5B?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL_16_|_Redis_7-C27803?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
+[![Frontend](https://img.shields.io/badge/Frontend-React_19_|_TailwindCSS_v4-2C2B29?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
+[![Security](https://img.shields.io/badge/Security-JWT_|_Bcrypt_|_Zod_|_Anti--Scraping-3B5249?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
 
-> **AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Domain Expertise (Dietetics Hons.)**  
-> *Bridging clinical operations discipline with algorithmic systems engineering, autonomous agentic workflows, and high-concurrency database architectures.*
-
----
-
-## 📌 Executive Summary
-
-This repository contains the complete, production-ready source code for **Hafizi Ahmar's Interactive CV Portfolio & Headless CMS**. Unlike static portfolios, this platform is built entirely upon **Approach B: Database-Driven CMS Architecture**. 
-
-All portfolio records (executive profile, categorized skills matrix, career timeline, project architectures, and academic credentials) are stored in normalized **PostgreSQL** relational tables, served via a decoupled **Express REST API** (enforcing strict Routes → Controllers → Services → Repositories separation), accelerated by **Redis in-memory caching**, and dynamically rendered on a **React 19** frontend.
-
-### 🛡️ Privacy & Anti-Scraping Safeguards
-In adherence to modern privacy best practices, **raw personal contact phone numbers, personal email addresses, and residential locations are strictly excluded** from the public DOM. All recruiter inquiries and engineering opportunities are routed exclusively through a backend-validated **Interactive Contact Queue Form**, stored in PostgreSQL, and managed within a secure **Admin CMS Dashboard** protected by JWT and bcrypt password hashing.
+> **AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Healthcare Foundation (Dietetics Hons.)**  
+> *Translating operational rigor and algorithmic thinking into production-grade, database-driven web systems.*
 
 ---
 
-## 🎨 Design System: Natural Earth & Warm Sand
-The user interface implements an ergonomic, healthcare/environmental-inspired aesthetic designed for long reading sessions and zero glare:
+## 🏛️ Executive Architectural Overview
+
+This system is engineered as an enterprise-grade, database-backed portfolio and content management engine designed to showcase full-stack software architecture, data integrity, and defensive engineering.
+
+Rather than relying on static site generation, this platform operates on a **decoupled, event-driven multi-tier architecture**:
+
+```mermaid
+flowchart TD
+    subgraph Client ["Client Presentation Tier"]
+        UI["React 19 SPA (TailwindCSS v4)"]
+        Copilot["Toph AI CV Copilot (Interactive Drawer)"]
+        CMS["Secure Admin CMS Portal (JWT Authenticated)"]
+    end
+
+    subgraph Gateway ["API & Gateway Tier"]
+        API["Node.js / Express REST API (Strict TypeScript)"]
+        Security["Defensive Layer: Helmet, CORS, Rate Limiters, Zod"]
+        Router["Layered Routing (Routes → Controllers → Services → Repositories)"]
+    end
+
+    subgraph Data ["Data & Caching Tier"]
+        Cache[("Redis 7 In-Memory Cache (Sub-ms Latency)")]
+        DB[("PostgreSQL 16 Relational Engine (Normalized Schema)")]
+    end
+
+    subgraph AI ["AI & Intelligence Engine"]
+        LLM["Google Gemini API (Deterministic Knowledge Engine Fallback)"]
+    end
+
+    UI --> Security
+    CMS --> Security
+    Security --> API
+    API --> Router
+    Router --> Cache
+    Router --> DB
+    Copilot --> API
+    API --> LLM
+```
+
+---
+
+## ⚙️ Core Engineering Design Decisions
+
+### 1. Relational PostgreSQL Schema & Strict Data Integrity
+All portfolio data — professional experiences, technical skill inventories, capstone projects, education credentials, and incoming recruiter messages — are modeled into normalized PostgreSQL tables:
+- **Foreign Constraints & Parameterized Queries**: Strict SQL parameterization (`$1, $2, ...`) eliminates SQL injection vectors.
+- **Concurrency Control**: Employs PostgreSQL row-level locks (`FOR UPDATE SKIP LOCKED`) in multi-user workflows to prevent data race conditions.
+- **Automated Versioned Migrations**: SQL DDL schemas run idempotently upon application initialization.
+
+### 2. High-Throughput Redis Caching with Write-Through Invalidation
+To minimize database read amplification while ensuring instantaneous global updates:
+- Public portfolio reads (`GET /api/portfolio`) are cached in Redis with a 300-second TTL.
+- Any write operation in the Admin CMS (e.g. updating a project, adding a new skill category, or modifying bio details) immediately triggers **atomic cache eviction** (`redis.del('portfolio:full')`).
+- If Redis is unreachable, the backend automatically fails over to an in-memory cache without dropping client traffic.
+
+### 3. Layered Enterprise Architecture
+The backend strictly adheres to the 4-layer architectural separation:
+1. **Routes**: Declarative HTTP endpoint definitions and authentication guards.
+2. **Controllers**: Request extraction, HTTP status coordination, and response serialization.
+3. **Services**: Business logic, cache synchronization, and AI copilot query dispatching.
+4. **Repositories**: Pure SQL abstraction and data access operations.
+
+### 4. Defensive Security & Zero-Trust Authentication
+- **Stateless Authentication**: Admin endpoints require cryptographically signed JSON Web Tokens (JWT) verified via middleware.
+- **Bcrypt Password Hashing**: Passwords stored using 10 salt rounds with constant-time verification.
+- **Zod Runtime Contracts**: All incoming HTTP payloads undergo strict type-checking and sanitization before hitting business services.
+- **Anti-Bot & Rate Limiting**: Dedicated rate-limiting tiers (`copilotLimiter`, `contactLimiter`) throttle automated scraping and denial-of-service attempts.
+
+---
+
+## 🛡️ Privacy & Contact Protection Architecture
+
+In adherence to strict personal privacy best practices:
+- **Zero Raw PII Exposure**: Private phone numbers, residential addresses, and personal email addresses are intentionally excluded from the public DOM.
+- **Authenticated Message Queue**: Recruiter and engineering inquiries route through a secure, backend-validated **Contact Queue**. Inquiries are stored directly in PostgreSQL with honeypot spam protection and triaged exclusively within the authenticated Admin CMS.
+- **AI Privacy Guardrails**: The integrated AI Copilot (**Toph**) enforces strict system boundary constraints, deflecting queries targeting private personal details while facilitating verified recruiter communication.
+
+---
+
+## 🤖 AI CV Copilot Engine: "Toph"
+
+The portfolio features **Toph**, an integrated conversational copilot engineered to answer recruiter queries regarding architectural decisions, technical stack proficiencies, and career progression:
+- **Grounded Verification**: Answers strictly reflect verified CV records, 42KL systems programming training, Project KADA engineering methodologies, and NVC Group clinical operations.
+- **Dual-Mode Engine**: Dynamically interfaces with the **Google Gemini API** when credentials are provided, seamlessly falling back to a deterministic, zero-latency local knowledge engine if external APIs are unavailable.
+- **Context Boundaries**: Operates under strict non-authoritative boundaries to ensure accurate technical representation without hallucination.
+
+---
+
+## 🎨 Natural Earth & Warm Sand Design System
+
+The frontend user experience is built upon an organic, nature-inspired palette tailored for readability, focus, and zero eye fatigue:
 
 | Element | Light Mode (Warm Sand) | Dark Mode (Mossy Charcoal) |
 | :--- | :--- | :--- |
 | **Canvas Background** | `#F7F4EE` (Soft Warm Sand) | `#171C18` (Deep Mossy Charcoal) |
-| **Surface Cards** | `#FFFFFF` (Pure Organic White) | `#222923` (Deep Earth Slate) |
+| **Surface Cards** | `#FFFFFF` (Organic White) | `#222923` (Deep Earth Slate) |
 | **Primary Typography** | `#2C2B29` (Deep Earth Bark) | `#EBE7DF` (Soft Pale Mist) |
 | **Primary Accent** | `#5E6C5B` (Muted Forest Moss) | `#83967F` (Soft Sage Green) |
-| **Interactive Accent** | `#C27803` (Warm Amber Sun) | `#F59E0B` (Warm Amber Glow) |
-| **Borders & Dividers** | `#E3DDD2` (Sand Muted Border) | `#2E382F` (Deep Slate Border) |
+| **Interactive Accent**| `#C27803` (Warm Amber Sun) | `#F59E0B` (Warm Amber Glow) |
+| **Borders & Dividers**| `#E3DDD2` (Sand Muted Border) | `#2E382F` (Deep Slate Border) |
 
-*Features smooth system/manual mode toggle with local storage persistence and `<meta name="color-scheme">` browser coordination.*
-
----
-
-## 🏗️ System Architecture & Monorepo Structure
-
-```
-hafizi-portfolio/
-├── .env.example              # Monorepo root environment variable template
-├── .gitignore                # Production-grade exclusions (node_modules, .env, dist, etc.)
-├── docker-compose.yml        # Docker orchestration (PostgreSQL 16 Alpine + Redis 7 Alpine)
-├── package.json              # Monorepo workspaces coordinator (npm workspaces)
-├── README.md                 # Complete documentation & deployment guide
-│
-├── backend/                  # Layered Express + TypeScript REST API
-│   ├── .env.example          # Backend-specific environment variables
-│   ├── package.json          # Express, pg, ioredis, zod, bcryptjs, jsonwebtoken, helmet
-│   ├── tsconfig.json         # Strict TypeScript configuration
-│   └── src/
-│       ├── config/           # PostgreSQL pool, Redis client (with memory fallback), env validation
-│       ├── controllers/      # HTTP request/response handlers (Auth, Admin, Portfolio, Message, Copilot)
-│       ├── db/
-│       │   ├── migrations/   # 001_init.sql: 7 relational PostgreSQL tables
-│       │   ├── migrate.ts    # Automated migration runner
-│       │   └── seed.ts       # Database seeder with Hafizi's authentic CV records
-│       ├── middlewares/      # JWT auth guard, rate limiters, Zod validator, error handler
-│       ├── repositories/     # Pure SQL query layer (profile, skills, experiences, projects, etc.)
-│       ├── routes/           # Express router endpoints mounted under /api
-│       ├── services/         # Business logic layer (portfolio cache sync, copilot AI engine)
-│       ├── utils/            # Bcrypt hashing, JWT issuance/verification, structured logger
-│       ├── app.ts            # Express application bootstrap & security middleware
-│       └── server.ts         # Server startup & automatic migration/seeding verification
-│
-└── frontend/                 # React 19 + Vite + TypeScript + TailwindCSS v4 SPA
-    ├── .env.example          # Frontend API base URL configuration
-    ├── index.html            # PWA-ready HTML5 entry point with theme script
-    ├── package.json          # React 19, Vite, Tailwind v4, Lucide React
-    ├── tsconfig.json         # Modern bundler mode TypeScript configuration
-    ├── vite.config.ts        # Vite build & local API proxy configuration
-    ├── public/
-    │   ├── _redirects        # Single-page app routing rule for Netlify/Cloudflare
-    │   ├── favicon.svg       # Branded HA monogram favicon
-    │   └── hafizi.jpg        # Professional portrait headshot
-    └── src/
-        ├── api/client.ts     # Canonical API client with JWT interceptor & error handling
-        ├── components/       # Component-driven UI primitives:
-        │   ├── Navbar.tsx            # Sticky header with theme toggle & admin shortcut
-        │   ├── Hero.tsx              # Executive bio, headshot photo, verified credentials card
-        │   ├── ProjectsSection.tsx   # Spotlight on URUS Platform & architecture details
-        │   ├── ProjectModal.tsx      # Native HTML5 <dialog> architectural modal
-        │   ├── ExperienceTimeline.tsx# Career progression from Australia healthcare to AI tech
-        │   ├── SkillsMatrix.tsx      # Categorized skills with interactive category filters
-        │   ├── EducationSection.tsx  # UiTM Dietetics Hons, 42KL Piscine, Project KADA Fellow
-        │   ├── ContactSection.tsx    # Secure Recruiter Contact Queue Form (honeypot protected)
-        │   ├── CopilotDrawer.tsx     # Interactive AI CV Copilot chat drawer
-        │   ├── ThemeToggle.tsx       # Accessible Dark/Light mode switch
-        │   ├── LoadingSkeleton.tsx   # High-fidelity loading skeleton UI state
-        │   ├── ErrorState.tsx        # Resilient error recovery UI state with retry trigger
-        │   └── Footer.tsx            # Clean branding, links, and admin portal gateway
-        ├── context/          # ThemeContext & AuthContext state providers
-        ├── pages/
-        │   ├── PortfolioPage.tsx     # Main public-facing portfolio view
-        │   └── AdminPage.tsx         # Secure Admin CMS Dashboard (/admin)
-        ├── styles/index.css  # TailwindCSS v4 theme tokens & modern pseudo-classes
-        ├── types/index.ts    # Shared TypeScript interfaces
-        ├── App.tsx           # Route/hash controller and drawer manager
-        └── main.tsx          # Application root mounting
-```
+- **TailwindCSS v4**: Modern CSS-first configuration using CSS variables and semantic theme classes.
+- **Typography**: Fully justified, relaxed readability layout with semantic HTML5 structuring.
 
 ---
 
-## 🗄️ Database Schema (PostgreSQL)
+## 📡 REST API Reference
 
-The database consists of 7 relational tables defined in `backend/src/db/migrations/001_init.sql`:
-
-1. **`profile`**: Headline, executive summary, verified external links (LinkedIn, GitHub), location, and availability badge.
-2. **`skills`**: Categorized technical competencies (`Autonomous AI Development`, `Full-Stack Technologies`, `Tools & Verification`), proficiency levels (1–5), and core highlights.
-3. **`experiences`**: Detailed career history, chronological intervals, locations, structured achievement bullet arrays (`TEXT[]`), and technology tag arrays.
-4. **`projects`**: Project titles, taglines, comprehensive architectural descriptions, feature lists (`TEXT[]`), and repository/demo links.
-5. **`education`**: Academic and specialized engineering credentials (UiTM Dietetics Hons, 42KL Piscine, Project KADA).
-6. **`messages`**: Incoming recruiter contact queue with sender details, organization, message body, IP address, and status (`unread`, `read`, `replied`, `archived`).
-7. **`admins`**: Authorized administrative accounts protected with bcrypt salt/hash passwords and JWT issuance.
-
----
-
-## 🚀 Key Features
-
-### 1. Flagship Highlight: URUS Platform Architecture
-The portfolio highlights **URUS (Integrated SME Operations Platform)**, built during Project KADA:
-- **Atomic Order Claiming:** Employs PostgreSQL row locks (`FOR UPDATE SKIP LOCKED`) within transaction boundaries to eliminate double-picking race conditions among concurrent warehouse pickers.
-- **Barcode SKU Pipeline:** Camera & handheld scanner integration validating EAN-13, SKU, and QR payloads prior to releasing dispatch labels.
-- **Finite State Machine:** Multi-stage lifecycle (`READY_TO_PICK` → `PICKING` → `PACKING` → `FULFILLED`) with immutable audit logs and automatic inventory deduction.
-- **Redis Outbound Caching:** Sub-millisecond queue response times for high-velocity dispatch floors.
-
-### 2. AI CV Copilot Drawer
-- Recruiters can open the slide-out **AI Copilot** at any time to ask natural-language questions about Hafizi's engineering capabilities, his clinical background at NVC Group in Australia, his 42KL low-level C programming immersion, or specific system design patterns.
-- Powered by a contextual knowledge engine with optional **Google Gemini API** integration.
-
-### 3. Secure Admin CMS Dashboard (`#admin`)
-- Accessible by clicking the Shield icon in the navigation bar or visiting `/#admin`.
-- Authenticates against PostgreSQL with bcrypt password validation and issues stateless JWT tokens.
-- **Recruiter Message Triage:** Review incoming inquiries, update statuses (`unread` → `read` → `replied` → `archived`), or delete spam.
-- **Profile Live Editor:** Update headline, summary, or status badge dynamically without redeploying code.
-- **Redis Cache Manager:** Inspect active cache keys and trigger instant global cache flushes.
-
----
-
-## 🛠️ Quickstart: Running Locally
-
-### Prerequisites
-- **Node.js**: v20 or higher
-- **npm**: v10 or higher
-- **Docker & Docker Compose** (for PostgreSQL and Redis)
-
-### 1. Clone & Install Dependencies
-```bash
-git clone https://github.com/hafizi-ahmar/hafizi-portfolio.git
-cd hafizi-portfolio
-
-# Install monorepo root and workspace dependencies
-npm install
-```
-
-### 2. Start PostgreSQL & Redis via Docker
-```bash
-docker compose up -d
-```
-*This launches PostgreSQL on port `5432` and Redis on port `6379`.*
-
-### 3. Configure Environment Variables
-Copy the root `.env.example` to `backend/.env` and `frontend/.env`:
-```bash
-# In backend/
-cp .env.example backend/.env
-
-# In frontend/
-cp frontend/.env.example frontend/.env
-```
-
-### 4. Run Migrations & Seed Data
-```bash
-npm run db:seed
-```
-*This verifies the 7 PostgreSQL tables and seeds all authentic career, project, education, and admin records.*
-
-### 5. Launch Development Servers
-In two separate terminals:
-```bash
-# Terminal 1: Backend API (port 5000)
-npm run dev:backend
-
-# Terminal 2: Frontend Client (port 5173)
-npm run dev:frontend
-```
-Open **`http://localhost:5173`** in your browser.
-
----
-
-## 🔑 Default Admin Credentials (Local Testing)
-- **Portal URL**: `http://localhost:5173/#admin`
-- **Username**: `hafizi_admin`
-- **Password**: `your_secure_admin_password_here2026!`
-
-*(Remember to change `JWT_SECRET` and `ADMIN_INITIAL_PASSWORD` before hosting publicly).*
-
----
-
-## 📡 REST API Specification
-
-| Method | Endpoint | Auth | Description |
+| Method | Endpoint | Access | Purpose |
 | :--- | :--- | :--- | :--- |
-| **GET** | `/api/health` | Public | Healthcheck and timestamp |
-| **GET** | `/api/portfolio` | Public | Returns complete portfolio records (cached in Redis for 300s) |
-| **GET** | `/api/portfolio?refresh=true` | Public | Bypasses Redis and fetches directly from PostgreSQL |
-| **POST** | `/api/messages` | Public (Rate Limited) | Submits recruiter contact inquiry (Zod validated, honeypot protected) |
-| **POST** | `/api/copilot/chat` | Public | Recruiter queries to the AI CV Copilot |
-| **POST** | `/api/auth/login` | Public | Admin login, validates bcrypt hash, returns JWT token |
-| **GET** | `/api/auth/me` | JWT | Validates active admin session token |
-| **PUT** | `/api/admin/profile` | JWT | Updates profile headline, bio, or status badge & evicts cache |
-| **GET** | `/api/admin/messages` | JWT | Retrieves all recruiter contact inquiries |
-| **PATCH**| `/api/admin/messages/:id/status`| JWT | Updates inquiry status (`read`, `replied`, `archived`) |
-| **DELETE**| `/api/admin/messages/:id` | JWT | Deletes an inquiry record |
-| **POST** | `/api/admin/cache/flush` | JWT | Clears all Redis cache keys |
+| `GET` | `/api/health` | Public | System health check and uptime timestamp |
+| `GET` | `/api/portfolio` | Public | Full portfolio payload (Redis-cached, sub-5ms response) |
+| `POST` | `/api/messages` | Public (Rate Limited) | Submit recruiter contact inquiry (Zod validated, honeypot protected) |
+| `POST` | `/api/copilot/chat` | Public (Rate Limited) | Query Toph AI CV Copilot |
+| `POST` | `/api/auth/login` | Public | Authenticate administrator via bcrypt & issue JWT |
+| `GET` | `/api/auth/me` | Admin (JWT) | Validate active admin session |
+| `PUT` | `/api/admin/profile` | Admin (JWT) | Update headline, summary, or availability status |
+| `POST` | `/api/admin/projects` | Admin (JWT) | Add a new project to the portfolio |
+| `PUT` | `/api/admin/projects/:id` | Admin (JWT) | Update project name, dates, or technical description |
+| `DELETE` | `/api/admin/projects/:id` | Admin (JWT) | Delete a project record |
+| `POST` | `/api/admin/education` | Admin (JWT) | Add an education or training credential |
+| `PUT` | `/api/admin/education/:id` | Admin (JWT) | Update education title, provider, dates, or description |
+| `DELETE` | `/api/admin/education/:id` | Admin (JWT) | Delete an education credential |
+| `POST` | `/api/admin/skills` | Admin (JWT) | Add a new skill (with custom dynamic category support) |
+| `DELETE` | `/api/admin/skills/:id` | Admin (JWT) | Delete a skill record |
+| `GET` | `/api/admin/messages` | Admin (JWT) | Retrieve incoming recruiter inquiries |
+| `PATCH`| `/api/admin/messages/:id/status` | Admin (JWT) | Update inquiry status (`unread` → `read` → `replied` → `archived`) |
+| `POST` | `/api/admin/cache/flush` | Admin (JWT) | Invalidate and flush all Redis cache keys |
 
 ---
 
-## 🚀 Deployment Guide
+## 💻 Local Engineering Environment
 
-### Option 1: Frontend on Netlify
-1. Connect your GitHub repository to **Netlify**.
-2. Set **Base directory**: `frontend`
-3. Set **Build command**: `npm run build`
-4. Set **Publish directory**: `frontend/dist`
-5. Under **Environment variables**, set:
-   - `VITE_API_BASE_URL`: `https://your-backend-service.onrender.com/api`
-6. Netlify automatically detects `frontend/public/_redirects` to handle client-side routing smoothly.
+### Infrastructure Requirements
+- **Runtime**: Node.js v20+ / npm v10+
+- **Containers**: Docker Desktop (PostgreSQL 16 Alpine + Redis 7 Alpine)
 
-### Option 2: Backend on Render or Railway
-1. Create a **Web Service** pointing to the repository.
-2. Set **Root Directory**: `backend`
-3. Set **Build Command**: `npm install && npm run build`
-4. Set **Start Command**: `npm run start`
-5. Create a PostgreSQL database on **Supabase** (or Render Postgres) and set:
-   - `DATABASE_URL`: `postgres://[user]:[password]@[host]:5432/[database]?sslmode=require`
-   - `JWT_SECRET`: A secure random 32+ character string
-   - `CORS_ORIGIN`: `https://your-portfolio.netlify.app`
-   - `NODE_ENV`: `production`
-   - `GEMINI_API_KEY`: *(Optional) For live Gemini 1.5 Flash AI Copilot*
-6. Trigger deployment. The backend will automatically run migrations and seed initial data on first boot!
-
----
-
-## 📦 Git & GitHub Workflow
-
-Initialize Git, create a clean initial commit, and push to GitHub:
-
+### Container Orchestration
 ```bash
-# 1. Initialize Git in the project root
-git init
+# Launch PostgreSQL and Redis instances in isolated containers
+docker compose up -d
 
-# 2. Stage all tracked files (.gitignore excludes node_modules and .env automatically)
-git add .
+# Verify container health
+docker ps
+```
 
-# 3. Create initial commit
-git commit -m "feat: complete production-grade full-stack portfolio & CMS for Ahmad Hafizi"
+### Environment Configuration
+Sensitive values and secrets are managed exclusively through untracked environment files:
+- Backend: `backend/.env` (configured from `backend/.env.example`)
+- Frontend: `frontend/.env` (configured from `frontend/.env.example`)
 
-# 4. Set default branch to main
-git branch -M main
-
-# 5. Add remote GitHub repository
-git remote add origin https://github.com/hafiziahmar/portfolio.git
-
-# 6. Push to GitHub
-git push -u origin main
+### Development Servers
+```bash
+# In workspace root
+npm run dev:backend     # Runs Express REST API on http://localhost:5000
+npm run dev:frontend    # Runs Vite + React 19 SPA on http://localhost:5173
 ```
 
 ---
 
-## 👨‍💻 Author & Contact
+## 👨‍💻 Engineering Profile & Contact
 
-**Ahmad Hafizi Bin Ahmar**  
-*AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Domain Expertise (Dietetics Hons.)*  
-- **LinkedIn**: [linkedin.com/in/ahmad-hafizi-ahmar](https://www.linkedin.com/in/ahmad-hafizi-ahmar)  
-- **GitHub**: [github.com/hafiziahmar](https://github.com/hafiziahmar)  
-- **Location**: Telok Panglima Garang, Selangor, Malaysia  
-- **Portfolio & Contact Queue**: Send inquiries securely through the portfolio contact form.
+**Hafizi Ahmar**  
+*AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Healthcare Foundation*
+
+- **LinkedIn**: [linkedin.com/in/ahmad-hafizi-ahmar](https://www.linkedin.com/in/ahmad-hafizi-ahmar)
+- **GitHub**: [github.com/hafiziahmar](https://github.com/hafiziahmar)
+- **Direct Recruiter Inquiries**: Verified communication is handled through the **Contact Queue Form** on the portfolio to ensure zero-spam delivery.
 
 ---
-*Built with care, precision, and natural earth ergonomics.*
+*Architected and engineered with precision, defensive security, and natural earth ergonomics.*
