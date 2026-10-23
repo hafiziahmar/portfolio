@@ -103,9 +103,9 @@ Always sign off or speak naturally as Toph.`;
       }
     };
 
-    // Try GA and current preview models with robust fallback
+    // Production models verified from Google AI Studio API key capabilities
     const errors: string[] = [];
-    const candidateModels = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash'];
+    const candidateModels = ['gemini-2.5-flash', 'gemini-2.5-pro'];
     for (const model of candidateModels) {
       try {
         const response = await fetch(
