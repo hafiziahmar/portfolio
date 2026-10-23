@@ -20,6 +20,7 @@ export class CopilotController {
 
       res.json({
         reply: answer,
+        engine: copilotService.lastDebugInfo,
         timestamp: new Date().toISOString(),
       });
     } catch (err) {

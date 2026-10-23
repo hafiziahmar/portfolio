@@ -8,27 +8,37 @@ export interface ChatMessage {
 }
 
 export class CopilotService {
+  public lastDebugInfo: string = 'Initialized';
+
   async processQuery(question: string, history: ChatMessage[] = []): Promise<string> {
     const portfolio = await portfolioService.getFullPortfolioData();
     const qLower = question.toLowerCase().trim();
 
+    const rawKey = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+    const apiKey = (rawKey || '').trim().replace(/^["']|["']$/g, '');
+
     // If Gemini API key is configured, attempt LLM call
-    if (env.GEMINI_API_KEY && env.GEMINI_API_KEY.trim() !== '') {
+    if (apiKey !== '') {
       try {
-        const aiResponse = await this.callGeminiAPI(question, portfolio, history);
+        const aiResponse = await this.callGeminiAPI(question, portfolio, history, apiKey);
         if (aiResponse) return aiResponse;
       } catch (err: any) {
+        this.lastDebugInfo = `Gemini call threw exception: ${err.message}`;
         logger.warn('Gemini API call failed, falling back to local CV knowledge engine:', err.message);
       }
+    } else {
+      this.lastDebugInfo = 'No GEMINI_API_KEY detected in environment variables';
     }
 
     // Built-in High-Fidelity Portfolio Knowledge Engine
     return this.generateKnowledgeResponse(qLower, portfolio);
   }
 
-  private async callGeminiAPI(question: string, portfolio: any, history: ChatMessage[]): Promise<string | null> {
-    const apiKey = env.GEMINI_API_KEY?.trim();
-    if (!apiKey) return null;
+  private async callGeminiAPI(question: string, portfolio: any, history: ChatMessage[], apiKey: string): Promise<string | null> {
+    if (!apiKey) {
+      this.lastDebugInfo = 'Empty API key';
+      return null;
+    }
 
     const systemPrompt = `You are Toph, the official AI CV Copilot for Hafizi Ahmar.
 You speak on behalf of Hafizi with warmth, technical precision, high intelligence, and professional advocacy.
@@ -113,13 +123,16 @@ Always sign off or speak naturally as Toph.`;
           const data: any = await response.json();
           const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
           if (text && text.trim().length > 0) {
+            this.lastDebugInfo = `Active: Google Gemini (${model})`;
             return text.trim();
           }
         } else {
           const errText = await response.text();
+          this.lastDebugInfo = `Gemini model ${model} HTTP ${response.status}: ${errText.slice(0, 150)}`;
           logger.warn(`Gemini API call to ${model} returned HTTP ${response.status}: ${errText}`);
         }
       } catch (err: any) {
+        this.lastDebugInfo = `Network exception on ${model}: ${err.message}`;
         logger.warn(`Gemini API network exception on ${model}: ${err.message}`);
       }
     }
