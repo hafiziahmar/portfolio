@@ -55,7 +55,19 @@ export class CopilotService {
         `- **Type Safety (DTOs & Mappers):** Strict TypeScript boundary where raw API DTOs are validated with Type Guards and mapped into clean domain UI models before reaching components.`;
     }
 
-    // B. URUS Capstone SME Operations Platform
+    // B. Korea-ASEAN Digital Academy (KADA) Fellowship
+    if (q.includes('kada') || q.includes('garranto') || q.includes('korea-asean') || q.includes('korea asean') || q.includes('fellowship')) {
+      return `### Korea-ASEAN Digital Academy (KADA) Fellowship\n\n` +
+        `**KADA** stands for the **Korea-ASEAN Digital Academy**, an elite engineering talent initiative delivered in collaboration with **Garranto Academy** to train top-tier software engineers across Southeast Asia in modern full-stack development and applied AI engineering.\n\n` +
+        `Hafizi was selected as a **KADA Fellow** within the intensive **AI-Enabled Full-Stack Development** program (August – September 2026).\n\n` +
+        `**What the KADA Fellowship Encompassed:**\n` +
+        `- **Full-Stack AI-Powered Engineering Curriculum:** Spanned requirements gathering, Domain-Driven Design (DDD), Figma translation, React 19 + TypeScript, Node.js + Express layered REST APIs, Dockerized PostgreSQL (Supabase image), Redis caching, Postman testing, and Swagger/OpenAPI documentation.\n` +
+        `- **Responsible AI-Assisted Development:** Taught disciplined AI prompt engineering across the SDLC (Role, Context, Task, Constraints, Format) and strict code-review standards to prevent unvetted "vibe coding."\n` +
+        `- **The Flagship Capstone — URUS:** Under KADA, Hafizi architected the Outbound Fulfillment & Wave Dispatch Queue for URUS, implementing PostgreSQL \`FOR UPDATE SKIP LOCKED\` row-locking to eliminate double-picking race conditions across warehouse operators, validated across 16 tables and 452 automated tests.\n` +
+        `- **Systems Engineering Transition:** Combined with his earlier foundation at the **42KL Piscine** (pure C low-level systems programming), KADA solidified Hafizi's ability to seamlessly bridge low-level algorithmic logic with modern, production-grade cloud web architectures.`;
+    }
+
+    // C. URUS Capstone SME Operations Platform
     if (q.includes('urus') || q.includes('concurrency') || q.includes('race condition') || q.includes('order') || q.includes('fulfillment') || q.includes('barcode') || q.includes('profit-leak') || q.includes('kpi')) {
       return `### URUS — All-In-One SME Operations Platform (Capstone)\n\n` +
         `**URUS** is an enterprise-grade operational platform connecting inventory movement, warehouse fulfillment, workforce attendance, KPI measurement, expense auditing, and payroll for stock-based SMEs.\n\n` +
@@ -168,19 +180,20 @@ You have complete context on his verified background:
 - Full-Stack Stack: React 19, TypeScript, TailwindCSS v4, Node.js, Express, PostgreSQL, Redis, Docker, Supabase.
 - Capstone Project: URUS (Integrated SME Operations Platform, PostgreSQL FOR UPDATE SKIP LOCKED row-locking, barcode pipeline, 452 automated tests).
 - Professional Experience: NVC Group Australia (clinical operations & Google Apps Script automation), Puncak Niaga, Prudential, MAFI, MDEC.
-- Education: KADA Fellow (AI Full-Stack), 42KL Piscine (pure C systems programming), UiTM (Bachelor of Dietetics Hons).
+- Education: KADA Fellow (Korea-ASEAN Digital Academy, organized with Garranto Academy — strictly never expand KADA as "Kita Anak Digital Academy" or any fictional name), 42KL Piscine (pure C systems programming), UiTM (Bachelor of Dietetics Hons).
 Privacy: Do not disclose raw personal phone numbers or private email addresses. Direct recruiters to the portfolio contact form or LinkedIn.
-Provide a complete, articulate, and insightful answer. Never leave thoughts cut off mid-sentence.`;
+Provide a complete, articulate, and insightful answer directly without overthinking. Never leave thoughts cut off mid-sentence.`;
 
     try {
       const ai = new GoogleGenAI({ apiKey });
 
-      // Official Interactions API from Google AI Studio
+      // Official Interactions API from Google AI Studio with minimal thinking for fast response
       const interaction = await ai.interactions.create({
         model: 'models/gemini-3.8-flash',
         input: `${systemPrompt}\n\nUser Question: ${question}`,
         generation_config: {
           max_output_tokens: 2048,
+          thinking_level: 'minimal',
         },
       });
 
