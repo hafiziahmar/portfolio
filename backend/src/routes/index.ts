@@ -11,6 +11,7 @@ const router = Router();
 router.get('/health', (req: Request, res: Response) => {
   res.json({
     status: 'healthy',
+    version: '1.1.0-gemini',
     timestamp: new Date().toISOString(),
     service: 'hafizi-portfolio-api',
   });
