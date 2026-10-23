@@ -103,13 +103,11 @@ Always sign off or speak naturally as Toph.`;
       }
     };
 
-    // Modern Google Gemini and Gemma models
+    // Fast candidates with strict timeout to prevent UI hanging
     const errors: string[] = [];
     const candidateModels = [
-      'gemini-3.8-flash',
-      'gemini-3.5-flash-lite',
-      'gemini-4-argon',
       'gemma-4-31b-it',
+      'gemini-2.5-flash',
       'gemma-4-26b-a4b-it',
     ];
     for (const model of candidateModels) {
@@ -122,6 +120,7 @@ Always sign off or speak naturally as Toph.`;
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(requestBody),
+            signal: AbortSignal.timeout(4000),
           }
         );
 
@@ -134,7 +133,7 @@ Always sign off or speak naturally as Toph.`;
           }
         } else {
           const errText = await response.text();
-          errors.push(`${model} [${response.status}]: ${errText}`);
+          errors.push(`${model} [${response.status}]: ${errText.slice(0, 300)}`);
           logger.warn(`Gemini API call to ${model} returned HTTP ${response.status}: ${errText}`);
         }
       } catch (err: any) {
