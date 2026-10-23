@@ -103,9 +103,15 @@ Always sign off or speak naturally as Toph.`;
       }
     };
 
-    // Production models verified from Google AI Studio API key capabilities
+    // Modern Google Gemini and Gemma models
     const errors: string[] = [];
-    const candidateModels = ['gemini-2.5-flash', 'gemini-2.5-pro'];
+    const candidateModels = [
+      'gemini-3.8-flash',
+      'gemini-3.5-flash-lite',
+      'gemini-4-argon',
+      'gemma-4-31b-it',
+      'gemma-4-26b-a4b-it',
+    ];
     for (const model of candidateModels) {
       try {
         const response = await fetch(
@@ -128,7 +134,7 @@ Always sign off or speak naturally as Toph.`;
           }
         } else {
           const errText = await response.text();
-          errors.push(`${model} [${response.status}]: ${errText.slice(0, 150)}`);
+          errors.push(`${model} [${response.status}]: ${errText}`);
           logger.warn(`Gemini API call to ${model} returned HTTP ${response.status}: ${errText}`);
         }
       } catch (err: any) {
