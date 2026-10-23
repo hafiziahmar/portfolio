@@ -1,6 +1,7 @@
 import { portfolioService } from './portfolio.service.js';
 import { env } from '../config/env.js';
 import { logger } from '../utils/logger.js';
+import { GoogleGenAI } from '@google/genai';
 
 export interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
@@ -171,53 +172,28 @@ You have complete context on his verified background:
 Privacy: Do not disclose raw personal phone numbers or private email addresses. Direct recruiters to the portfolio contact form or LinkedIn.
 Provide a complete, articulate, and insightful answer. Never leave thoughts cut off mid-sentence.`;
 
-    const requestBody = {
-      systemInstruction: {
-        parts: [{ text: systemPrompt }]
-      },
-      contents: [
-        {
-          role: 'user',
-          parts: [{ text: question }]
-        }
-      ],
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 1200
+    try {
+      const ai = new GoogleGenAI({ apiKey });
+
+      // Official Interactions API from Google AI Studio
+      const interaction = await ai.interactions.create({
+        model: 'models/gemini-3.8-flash',
+        input: `${systemPrompt}\n\nUser Question: ${question}`,
+        generation_config: {
+          max_output_tokens: 2048,
+        },
+      });
+
+      const text = interaction.output_text || (interaction as any).steps?.at(-1)?.output_text || (interaction as any).outputs?.[0]?.text;
+      if (text && text.trim().length > 0) {
+        this.lastDebugInfo = 'Active: GoogleGenAI (gemini-3.8-flash via Interactions API)';
+        return text.trim();
       }
-    };
 
-    const candidateModels = [
-      'gemma-4-31b-it',
-      'gemma-4-26b-a4b-it',
-      'gemini-2.5-flash',
-    ];
-
-    for (const model of candidateModels) {
-      try {
-        const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            signal: AbortSignal.timeout(12000), // Generous 12-second allowance for complete AI response
-          }
-        );
-
-        if (response.ok) {
-          const data: any = await response.json();
-          const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (text && text.trim().length > 0) {
-            this.lastDebugInfo = `Active: Google AI (${model})`;
-            return text.trim();
-          }
-        }
-      } catch (err: any) {
-        logger.warn(`API call on ${model}: ${err.message}`);
-      }
+      this.lastDebugInfo = `GoogleGenAI returned empty text: ${JSON.stringify(interaction).slice(0, 150)}`;
+    } catch (err: any) {
+      logger.warn(`GoogleGenAI Interactions error: ${err.message}`);
+      this.lastDebugInfo = `GoogleGenAI error: ${err.message}`;
     }
 
     return null;
