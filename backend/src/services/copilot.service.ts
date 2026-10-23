@@ -27,6 +27,9 @@ export class CopilotService {
   }
 
   private async callGeminiAPI(question: string, portfolio: any, history: ChatMessage[]): Promise<string | null> {
+    const apiKey = env.GEMINI_API_KEY?.trim();
+    if (!apiKey) return null;
+
     const systemPrompt = `You are Toph, the dedicated AI CV Copilot representing Hafizi Ahmar.
 You are professional, articulate, technically sharp, and directly and accurately grounded in Hafizi Ahmar's authentic CV and knowledge.
 
@@ -67,26 +70,50 @@ Education & Training:
 Privacy Notice: Do NOT disclose raw phone numbers or personal emails. Recruiters should connect via the Contact Queue on this portfolio or via LinkedIn.
 Introduce yourself as Toph when appropriate. Always respond concisely, authoritatively, and professionally.`;
 
-    const contents = [
-      { role: 'user', parts: [{ text: `${systemPrompt}\n\nRecruiter query: ${question}` }] }
-    ];
+    const requestBody = {
+      system_instruction: {
+        parts: [{ text: systemPrompt }]
+      },
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: question }]
+        }
+      ],
+      generationConfig: {
+        temperature: 0.6,
+        maxOutputTokens: 500
+      }
+    };
 
-    // Try modern Gemini models with automatic fallback
-    const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    // Try GA and current preview models with robust fallback
+    const candidateModels = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-exp'];
     for (const model of candidateModels) {
       try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents }),
-        });
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-goog-api-key': apiKey,
+            },
+            body: JSON.stringify(requestBody),
+          }
+        );
+
         if (response.ok) {
           const data: any = await response.json();
           const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (text) return text;
+          if (text && text.trim().length > 0) {
+            return text.trim();
+          }
+        } else {
+          const errText = await response.text();
+          logger.warn(`Gemini API call to ${model} returned HTTP ${response.status}: ${errText}`);
         }
-      } catch {
-        // Continue to next candidate model
+      } catch (err: any) {
+        logger.warn(`Gemini API network exception on ${model}: ${err.message}`);
       }
     }
     return null;
