@@ -104,7 +104,8 @@ Always sign off or speak naturally as Toph.`;
     };
 
     // Try GA and current preview models with robust fallback
-    const candidateModels = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-exp'];
+    const errors: string[] = [];
+    const candidateModels = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash'];
     for (const model of candidateModels) {
       try {
         const response = await fetch(
@@ -113,7 +114,6 @@ Always sign off or speak naturally as Toph.`;
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'x-goog-api-key': apiKey,
             },
             body: JSON.stringify(requestBody),
           }
@@ -128,13 +128,27 @@ Always sign off or speak naturally as Toph.`;
           }
         } else {
           const errText = await response.text();
-          this.lastDebugInfo = `Gemini model ${model} HTTP ${response.status}: ${errText.slice(0, 150)}`;
+          errors.push(`${model} [${response.status}]: ${errText.slice(0, 150)}`);
           logger.warn(`Gemini API call to ${model} returned HTTP ${response.status}: ${errText}`);
         }
       } catch (err: any) {
-        this.lastDebugInfo = `Network exception on ${model}: ${err.message}`;
+        errors.push(`${model} [net]: ${err.message}`);
         logger.warn(`Gemini API network exception on ${model}: ${err.message}`);
       }
+    }
+
+    // Diagnostic fallback: check if API key has access to any models
+    try {
+      const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`);
+      const listData: any = await listRes.json();
+      if (listData.models) {
+        const names = listData.models.map((m: any) => m.name.replace('models/', '')).slice(0, 6).join(', ');
+        this.lastDebugInfo = `Failures: ${errors.join(' | ')}. Available models for this key: ${names}`;
+      } else {
+        this.lastDebugInfo = `Failures: ${errors.join(' | ')}. Models list returned: ${JSON.stringify(listData).slice(0, 150)}`;
+      }
+    } catch (e: any) {
+      this.lastDebugInfo = `Failures: ${errors.join(' | ')}. List query error: ${e.message}`;
     }
     return null;
   }
