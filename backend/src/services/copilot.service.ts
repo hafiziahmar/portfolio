@@ -71,18 +71,25 @@ Introduce yourself as Toph when appropriate. Always respond concisely, authorita
       { role: 'user', parts: [{ text: `${systemPrompt}\n\nRecruiter query: ${question}` }] }
     ];
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${env.GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Gemini API returned status ${response.status}`);
+    // Try modern Gemini models with automatic fallback
+    const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    for (const model of candidateModels) {
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents }),
+        });
+        if (response.ok) {
+          const data: any = await response.json();
+          const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (text) return text;
+        }
+      } catch {
+        // Continue to next candidate model
+      }
     }
-
-    const data = await response.json();
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || null;
+    return null;
   }
 
   private generateKnowledgeResponse(q: string, portfolio: any): string {
