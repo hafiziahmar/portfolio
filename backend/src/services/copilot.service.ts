@@ -187,17 +187,44 @@ Provide a complete, articulate, and insightful answer directly without overthink
     try {
       const ai = new GoogleGenAI({ apiKey });
 
-      // Official Interactions API from Google AI Studio with minimal thinking for fast response
-      const interaction = await ai.interactions.create({
-        model: 'models/gemini-3.8-flash',
-        input: `${systemPrompt}\n\nUser Question: ${question}`,
-        generation_config: {
-          max_output_tokens: 2048,
-          thinking_level: 'minimal',
-        },
-      });
+      let interaction: any;
+      try {
+        // Try with 'low' thinking level for rapid response without 400 error
+        interaction = await ai.interactions.create({
+          model: 'models/gemini-3.8-flash',
+          input: `${systemPrompt}\n\nUser Question: ${question}`,
+          generation_config: {
+            max_output_tokens: 2048,
+            thinking_level: 'low',
+          },
+        });
+      } catch (innerErr: any) {
+        // If thinking_level is rejected, fallback to standard config without thinking_level
+        logger.warn(`Interactions with thinking_level failed, retrying standard config: ${innerErr.message}`);
+        interaction = await ai.interactions.create({
+          model: 'models/gemini-3.8-flash',
+          input: `${systemPrompt}\n\nUser Question: ${question}`,
+          generation_config: {
+            max_output_tokens: 2048,
+          },
+        });
+      }
 
-      const text = interaction.output_text || (interaction as any).steps?.at(-1)?.output_text || (interaction as any).outputs?.[0]?.text;
+      let text = interaction.output_text || interaction.steps?.at(-1)?.output_text || interaction.outputs?.[0]?.text;
+      if (!text && interaction.steps) {
+        for (let i = interaction.steps.length - 1; i >= 0; i--) {
+          const step = interaction.steps[i];
+          if (step.type === 'model_output' && step.content) {
+            const parts = step.content.flatMap((c: any) => c.parts || []);
+            const textParts = parts.filter((p: any) => p.text).map((p: any) => p.text);
+            if (textParts.length > 0) {
+              text = textParts.join('');
+              break;
+            }
+          }
+        }
+      }
+
       if (text && text.trim().length > 0) {
         this.lastDebugInfo = 'Active: GoogleGenAI (gemini-3.8-flash via Interactions API)';
         return text.trim();
