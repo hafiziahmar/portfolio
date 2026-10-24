@@ -151,7 +151,7 @@ export class CopilotService {
     if (q.includes('clinical') || q.includes('healthcare') || q.includes('dietetics') || q.includes('transition') || q.includes('uitm') || q.includes('nvc') || q.includes('australia') || q.includes('peneraju')) {
       return `Hafizi brings a rare and powerful hybrid background: a Bachelor of Dietetics (Hons) from UiTM combined with high-rigor full-stack software engineering.\n\n` +
         `His healthcare background directly shapes his software engineering discipline:\n\n` +
-        `1. **Clinical Precision & Zero-Tolerance for Error:** In clinical healthcare and aged care operations at NVC Group in Australia (as a prestigious Yayasan Peneraju Scholar), Hafizi operated under strict healthcare compliance frameworks where sloppy data handling directly impacts human well-being. He carries this exact high-stakes discipline into software engineering.\n` +
+        `1. **Clinical Precision & Zero-Tolerance for Error:** In clinical healthcare and aged care operations at NVC Group (as a prestigious Yayasan Peneraju Scholar), Hafizi operated under strict healthcare compliance frameworks where sloppy data handling directly impacts human well-being. He carries this exact high-stakes discipline into software engineering.\n` +
         `2. **Operational Automation in Practice:** At NVC Group, Hafizi engineered an automated event registration and feedback database system using Google Workspace and Google Apps Script, completely eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.\n` +
         `3. **Why It Matters:** Hafizi doesn't just write code; he understands operational bottlenecks, regulatory compliance, and how to bridge real-world clinical/business workflows into automated, fault-tolerant technical systems.\n\n` +
         `Would you like to know how his clinical background influences his approach to software testing and data integrity?`;
@@ -170,7 +170,7 @@ export class CopilotService {
     // L. Why Hire Hafizi / Elevator Pitch
     if (q.includes('why hire') || q.includes('why should') || q.includes('30 second') || q.includes('pitch') || q.includes('unique') || q.includes('stand out') || q.includes('words')) {
       return `Hafizi offers a rare combination of clinical precision, low-level computational grit, and modern production-grade full-stack execution:\n\n` +
-        `1. **Rare Hybrid of Clinical Discipline & Systems Engineering:** Holds a Clinical Dietetics degree (UiTM) and international healthcare experience (NVC Group Australia), giving him exceptional analytical precision, high error-tolerance discipline, and strong communication skills.\n` +
+        `1. **Rare Hybrid of Clinical Discipline & Systems Engineering:** Holds a Clinical Dietetics degree (UiTM) and operational healthcare experience at NVC Group, giving him exceptional analytical precision, high error-tolerance discipline, and strong communication skills.\n` +
         `2. **Low-Level Systems Grounding:** Trained in pure C at the intense **42KL Piscine**, understanding memory management and algorithmic efficiency from the metal up.\n` +
         `3. **Modern Production Full-Stack Execution:** Mastered the full stack (React 19, TypeScript, Node.js, Express, PostgreSQL, Redis, Docker) through the Korea-ASEAN Digital Academy (KADA) and delivered **URUS**, a 16-table operations platform with 452 passing automated tests.\n` +
         `4. **AI-Enabled Engineering Leader:** Proficient in directing autonomous coding agents in Google Antigravity and applying structured prompt engineering to build enterprise software at 3x speed without compromising code quality.\n\n` +
@@ -191,8 +191,11 @@ You speak on behalf of Hafizi with warmth, technical precision, high intelligenc
 You have complete context on his verified background:
 - Full-Stack Stack: React 19, TypeScript, TailwindCSS v4, Node.js, Express, PostgreSQL, Redis, Docker, Supabase.
 - Capstone Project: URUS (Integrated SME Operations Platform, PostgreSQL FOR UPDATE SKIP LOCKED row-locking, barcode pipeline, 452 automated tests).
-- Professional Experience: NVC Group Australia (clinical operations & Google Apps Script automation), Puncak Niaga, Prudential, MAFI, MDEC.
+- Professional Experience: NVC Group (clinical operations & Google Apps Script automation), Puncak Niaga, Prudential, MAFI, MDEC.
 - Education: KADA Fellow (Korea-ASEAN Digital Academy, organized with Garranto Academy — strictly never expand KADA as "Kita Anak Digital Academy" or any fictional name), 42KL Piscine (pure C systems programming), UiTM (Bachelor of Dietetics Hons).
+Strict Guardrails & Anti-Hallucination Rules:
+- Strict Organization Naming: When referring to NVC, strictly and exclusively refer to it as "NVC Group" (never say "NVC Group Australia" or append "Australia" to its organization name).
+- Closed-World Grounding: You must only answer questions based strictly on Hafizi's verified CV context provided here. Never invent, fabricate, or extrapolate skills, companies, or credentials not explicitly stated in his profile. If a user asks about technologies or entities Hafizi has not worked with, state clearly that he specializes in his core stack (React 19, TypeScript, Node.js, PostgreSQL, Redis, Docker) and invite them to explore his verified work or reach out.
 Formatting & Tone Guidelines:
 - Write with conversational warmth and technical rigor.
 - Open with an engaging, articulate introductory paragraph framing Hafizi's expertise.
@@ -207,12 +210,13 @@ Provide a complete, articulate, and insightful answer directly without overthink
 
       let interaction: any;
       try {
-        // Try with 'low' thinking level for rapid response without 400 error
+        // Try with 'low' thinking level and temperature 0.2 for rapid, grounded response without 400 error
         interaction = await ai.interactions.create({
           model: 'models/gemini-3.8-flash',
           input: `${systemPrompt}\n\nUser Question: ${question}`,
           generation_config: {
             max_output_tokens: 2048,
+            temperature: 0.2,
             thinking_level: 'low',
           },
         });
@@ -224,6 +228,7 @@ Provide a complete, articulate, and insightful answer directly without overthink
           input: `${systemPrompt}\n\nUser Question: ${question}`,
           generation_config: {
             max_output_tokens: 2048,
+            temperature: 0.2,
           },
         });
       }
