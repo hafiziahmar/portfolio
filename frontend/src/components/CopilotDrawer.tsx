@@ -16,32 +16,98 @@ const renderFormattedMessage = (text: string) => {
   const lines = text.split('\n');
   return lines.map((line, lineIdx) => {
     const renderInline = (str: string) => {
-      const parts = str.split(/(\*\*.*?\*\*|`.*?`)/g);
+      // Matches links [text](url), bold **text**, code `code`, and single asterisk/underscore *emphasis* or _emphasis_
+      const parts = str.split(/(\[.*?\]\(.*?\)|\*\*.*?\*\*|`.*?`|\*[^*\n]+?\*|_[^_\n]+?_)/g);
       return parts.map((part, pIdx) => {
-        if (part.startsWith('**') && part.endsWith('**')) {
+        if (!part) return null;
+
+        // Link: [label](url)
+        const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
+        if (linkMatch) {
           return (
-            <strong key={pIdx} className="font-bold underline-offset-2">
+            <a
+              key={pIdx}
+              href={linkMatch[2]}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sand-moss underline font-semibold hover:text-sand-moss-hover inline-flex items-center"
+            >
+              {linkMatch[1]}
+            </a>
+          );
+        }
+
+        // Bold: **text**
+        if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
+          return (
+            <strong key={pIdx} className="font-bold text-sand-text underline-offset-2">
               {part.slice(2, -2)}
             </strong>
           );
         }
-        if (part.startsWith('`') && part.endsWith('`')) {
+
+        // Code: `code`
+        if (part.startsWith('`') && part.endsWith('`') && part.length >= 2) {
           return (
-            <code key={pIdx} className="font-mono text-xs px-1.5 py-0.5 rounded bg-sand-surface border border-sand-border text-sand-moss">
+            <code
+              key={pIdx}
+              className="font-mono text-xs px-1.5 py-0.5 rounded bg-sand-surface border border-sand-border text-sand-moss"
+            >
               {part.slice(1, -1)}
             </code>
           );
         }
+
+        // Emphasis / Single Asterisk / Underscore: *text* or _text_
+        if (
+          (part.startsWith('*') && part.endsWith('*') && part.length >= 2) ||
+          (part.startsWith('_') && part.endsWith('_') && part.length >= 2)
+        ) {
+          return (
+            <span key={pIdx} className="font-semibold text-sand-text italic">
+              {part.slice(1, -1)}
+            </span>
+          );
+        }
+
         return part;
       });
     };
 
     const trimmed = line.trim();
-    if (trimmed.startsWith('- ') || trimmed.startsWith('• ') || trimmed.startsWith('* ')) {
+
+    // 1. Markdown Headings (e.g. ### Title) -> Rendered cleanly without raw ###
+    if (trimmed.startsWith('#')) {
+      const headingMatch = trimmed.match(/^#+\s*(.*)$/);
+      if (headingMatch && headingMatch[1]) {
+        return (
+          <div key={lineIdx} className="font-bold text-xs sm:text-sm text-sand-text pt-2 pb-0.5 border-b border-sand-border/40">
+            {renderInline(headingMatch[1])}
+          </div>
+        );
+      }
+    }
+
+    // 2. Numbered Lists (e.g. 1. Item or 1) Item)
+    const numMatch = trimmed.match(/^(\d+)[\.\)]\s+(.*)$/);
+    if (numMatch) {
+      const [, num, itemContent] = numMatch;
+      return (
+        <div key={lineIdx} className="flex items-start space-x-2 ml-1 my-1">
+          <span className="text-3xs font-mono font-bold text-sand-moss bg-sand-moss/10 px-1.5 py-0.5 rounded-sm shrink-0 select-none mt-0.5">
+            {num}
+          </span>
+          <span className="text-xs sm:text-sm leading-relaxed flex-1">{renderInline(itemContent)}</span>
+        </div>
+      );
+    }
+
+    // 3. Bullet points (e.g. - item, * item, • item)
+    if (trimmed.startsWith('- ') || trimmed.startsWith('• ') || (trimmed.startsWith('* ') && !trimmed.startsWith('** '))) {
       return (
         <div key={lineIdx} className="flex items-start space-x-2 ml-2 my-1">
           <span className="text-sand-moss font-bold text-xs select-none">&bull;</span>
-          <span className="text-xs sm:text-sm leading-relaxed">{renderInline(trimmed.slice(2))}</span>
+          <span className="text-xs sm:text-sm leading-relaxed flex-1">{renderInline(trimmed.slice(2))}</span>
         </div>
       );
     }
