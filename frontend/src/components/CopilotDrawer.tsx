@@ -139,6 +139,9 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const streamTimerRef = useRef<any>(null);
+  const currentFullTextRef = useRef<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const quickPrompts = [
@@ -148,15 +151,46 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
     'Tell me about his latest work experience.',
   ];
 
+  const finishStreaming = () => {
+    if (streamTimerRef.current) {
+      clearInterval(streamTimerRef.current);
+      streamTimerRef.current = null;
+    }
+    if (currentFullTextRef.current) {
+      const full = currentFullTextRef.current;
+      setMessages((prev) => {
+        const copy = [...prev];
+        if (copy.length > 0 && copy[copy.length - 1].role === 'assistant') {
+          copy[copy.length - 1] = { role: 'assistant', content: full };
+        }
+        return copy;
+      });
+      currentFullTextRef.current = null;
+    }
+    setIsStreaming(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (streamTimerRef.current) {
+        clearInterval(streamTimerRef.current);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, isTyping, isStreaming]);
 
   const handleSend = async (messageText?: string) => {
     const textToSend = messageText || input;
-    if (!textToSend.trim() || isTyping) return;
+    if (!textToSend.trim() || isTyping || isStreaming) return;
+
+    if (isStreaming) {
+      finishStreaming();
+    }
 
     const newHistory: ChatEntry[] = [...messages, { role: 'user', content: textToSend }];
     setMessages(newHistory);
@@ -165,8 +199,45 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
 
     try {
       const reply = await api.askCopilot(textToSend, newHistory);
-      setMessages([...newHistory, { role: 'assistant', content: reply }]);
+      setIsTyping(false);
+      setIsStreaming(true);
+      currentFullTextRef.current = reply;
+
+      // Add empty assistant placeholder to stream into
+      setMessages([...newHistory, { role: 'assistant', content: '' }]);
+
+      let currentIdx = 0;
+      const fullText = reply;
+      // Target smooth ~2.0-2.5s streaming duration regardless of length
+      const chunkSize = Math.max(2, Math.ceil(fullText.length / 90));
+      const intervalMs = 22;
+
+      streamTimerRef.current = setInterval(() => {
+        currentIdx += chunkSize;
+        if (currentIdx >= fullText.length) {
+          if (streamTimerRef.current) {
+            clearInterval(streamTimerRef.current);
+            streamTimerRef.current = null;
+          }
+          currentFullTextRef.current = null;
+          setMessages((prev) => {
+            const copy = [...prev];
+            copy[copy.length - 1] = { role: 'assistant', content: fullText };
+            return copy;
+          });
+          setIsStreaming(false);
+        } else {
+          const displayed = fullText.slice(0, currentIdx);
+          setMessages((prev) => {
+            const copy = [...prev];
+            copy[copy.length - 1] = { role: 'assistant', content: displayed };
+            return copy;
+          });
+        }
+      }, intervalMs);
     } catch (err: any) {
+      setIsTyping(false);
+      setIsStreaming(false);
       setMessages([
         ...newHistory,
         {
@@ -175,8 +246,6 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
             "I encountered a temporary connection issue. You can still reach Hafizi directly via the **Recruiter Contact Queue** on this page!",
         },
       ]);
-    } finally {
-      setIsTyping(false);
     }
   };
 
@@ -230,14 +299,19 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
               )}
 
               <div
+                onClick={isStreaming && idx === messages.length - 1 ? finishStreaming : undefined}
+                title={isStreaming && idx === messages.length - 1 ? 'Click to reveal full response immediately' : undefined}
                 className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs sm:text-sm leading-relaxed ${
                   m.role === 'user'
                     ? 'bg-sand-moss text-white rounded-br-xs'
                     : 'bg-sand-surface-muted text-sand-text border border-sand-border rounded-bl-xs'
-                }`}
+                } ${isStreaming && idx === messages.length - 1 ? 'cursor-pointer hover:border-sand-moss/50 transition-colors' : ''}`}
               >
                 <div className="space-y-1">
                   {renderFormattedMessage(m.content)}
+                  {isStreaming && idx === messages.length - 1 && (
+                    <span className="inline-block w-1.5 h-3.5 bg-sand-moss animate-pulse ml-1 align-middle rounded-xs" />
+                  )}
                 </div>
               </div>
 
@@ -269,8 +343,9 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
               <button
                 key={i}
                 type="button"
+                disabled={isTyping || isStreaming}
                 onClick={() => handleSend(p)}
-                className="text-2xs px-2.5 py-1 rounded-lg bg-sand-surface border border-sand-border text-sand-text hover:bg-sand-surface-muted hover:border-sand-moss transition-colors text-left cursor-pointer"
+                className="text-2xs px-2.5 py-1 rounded-lg bg-sand-surface border border-sand-border text-sand-text hover:bg-sand-surface-muted hover:border-sand-moss disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-left cursor-pointer"
               >
                 {p}
               </button>
@@ -290,14 +365,15 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
             <input
               type="text"
               value={input}
+              disabled={isTyping || isStreaming}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask a technical or background question..."
-              className="flex-1 px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-xs sm:text-sm text-sand-text placeholder:text-sand-text-muted/60 focus:outline-none focus:ring-2 focus:ring-sand-moss"
+              placeholder={isTyping || isStreaming ? "Toph is responding..." : "Ask a technical or background question..."}
+              className="flex-1 px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-xs sm:text-sm text-sand-text placeholder:text-sand-text-muted/60 focus:outline-none focus:ring-2 focus:ring-sand-moss disabled:opacity-60"
             />
             <button
               type="submit"
-              disabled={isTyping || !input.trim()}
-              className="p-2.5 rounded-xl bg-sand-moss text-white hover:bg-sand-moss-hover disabled:opacity-50 transition-colors shadow-2xs cursor-pointer"
+              disabled={isTyping || isStreaming || !input.trim()}
+              className="p-2.5 rounded-xl bg-sand-moss text-white hover:bg-sand-moss-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-2xs cursor-pointer"
               aria-label="Send message"
             >
               <Send className="w-4 h-4" />

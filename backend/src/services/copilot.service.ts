@@ -24,7 +24,7 @@ export const TOPICS: InternalTopic[] = [
   // ==========================================
   {
     id: 'why_hire',
-    keywords: ['why hire', 'why should', '30 second', 'pitch', 'stand out', 'hire', 'candidate', 'tell me about hafizi', 'who is hafizi', 'who is hafizi ahmar', 'tell me about hafizi ahmar', 'about hafizi', 'introduce hafizi', 'introduction', 'bio'],
+    keywords: ['why hire', 'why should', '30 second', 'pitch', 'stand out', 'hire', 'candidate', 'tell me about hafizi', 'who is hafizi', 'who is hafizi ahmar', 'tell me about hafizi ahmar', 'about hafizi', 'introduce hafizi', 'introduction', 'bio', 'tell me about him', 'him', 'hafizi', 'fizi'],
     title: 'Why You Should Interview Hafizi Ahmar',
     body: `Hafizi offers a rare combination of clinical precision, low-level computational grit, and modern production-grade full-stack execution:\n\n` +
       `1. **Rare Hybrid of Clinical Discipline & Systems Engineering:** Holds a Clinical Dietetics degree (UiTM) and operational healthcare experience at NVC Group, giving him exceptional analytical precision, high error-tolerance discipline, and strong communication skills.\n` +
@@ -423,11 +423,11 @@ export class CopilotService {
       }
     }
 
-    // 1. Instant High-Intelligence Prebuilt Topics (with natural 1000ms thinking delay)
+    // 1. Instant High-Intelligence Prebuilt Topics (with natural 1500ms thinking delay)
     const instantKnowledge = this.matchPrebuiltTopic(qLower, portfolio, history);
     if (instantKnowledge) {
-      // Natural simulated thinking delay (1000ms)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Natural simulated thinking delay (1500ms)
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       this.lastDebugInfo = 'Instant Engine: Verified Technical Knowledge Base';
       return instantKnowledge;
     }
@@ -460,7 +460,12 @@ export class CopilotService {
     for (const topic of TOPICS) {
       for (const k of topic.keywords) {
         if (this.matchesKeyword(q, k)) {
-          if (k.length > maxKeywordLength) {
+          // If keyword length is strictly greater, it wins.
+          // If keyword length is equal, prefer domain-specific topics over the general identity topic 'why_hire'
+          const isBetter = k.length > maxKeywordLength ||
+            (k.length === maxKeywordLength && bestMatched?.id === 'why_hire');
+
+          if (isBetter) {
             maxKeywordLength = k.length;
             bestMatched = topic;
           }
