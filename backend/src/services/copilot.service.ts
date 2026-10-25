@@ -37,7 +37,7 @@ export const TOPICS: InternalTopic[] = [
   },
   {
     id: 'clinical',
-    keywords: ['clinical', 'dietetics', 'healthcare', 'uitm', 'medical', 'hospital'],
+    keywords: ['clinical', 'dietetics', 'dietetic', 'dietitian', 'dietician', 'healthcare', 'uitm', 'medical', 'hospital', 'mnt', 'medical nutrition therapy'],
     title: 'Clinical Healthcare to Software Engineering Bridge',
     body: `Hafizi brings a rare and powerful hybrid background: a Bachelor of Dietetics (Hons) from UiTM combined with high-rigor full-stack software engineering.\n\n` +
       `His healthcare background directly shapes his software engineering discipline:\n\n` +
@@ -50,19 +50,19 @@ export const TOPICS: InternalTopic[] = [
   },
   {
     id: 'nvc',
-    keywords: ['nvc', 'nvc group', 'apps script', 'aged care', 'registration system', 'compliance', 'latest work experience', 'latest work', 'latest experience', 'latest job'],
+    keywords: ['nvc', 'nvc group', 'apps script', 'aged care', 'registration system', 'compliance', 'latest work experience', 'latest work', 'latest experience', 'latest job', 'yayasan peneraju', 'peneraju', 'certificate iii'],
     title: 'NVC Group — Operations & Google Apps Script Automation',
     body: `At NVC Group, Hafizi operated under strict international healthcare compliance frameworks while spearheading operational automation initiatives:\n\n` +
       `1. **Zero-Manual Data Entry Pipeline:** Engineered an automated event registration and database feedback pipeline utilizing Google Workspace and Google Apps Script, eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.\n` +
       `2. **International Healthcare Compliance:** Selected as a competitive Yayasan Peneraju International Scholar, mastering strict Australian aged-care compliance frameworks and adapting protocols to global operational standards.\n` +
-      `3. **Early AI-Assisted Prototyping:** Leveraged structured prompt engineering with LLM assistants to accelerate script writing and prototype operational workflows, bridging healthcare processes with modern technical automation.`,
+      `3. **Early AI-Enabled Prototyping:** Leveraged structured prompt engineering with LLM assistants to accelerate script writing and prototype operational workflows, bridging healthcare processes with modern technical automation.`,
     recap: `At NVC Group, Hafizi engineered a zero-manual registration and e-certification pipeline using Google Apps Script while operating under strict Australian healthcare compliance frameworks.`,
     relatedIds: ['clinical', 'puncak_niaga', 'prompt_ai', 'urus_overview'],
     suggestPrompt: 'learn about his Google Apps Script automation and operations at NVC Group',
   },
   {
     id: 'takaful',
-    keywords: ['takaful', 'prudential', 'insurance', 'financial', 'risk', 'crm', 'client portfolio'],
+    keywords: ['takaful', 'prudential', 'insurance', 'financial', 'risk', 'crm', 'client portfolio', 'prudential bsn takaful', 'prubsn', 'bsn'],
     title: 'Prudential BSN Takaful — Financial Domain Rigor & Risk Evaluation',
     body: `At Prudential BSN Takaful Berhad, Hafizi managed client portfolios, performed quantitative risk evaluations, and navigated strict financial compliance frameworks.\n\n` +
       `In software engineering, this domain experience directly translates into architectural discipline:\n\n` +
@@ -101,7 +101,7 @@ export const TOPICS: InternalTopic[] = [
   },
   {
     id: 'mdec',
-    keywords: ['mdec', 'glow', 'penjana', 'freelance', 'remote delivery', 'marketplace'],
+    keywords: ['mdec', 'glow', 'penjana', 'freelance', 'remote delivery', 'marketplace', 'global online workforce'],
     title: 'MDEC GLOW PENJANA — Global Remote Delivery & Asynchronous Workflows',
     body: `Through the Malaysia Digital Economy Corporation (MDEC) Global Online Workforce (GLOW PENJANA) initiative, Hafizi completed specialized training on high-standard remote delivery and digital marketplace positioning.\n\n` +
       `Key engineering and operational disciplines gained:\n\n` +
@@ -132,10 +132,10 @@ export const TOPICS: InternalTopic[] = [
     body: `Hafizi was selected as an elite KADA Fellow in the Korea-ASEAN Digital Academy (organized in collaboration with Garranto Academy), focusing on modern full-stack development and applied AI engineering (August – September 2026).\n\n` +
       `The fellowship emphasized production-grade software engineering realities and real-world system architecture:\n\n` +
       `1. **Full-Stack AI-Powered Engineering Curriculum:** Spanned requirements gathering, Domain-Driven Design (DDD), React 19 + TypeScript, Node.js + Express layered REST APIs, Dockerized PostgreSQL, Redis caching, Postman testing, and Swagger/OpenAPI documentation.\n` +
-      `2. **Responsible AI-Assisted Development:** Taught disciplined AI prompt engineering across the SDLC (Role, Context, Task, Constraints, Format) and strict code-review standards to prevent unvetted "vibe coding."\n` +
+      `2. **Responsible AI-Enabled Development:** Taught disciplined AI prompt engineering across the SDLC (Role, Context, Task, Constraints, Format) and strict code-review standards to prevent unvetted "vibe coding."\n` +
       `3. **The Flagship Capstone — URUS:** Under KADA, Hafizi architected the Outbound Fulfillment & Wave Dispatch Queue for URUS, implementing PostgreSQL \`FOR UPDATE SKIP LOCKED\` row-locking to eliminate double-picking race conditions across warehouse operators, validated across 16 tables and 452 automated tests.\n` +
       `4. **Systems Engineering Transition:** Combined with his earlier foundation at the 42KL Piscine (pure C low-level systems programming), KADA solidified Hafizi's ability to seamlessly bridge low-level computational logic with modern, production-grade cloud web architectures.`,
-    recap: `During the Korea-ASEAN Digital Academy fellowship with Garranto Academy, Hafizi mastered AI-assisted full-stack development across React 19, TypeScript, PostgreSQL, and Redis, culminating in his URUS capstone.`,
+    recap: `During the Korea-ASEAN Digital Academy fellowship with Garranto Academy, Hafizi mastered AI-enabled full-stack development across React 19, TypeScript, PostgreSQL, and Redis, culminating in his URUS capstone.`,
     relatedIds: ['urus_overview', 'react19', 'prompt_ai', 'backend_layers'],
     suggestPrompt: 'know more about his KADA Fellowship in AI-enabled full-stack development',
   },
@@ -151,10 +151,10 @@ export const TOPICS: InternalTopic[] = [
       `Rather than building a basic CRUD prototype, Hafizi engineered URUS to solve high-stakes operational bottlenecks across 16 database tables:\n\n` +
       `1. **Atomic Order-Claiming (Zero Race Conditions):** Implemented PostgreSQL \`FOR UPDATE SKIP LOCKED\` row-level locking to completely eliminate double-picking conflicts between simultaneous warehouse operators on the dispatch floor.\n` +
       `2. **4-Stage Outbound State Machine:** Enforces a strict lifecycle (\`PENDING\` → \`READY_TO_PICK\` → \`PICKING\` → \`PACKING\` → \`FULFILLED\`) backed by real-time barcode scanning for SKU verification and atomic inventory deductions.\n` +
-      `3. **Deterministic KPI & Workforce Engine:** Computes transparent productivity rankings using a weighted formula: **40% Output, 30% Accuracy, 20% Efficiency, and 10% Attendance**.\n` +
+      `3. **Automated Inventory Deduction & Event Streams:** Emits verified operational events upon order completion, triggering automatic atomic inventory deductions and maintaining real-time audit trails across fulfillment stages.\n` +
       `4. **Automated Verification:** Verified across **16 live database tables** and **452 automated tests** across API, web, and client packages.`,
     recap: `URUS is Hafizi's 16-table SME warehouse fulfillment platform featuring PostgreSQL FOR UPDATE SKIP LOCKED row locking to eliminate operator race conditions, validated by 452 automated tests.`,
-    relatedIds: ['urus_barcode', 'urus_kpi', 'postgres', 'backend_layers'],
+    relatedIds: ['urus_barcode', 'postgres', 'backend_layers', 'react19'],
     suggestPrompt: 'explore his URUS concurrency architecture and row-locking model',
   },
   {
@@ -166,20 +166,8 @@ export const TOPICS: InternalTopic[] = [
       `2. **Debounced SKU Validation:** Implemented strict input debouncing and audio-visual feedback loops so rapid multi-item scanning prevents accidental duplicate reads.\n` +
       `3. **Optimistic Inventory Deduction:** Once a valid barcode match is confirmed, the system verifies stock against the 4-stage outbound state machine and issues atomic inventory deduction events to the database.`,
     recap: `In URUS, Hafizi engineered a browser camera barcode scanner that decodes physical 1D/2D SKU streams in real time via canvas buffers with debounced validation and atomic inventory deduction.`,
-    relatedIds: ['urus_overview', 'urus_kpi', 'react19', 'postgres'],
+    relatedIds: ['urus_overview', 'react19', 'postgres', 'backend_layers'],
     suggestPrompt: 'see how the URUS camera barcode pipeline decodes SKUs in real time',
-  },
-  {
-    id: 'urus_kpi',
-    keywords: ['kpi', 'profit leak', 'auditing agent', 'workforce attendance', 'margin', 'below_cost'],
-    title: 'URUS — Deterministic KPI & Profit-Leak Auditing Engine',
-    body: `Within URUS, Hafizi implemented deterministic operational auditing and workforce productivity evaluation:\n\n` +
-      `1. **Mathematical KPI Formula:** Eliminates subjective evaluation by computing employee productivity through a transparent, weighted formula: **40% Output, 30% Accuracy, 20% Efficiency, and 10% Attendance**.\n` +
-      `2. **Profit-Leak Detection Agent:** Built an automated auditing agent that compares realized sale margins against product unit costs, flagging anomalies into \`BELOW_COST\`, \`BELOW_FLOOR\`, and \`DISCOUNT_EROSION\` categories.\n` +
-      `3. **Non-Authoritative AI Boundaries:** Assistive AI surfaces (OCR, Copilot) are strictly advisory and cannot mutate inventory or financial records without human verification.`,
-    recap: `In URUS, Hafizi implemented a deterministic workforce productivity formula (40% Output, 30% Accuracy, 20% Efficiency, 10% Attendance) and an automated profit-leak auditing agent.`,
-    relatedIds: ['urus_overview', 'urus_barcode', 'prompt_ai', 'postgres'],
-    suggestPrompt: 'explore how URUS computes deterministic workforce KPIs and audits profit leaks',
   },
 
   // ==========================================
@@ -317,7 +305,7 @@ export const TOPICS: InternalTopic[] = [
     id: 'prompt_ai',
     keywords: ['prompt', 'antigravity', 'agent', 'vibe coding', 'sdlc', 'ai workflow', 'prompt engineering'],
     title: 'AI Prompt Engineering & Antigravity Workflows',
-    body: `Hafizi practices **Responsible AI-Assisted Development** rather than unvetted "Vibe Coding":\n\n` +
+    body: `Hafizi practices **Responsible AI-Enabled Development** rather than unvetted "Vibe Coding":\n\n` +
       `In his workflow, human judgment steers architecture, data modeling, and security, while autonomous AI agents accelerate implementation under rigorous code review:\n\n` +
       `1. **The 5-Ingredient Prompt Specification:** Engineers prompts using the 5 essential pillars: **Role/Persona**, **Context**, **Task**, **Constraints** (libraries allowed/forbidden, naming conventions), and **Output Format**.\n` +
       `2. **Antigravity Autonomous Workflows:** Directs autonomous coding agent hierarchies in Google Antigravity, designing deterministic evaluation harnesses, and verifying code correctness through automated test suites.\n` +
@@ -351,7 +339,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Hybrid Edge Architecture:** I run on a two-tier hybrid engine—powered by a sub-second deterministic knowledge base for verified CV records, backed by Google Gemini 3.8 Flash for open-ended synthesis.\n` +
       `2. **Non-Authoritative & Grounded Design:** Built under strict closed-world grounding rules so I never hallucinate experience or expose private contact credentials without authorization.\n` +
       `3. **The Inspiration Behind the Name:** Named after *Toph Beifong* from Avatar—grounded, sharp, resilient, and sensing foundational structural truths directly through the code.`,
-    recap: `Toph is Hafizi's custom AI CV Copilot, powered by a deterministic 26-topic internal engine for sub-second answers with Gemini 3.8 Flash as an open-ended concierge fallback.`,
+    recap: `Toph is Hafizi's custom AI CV Copilot, powered by a deterministic internal knowledge engine for sub-second answers with Gemini 3.8 Flash as an open-ended concierge fallback.`,
     relatedIds: ['portfolio_architecture', 'capabilities', 'why_hire', 'prompt_ai'],
     suggestPrompt: 'learn more about how Toph herself was architected as an AI copilot',
   },
@@ -373,7 +361,7 @@ export const TOPICS: InternalTopic[] = [
     keywords: ['can he build', 'able to build', 'capabilities', 'what can hafizi build', 'capable of building', 'what can he build', 'what systems can he build', 'what production platforms can hafizi build', 'what platforms can hafizi build', 'production platforms can hafizi build', 'lms', 'workforce portal', 'landing page', 'saas', 'internal tools', 'build for our company'],
     title: 'Production Capabilities — What Systems Hafizi Can Build',
     body: `With his modern full-stack toolkit and systems discipline, Hafizi can architect and ship production software across several major enterprise domains:\n\n` +
-      `1. **Enterprise SME & Workforce Portals:** Platforms like URUS featuring high-concurrency order dispatch queues, row-level database locking (\`FOR UPDATE SKIP LOCKED\`), camera barcode scanning, and transparent KPI ranking algorithms.\n` +
+      `1. **Enterprise SME & Warehouse Portals:** Platforms like URUS featuring high-concurrency order dispatch queues, row-level database locking (\`FOR UPDATE SKIP LOCKED\`), camera barcode scanning, and multi-stage outbound fulfillment workflows.\n` +
       `2. **Learning Management Systems (LMS) & Training Portals:** Structured course pipelines, real-time progress ledgers, automated e-certification generation (building on his Google Apps Script certification automation), and quiz evaluation engines.\n` +
       `3. **High-Performance SaaS & Corporate Web Applications:** Full-stack React 19 web apps backed by headless CMS architectures, multi-tenant databases, strict Zod input validation, and role-based access control (RBAC).\n` +
       `4. **AI-Enabled Operational Pipelines:** Embedding assistive AI copilots, OCR document ingestion, and autonomous agent workflows into legacy business operations with non-authoritative security boundaries.`,
@@ -387,9 +375,9 @@ export const TOPICS: InternalTopic[] = [
     title: 'Professional Contact Channels & Availability',
     body: `Hafizi is based in **Selangor / Kuala Lumpur, Malaysia**, and is available for full-time on-site, hybrid, or remote full-stack engineering roles:\n\n` +
       `1. **Direct Recruiter Contact:** You can reach him directly via the **Recruiter Contact Queue** on this website. Inquiries are stored securely in PostgreSQL and sent straight to his notification stream.\n` +
-      `2. **Professional Profiles:** Connect with him on **[LinkedIn](https://www.linkedin.com/in/ahmad-hafizi-ahmar)** or explore his active code repositories on **[GitHub](https://github.com/hafiziahmar)**.\n` +
+      `2. **Professional Profiles:** Connect with him on [LinkedIn](https://www.linkedin.com/in/ahmad-hafizi-ahmar) or explore his active code repositories on [GitHub](https://github.com/hafiziahmar).\n` +
       `3. **Privacy Standard:** To protect against automated web scrapers and marketing spam, direct telephone numbers and personal emails are provided upon initial recruiter contact.`,
-    recap: `Hafizi is based in Selangor/KL, Malaysia, and available for full-stack engineering roles. You can contact him via the Recruiter Contact Queue on this website or on [LinkedIn](https://www.linkedin.com/in/ahmad-hafizi-ahmar).`,
+    recap: `Hafizi is based in Selangor/KL, Malaysia, and available for full-stack engineering roles. You can contact him via the Recruiter Contact Queue on this website or on [LinkedIn](https://www.linkedin.com/in/ahmad-hafizi-ahmar) and [GitHub](https://github.com/hafiziahmar).`,
     relatedIds: ['kada', 'urus_overview', 'capabilities', 'nvc'],
     suggestPrompt: 'see his professional contact channels and work availability',
   },
@@ -584,7 +572,7 @@ export class CopilotService {
       }
     }
 
-    // 5. If all 26 topics in the portfolio have already been visited
+    // 5. If all topics in the portfolio have already been explored
     const linkedin = portfolio.profile?.linkedin_url || 'https://www.linkedin.com/in/ahmad-hafizi-ahmar';
     return `\n\nYou have explored all key pillars of Hafizi's engineering profile! Feel free to ask any custom question or connect with him directly via the contact form or [LinkedIn](${linkedin}).`;
   }

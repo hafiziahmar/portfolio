@@ -15,7 +15,9 @@ interface ChatEntry {
 const renderFormattedMessage = (text: string) => {
   const lines = text.split('\n');
   return lines.map((line, lineIdx) => {
-    const renderInline = (str: string) => {
+    const renderInline = (rawStr: string) => {
+      // Normalize any markdown links wrapped in bold like **[Label](url)** -> [Label](url)
+      const str = rawStr.replace(/\*\*(\[.*?\]\(.*?\))\*\*/g, '$1');
       // Matches links [text](url), bold **text**, code `code`, and single asterisk/underscore *emphasis* or _emphasis_
       const parts = str.split(/(\[.*?\]\(.*?\)|\*\*.*?\*\*|`.*?`|\*[^*\n]+?\*|_[^_\n]+?_)/g);
       return parts.map((part, pIdx) => {
@@ -30,9 +32,12 @@ const renderFormattedMessage = (text: string) => {
               href={linkMatch[2]}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sand-moss underline font-semibold hover:text-sand-moss-hover inline-flex items-center"
+              className="inline-flex items-center gap-1 text-sand-moss hover:text-sand-amber font-semibold underline underline-offset-2 transition-colors cursor-pointer"
             >
-              {linkMatch[1]}
+              <span>{linkMatch[1]}</span>
+              <svg className="w-3 h-3 shrink-0 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
             </a>
           );
         }
