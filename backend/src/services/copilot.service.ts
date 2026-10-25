@@ -370,7 +370,7 @@ export const TOPICS: InternalTopic[] = [
   },
   {
     id: 'capabilities',
-    keywords: ['can he build', 'able to build', 'capabilities', 'what can hafizi build', 'lms', 'workforce portal', 'landing page', 'saas', 'internal tools', 'build for our company'],
+    keywords: ['can he build', 'able to build', 'capabilities', 'what can hafizi build', 'capable of building', 'what can he build', 'what systems can he build', 'lms', 'workforce portal', 'landing page', 'saas', 'internal tools', 'build for our company'],
     title: 'Production Capabilities — What Systems Hafizi Can Build',
     body: `With his modern full-stack toolkit and systems discipline, Hafizi can architect and ship production software across several major enterprise domains:\n\n` +
       `1. **Enterprise SME & Workforce Portals:** Platforms like URUS featuring high-concurrency order dispatch queues, row-level database locking (\`FOR UPDATE SKIP LOCKED\`), camera barcode scanning, and transparent KPI ranking algorithms.\n` +
@@ -380,6 +380,27 @@ export const TOPICS: InternalTopic[] = [
     recap: `Hafizi is capable of engineering enterprise SME portals, automated LMS platforms with e-certification pipelines, high-performance SaaS applications, and AI-enabled operational workflows.`,
     relatedIds: ['urus_overview', 'backend_layers', 'portfolio_architecture', 'why_hire'],
     suggestPrompt: 'know what other production platforms Hafizi is capable of building',
+  },
+  {
+    id: 'contact_channels',
+    keywords: ['contact', 'email', 'phone', 'reach', 'hire him', 'whatsapp', 'call', 'location', 'where is he based', 'relocation', 'remote', 'hire hafizi'],
+    title: 'Professional Contact Channels & Availability',
+    body: `Hafizi is based in **Selangor / Kuala Lumpur, Malaysia**, and is available for full-time on-site, hybrid, or remote full-stack engineering roles:\n\n` +
+      `1. **Direct Recruiter Contact:** You can reach him directly via the **Recruiter Contact Queue** on this website. Inquiries are stored securely in PostgreSQL and sent straight to his notification stream.\n` +
+      `2. **Professional Profiles:** Connect with him on **[LinkedIn](https://www.linkedin.com/in/ahmad-hafizi-ahmar)** or explore his active code repositories on **[GitHub](https://github.com/hafiziahmar)**.\n` +
+      `3. **Privacy Standard:** To protect against automated web scrapers and marketing spam, direct telephone numbers and personal emails are provided upon initial recruiter contact.`,
+    recap: `Hafizi is based in Selangor/KL, Malaysia, and available for full-stack engineering roles. You can contact him via the Recruiter Contact Queue on this website or on [LinkedIn](https://www.linkedin.com/in/ahmad-hafizi-ahmar).`,
+    relatedIds: ['kada', 'urus_overview', 'capabilities', 'nvc'],
+    suggestPrompt: 'see his professional contact channels and work availability',
+  },
+  {
+    id: 'personal_boundary',
+    keywords: ['single', 'married', 'wife', 'girlfriend', 'born', 'birthplace', 'religion', 'race', 'age', 'live', 'address', 'personal life', 'dating'],
+    title: 'Professional Engineering Scope & Privacy Boundary',
+    body: `I am programmed strictly to assist with Hafizi's software engineering capabilities, technical architecture, and professional background. Personal matters are outside my scope.`,
+    recap: `I focus exclusively on Hafizi's software engineering capabilities, technical architecture, and professional background. Personal matters are outside my scope.`,
+    relatedIds: ['kada', 'urus_overview', 'capabilities', 'nvc'],
+    suggestPrompt: 'explore his professional engineering scope and boundaries',
   },
 ];
 
@@ -444,26 +465,45 @@ export class CopilotService {
   }
 
   private matchPrebuiltTopic(q: string, portfolio: any, history: ChatMessage[] = []): string | null {
-    // Find matching topic based on keyword triggers
-    const matched = TOPICS.find((topic) =>
-      topic.keywords.some((k) => q.includes(k))
-    );
+    // Find matching topic with priority given to longest matching keyword (with word-boundary protection)
+    let bestMatched: InternalTopic | null = null;
+    let maxKeywordLength = 0;
 
-    if (!matched) {
+    for (const topic of TOPICS) {
+      for (const k of topic.keywords) {
+        if (this.matchesKeyword(q, k)) {
+          if (k.length > maxKeywordLength) {
+            maxKeywordLength = k.length;
+            bestMatched = topic;
+          }
+        }
+      }
+    }
+
+    if (!bestMatched) {
       return null;
     }
 
     const visitedTopicIds = this.getVisitedTopicIds(history);
-    const isRevisit = visitedTopicIds.has(matched.id);
+    const isRevisit = visitedTopicIds.has(bestMatched.id);
 
     // If already visited in this session, deliver the Smart Concise Recap (Approach 1)
     const content = isRevisit
-      ? `As we covered earlier, ${matched.recap}`
-      : matched.body;
+      ? `As we covered earlier, ${bestMatched.recap}`
+      : bestMatched.body;
 
     // Append dynamic, statefully pruned follow-up suggestion
-    const followUp = this.buildFollowUpPrompt(matched, history, portfolio);
+    const followUp = this.buildFollowUpPrompt(bestMatched, history, portfolio);
     return `${content}${followUp}`;
+  }
+
+  private matchesKeyword(text: string, keyword: string): boolean {
+    if (keyword.includes(' ')) {
+      return text.includes(keyword);
+    }
+    const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+    return regex.test(text);
   }
 
   private getVisitedTopicIds(history: ChatMessage[]): Set<string> {
@@ -578,7 +618,7 @@ Part 3: Closing Bridge Question (An engaging closing sentence steering the user 
 - Strict Organization Naming: When referring to NVC, strictly and exclusively refer to it as "NVC Group" (never say "NVC Group Australia" or append "Australia" to its organization name).
 - Closed-World Grounding: You must only answer questions based strictly on Hafizi's verified CV context. Never invent, fabricate, or extrapolate skills, companies, or credentials not explicitly present in his profile. If a user asks about technologies Hafizi has not worked with, state clearly that he specializes in his core stack (React 19, TypeScript, Node.js, PostgreSQL, Redis, Docker) and invite them to explore his verified work.
 - Typography: Never output raw markdown headings (### or ##). Always use standard Markdown bold with double asterisks (**bold**). Never use single asterisks for bolding. Use backticks for code and technical identifiers.
-- Privacy: Do not disclose raw personal phone numbers or private email addresses. Direct recruiters to the portfolio contact form or LinkedIn.
+- Privacy & Professional Boundaries: Do not discuss off-topic personal matters (such as dating, relationship status, or private personal arrangements). State succinctly: "I am programmed strictly to assist with Hafizi's software engineering capabilities, technical architecture, and professional background. Personal matters are outside my scope." For professional contact inquiries, direct recruiters to the portfolio contact form, LinkedIn, or GitHub. Do not disclose raw personal phone numbers or private email addresses.
 Provide a complete, articulate, and insightful answer directly without overthinking. Never leave thoughts cut off mid-sentence.`;
 
     try {

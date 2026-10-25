@@ -137,10 +137,10 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const quickPrompts = [
-    'How does URUS prevent race conditions?',
-    'Tell me about his clinical operations at NVC Group.',
-    'What are his Antigravity & Agentic AI skills?',
-    'What was his training at 42KL Piscine?',
+    'What was his training in the KADA AI Full-Stack Fellowship?',
+    'How does URUS prevent warehouse race conditions?',
+    'What production platforms is Hafizi capable of building?',
+    'Tell me about his automation & operations at NVC Group.',
   ];
 
   useEffect(() => {
