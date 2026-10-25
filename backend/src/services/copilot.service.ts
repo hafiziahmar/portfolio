@@ -328,7 +328,7 @@ export const TOPICS: InternalTopic[] = [
       `2. **Non-Authoritative & Grounded Design:** Built under strict closed-world grounding rules so I never hallucinate experience or expose private contact credentials without authorization.\n` +
       `3. **The Inspiration Behind the Name:** Named after *Toph Beifong* from Avatar—grounded, sharp, resilient, and sensing foundational structural truths directly through the code.`,
     relatedIds: ['portfolio_architecture', 'capabilities', 'why_hire', 'prompt_ai'],
-    suggestPrompt: 'explore the tech stack and architecture of this interactive portfolio site itself',
+    suggestPrompt: 'learn more about how Toph herself was architected as an AI copilot',
   },
   {
     id: 'portfolio_architecture',
@@ -340,7 +340,7 @@ export const TOPICS: InternalTopic[] = [
       `3. **Production Headless CMS:** Includes a secure, JWT-authenticated admin dashboard (\`/admin\`) allowing dynamic CRUD management over skills, experiences, and project records with instant database synchronization.\n` +
       `4. **Optimized Monorepo CI/CD:** Deployed via Netlify with custom build-credit suppression rules (\`netlify.toml\`) so frontend previews deploy in 20 seconds without burning serverless credits on backend commits.`,
     relatedIds: ['capabilities', 'react19', 'postgres', 'redis'],
-    suggestPrompt: 'know what other production platforms Hafizi is capable of building',
+    suggestPrompt: 'explore the tech stack and architecture of this interactive portfolio site itself',
   },
   {
     id: 'capabilities',
@@ -352,7 +352,7 @@ export const TOPICS: InternalTopic[] = [
       `3. **High-Performance SaaS & Corporate Web Applications:** Full-stack React 19 web apps backed by headless CMS architectures, multi-tenant databases, strict Zod input validation, and role-based access control (RBAC).\n` +
       `4. **AI-Enabled Operational Pipelines:** Embedding assistive AI copilots, OCR document ingestion, and autonomous agent workflows into legacy business operations with non-authoritative security boundaries.`,
     relatedIds: ['urus_overview', 'backend_layers', 'portfolio_architecture', 'why_hire'],
-    suggestPrompt: 'explore his URUS capstone architecture and concurrency model',
+    suggestPrompt: 'know what other production platforms Hafizi is capable of building',
   },
 ];
 
