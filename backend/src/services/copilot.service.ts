@@ -24,7 +24,7 @@ export const TOPICS: InternalTopic[] = [
   // ==========================================
   {
     id: 'why_hire',
-    keywords: ['why hire', 'why should', '30 second', 'pitch', 'stand out', 'hire', 'candidate'],
+    keywords: ['why hire', 'why should', '30 second', 'pitch', 'stand out', 'hire', 'candidate', 'tell me about hafizi', 'who is hafizi', 'who is hafizi ahmar', 'tell me about hafizi ahmar', 'about hafizi', 'introduce hafizi', 'introduction', 'bio'],
     title: 'Why You Should Interview Hafizi Ahmar',
     body: `Hafizi offers a rare combination of clinical precision, low-level computational grit, and modern production-grade full-stack execution:\n\n` +
       `1. **Rare Hybrid of Clinical Discipline & Systems Engineering:** Holds a Clinical Dietetics degree (UiTM) and operational healthcare experience at NVC Group, giving him exceptional analytical precision, high error-tolerance discipline, and strong communication skills.\n` +
