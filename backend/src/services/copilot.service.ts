@@ -30,7 +30,7 @@ export const TOPICS: InternalTopic[] = [
       `2. **Low-Level Systems Grounding:** Trained in pure C at the intense **42KL Piscine**, understanding memory management and algorithmic efficiency from the metal up.\n` +
       `3. **Modern Production Full-Stack Execution:** Mastered the full stack (React 19, TypeScript, Node.js, Express, PostgreSQL, Redis, Docker) through the Korea-ASEAN Digital Academy (KADA) and delivered **URUS**, a 16-table operations platform with 452 passing automated tests.\n` +
       `4. **AI-Enabled Engineering Leader:** Proficient in directing autonomous coding agents in Google Antigravity and applying structured prompt engineering to build enterprise software at 3x speed without compromising code quality.`,
-    relatedIds: ['urus_overview', 'react19', 'typescript', 'clinical', '42kl'],
+    relatedIds: ['urus_overview', 'react19', 'capabilities', 'portfolio_architecture', 'clinical'],
     suggestPrompt: 'a 30-second summary of why Hafizi would be an exceptional addition to your engineering team',
   },
   {
@@ -183,7 +183,7 @@ export const TOPICS: InternalTopic[] = [
       `3. **State Management with Zustand:** Eliminates prop-drilling without the heavy boilerplate or full-tree re-renders of React Context. Implements immutable store updates and selector-based subscriptions.\n` +
       `4. **Data-Driven UI States:** Every data-fetching screen explicitly implements all 4 UI states: **Loading** (with skeleton loaders, not just spinners), **Success** (populated data), **Empty** (clear zero-state messaging), and **Error** (resilient fallback with inline retry buttons).\n` +
       `5. **Type Safety (DTOs & Mappers):** Strict TypeScript boundary where raw API DTOs are validated with Type Guards and mapped into clean domain UI models before reaching components.`,
-    relatedIds: ['typescript', 'zod', 'backend_layers', 'urus_overview'],
+    relatedIds: ['typescript', 'portfolio_architecture', 'zod', 'backend_layers'],
     suggestPrompt: 'explore his React 19 concurrent transitions and Zustand store architecture',
   },
   {
@@ -300,7 +300,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **The 5-Ingredient Prompt Specification:** Engineers prompts using the 5 essential pillars: **Role/Persona**, **Context**, **Task**, **Constraints** (libraries allowed/forbidden, naming conventions), and **Output Format**.\n` +
       `2. **Antigravity Autonomous Workflows:** Directs autonomous coding agent hierarchies in Google Antigravity, designing deterministic evaluation harnesses, and verifying code correctness through automated test suites.\n` +
       `3. **Zero-Trust AI Boundaries:** Assistive AI models are never given direct authority to approve financial transactions or overwrite critical state without human or deterministic verification.`,
-    relatedIds: ['git', 'urus_overview', 'kada', 'nvc'],
+    relatedIds: ['git', 'toph', 'urus_overview', 'kada'],
     suggestPrompt: 'explore his 5-ingredient prompt framework and Antigravity AI workflows',
   },
   {
@@ -314,6 +314,46 @@ export const TOPICS: InternalTopic[] = [
     relatedIds: ['backend_layers', 'zod', 'postgres', 'security'],
     suggestPrompt: 'see his centralized error-handling and resilience architecture',
   },
+
+  // ==========================================
+  // PILLAR 5: COPILOT, PLATFORM & PRODUCTION CAPABILITIES
+  // ==========================================
+  {
+    id: 'toph',
+    keywords: ['toph', 'who are you', 'what are you', 'your name', 'about toph', 'copilot'],
+    title: 'About Toph — AI CV Copilot & Architecture',
+    body: `I am **Toph**, Hafizi Ahmar’s official AI CV Copilot and technical advocate.\n\n` +
+      `I was architected to give engineering leaders and recruiters direct, real-time insight into Hafizi’s system architecture, technical decisions, and background:\n\n` +
+      `1. **Hybrid Edge Architecture:** I run on a two-tier hybrid engine—powered by a sub-second deterministic knowledge base for verified CV records, backed by Google Gemini 3.8 Flash for open-ended synthesis.\n` +
+      `2. **Non-Authoritative & Grounded Design:** Built under strict closed-world grounding rules so I never hallucinate experience or expose private contact credentials without authorization.\n` +
+      `3. **The Inspiration Behind the Name:** Named after *Toph Beifong* from Avatar—grounded, sharp, resilient, and sensing foundational structural truths directly through the code.`,
+    relatedIds: ['portfolio_architecture', 'capabilities', 'why_hire', 'prompt_ai'],
+    suggestPrompt: 'explore the tech stack and architecture of this interactive portfolio site itself',
+  },
+  {
+    id: 'portfolio_architecture',
+    keywords: ['portfolio', 'this website', 'this site', 'tech stack of this site', 'how was this built', 'architecture of this site', 'headless cms'],
+    title: 'Interactive Portfolio & Headless CMS Architecture',
+    body: `This interactive portfolio is a production-grade full-stack web application designed and built by Hafizi from scratch:\n\n` +
+      `1. **Client-Side Architecture:** Built with modern **React 19**, **TypeScript (Strict Mode)**, **Tailwind CSS v4**, and **Vite**. Features custom Markdown rendering, reactive drawer state, and zero-layout-shift UI states.\n` +
+      `2. **Cloud Backend & Database:** Powered by a layered **Node.js + Express** REST API deployed on Render, connected to containerized **PostgreSQL on Supabase** (Singapore region) and accelerated by an in-memory **Redis** cache-aside layer.\n` +
+      `3. **Production Headless CMS:** Includes a secure, JWT-authenticated admin dashboard (\`/admin\`) allowing dynamic CRUD management over skills, experiences, and project records with instant database synchronization.\n` +
+      `4. **Optimized Monorepo CI/CD:** Deployed via Netlify with custom build-credit suppression rules (\`netlify.toml\`) so frontend previews deploy in 20 seconds without burning serverless credits on backend commits.`,
+    relatedIds: ['capabilities', 'react19', 'postgres', 'redis'],
+    suggestPrompt: 'know what other production platforms Hafizi is capable of building',
+  },
+  {
+    id: 'capabilities',
+    keywords: ['can he build', 'able to build', 'capabilities', 'what can hafizi build', 'lms', 'workforce portal', 'landing page', 'saas', 'internal tools', 'build for our company'],
+    title: 'Production Capabilities — What Systems Hafizi Can Build',
+    body: `With his modern full-stack toolkit and systems discipline, Hafizi can architect and ship production software across several major enterprise domains:\n\n` +
+      `1. **Enterprise SME & Workforce Portals:** Platforms like URUS featuring high-concurrency order dispatch queues, row-level database locking (\`FOR UPDATE SKIP LOCKED\`), camera barcode scanning, and transparent KPI ranking algorithms.\n` +
+      `2. **Learning Management Systems (LMS) & Training Portals:** Structured course pipelines, real-time progress ledgers, automated e-certification generation (building on his Google Apps Script certification automation), and quiz evaluation engines.\n` +
+      `3. **High-Performance SaaS & Corporate Web Applications:** Full-stack React 19 web apps backed by headless CMS architectures, multi-tenant databases, strict Zod input validation, and role-based access control (RBAC).\n` +
+      `4. **AI-Enabled Operational Pipelines:** Embedding assistive AI copilots, OCR document ingestion, and autonomous agent workflows into legacy business operations with non-authoritative security boundaries.`,
+    relatedIds: ['urus_overview', 'backend_layers', 'portfolio_architecture', 'why_hire'],
+    suggestPrompt: 'explore his URUS capstone architecture and concurrency model',
+  },
 ];
 
 export class CopilotService {
@@ -323,9 +363,30 @@ export class CopilotService {
     const portfolio = await portfolioService.getFullPortfolioData();
     const qLower = question.toLowerCase().trim();
 
-    // 1. Instant High-Intelligence Prebuilt Topics (Zero Latency, Unlimited Quota)
+    // 0. Context-Aware Affirmation Router (e.g. "sure", "yes", "ok", "tell me more", "go ahead")
+    const isAffirmative = /^(yes|sure|yeah|yep|ok|okay|yup|go ahead|tell me more|please|proceed|definitely|let's do it|of course|why not|yes please)[!.]*$/i.test(qLower);
+    if (isAffirmative && history.length > 0) {
+      const lastAssistantMsg = [...history].reverse().find((m) => m.role === 'assistant');
+      if (lastAssistantMsg) {
+        // Find which topic was suggested at the end of that message
+        const suggestedTopic = TOPICS.find((t) =>
+          lastAssistantMsg.content.includes(t.suggestPrompt)
+        );
+        if (suggestedTopic) {
+          // Natural simulated thinking delay (1000ms)
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          const followUp = this.buildFollowUpPrompt(suggestedTopic, history, portfolio);
+          this.lastDebugInfo = `Affirmation Router: Continued to ${suggestedTopic.id}`;
+          return `${suggestedTopic.body}${followUp}`;
+        }
+      }
+    }
+
+    // 1. Instant High-Intelligence Prebuilt Topics (with natural 1000ms thinking delay)
     const instantKnowledge = this.matchPrebuiltTopic(qLower, portfolio, history);
     if (instantKnowledge) {
+      // Natural simulated thinking delay (1000ms)
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       this.lastDebugInfo = 'Instant Engine: Verified Technical Knowledge Base';
       return instantKnowledge;
     }
