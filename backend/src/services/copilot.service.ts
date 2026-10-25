@@ -13,6 +13,7 @@ export interface InternalTopic {
   keywords: string[];
   title: string;
   body: string;
+  recap: string;
   relatedIds: string[];
   suggestPrompt: string;
 }
@@ -30,6 +31,7 @@ export const TOPICS: InternalTopic[] = [
       `2. **Low-Level Systems Grounding:** Trained in pure C at the intense **42KL Piscine**, understanding memory management and algorithmic efficiency from the metal up.\n` +
       `3. **Modern Production Full-Stack Execution:** Mastered the full stack (React 19, TypeScript, Node.js, Express, PostgreSQL, Redis, Docker) through the Korea-ASEAN Digital Academy (KADA) and delivered **URUS**, a 16-table operations platform with 452 passing automated tests.\n` +
       `4. **AI-Enabled Engineering Leader:** Proficient in directing autonomous coding agents in Google Antigravity and applying structured prompt engineering to build enterprise software at 3x speed without compromising code quality.`,
+    recap: `Hafizi combines clinical healthcare precision (zero tolerance for error), low-level computational grit (pure C at 42KL), and production full-stack execution (KADA & URUS with 452 automated tests).`,
     relatedIds: ['urus_overview', 'react19', 'capabilities', 'portfolio_architecture', 'clinical'],
     suggestPrompt: 'a 30-second summary of why Hafizi would be an exceptional addition to your engineering team',
   },
@@ -42,6 +44,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Clinical Precision & Zero-Tolerance for Error:** In clinical healthcare environments where biochemical calculations directly impact patient health, Hafizi cultivated a zero-tolerance approach to sloppy data handling—discipline he carries into database constraints, type guards, and defensive coding.\n` +
       `2. **Biochemical Data Analysis:** Trained to parse messy, multi-variable laboratory inputs into structured treatment plans, mirroring how software engineers normalize external API streams and database schemas.\n` +
       `3. **High-Empathy User Workflows:** Working with clinical patients honed exceptional active listening and diagnostic skills, enabling Hafizi to translate non-technical business pain points into elegant, resilient software architectures.`,
+    recap: `Hafizi's Clinical Dietetics degree from UiTM shapes his engineering discipline—cultivating zero-tolerance data integrity, structured biochemical/schema normalization, and diagnostic empathy for user workflows.`,
     relatedIds: ['nvc', 'takaful', 'puncak_niaga', 'postgres'],
     suggestPrompt: 'explore how his clinical dietetics background translates into zero-tolerance software discipline',
   },
@@ -53,6 +56,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Zero-Manual Data Entry Pipeline:** Engineered an automated event registration and database feedback pipeline utilizing Google Workspace and Google Apps Script, eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.\n` +
       `2. **International Healthcare Compliance:** Selected as a competitive Yayasan Peneraju International Scholar, mastering strict Australian aged-care compliance frameworks and adapting protocols to global operational standards.\n` +
       `3. **Early AI-Assisted Prototyping:** Leveraged structured prompt engineering with LLM assistants to accelerate script writing and prototype operational workflows, bridging healthcare processes with modern technical automation.`,
+    recap: `At NVC Group, Hafizi engineered a zero-manual registration and e-certification pipeline using Google Apps Script while operating under strict Australian healthcare compliance frameworks.`,
     relatedIds: ['clinical', 'puncak_niaga', 'prompt_ai', 'urus_overview'],
     suggestPrompt: 'learn about his Google Apps Script automation and operations at NVC Group',
   },
@@ -65,6 +69,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Defensive Domain Logic:** Financial calculations allow zero tolerance for rounding errors or unhandled edge cases. Hafizi treats software business rules with this same rigor—ensuring non-negative ledger constraints and atomic database updates.\n` +
       `2. **Enterprise CRM & Data Pipelines:** Utilized internal enterprise software and CRM systems to manage multi-tiered client data, giving him practical empathy for end-user data entry pain points and workflow bottlenecks.\n` +
       `3. **Regulatory & Compliance-First Mindset:** Accustomed to operating within audited financial frameworks—habits that directly inform his approach to database access controls (RBAC) and data protection.`,
+    recap: `At Prudential BSN Takaful, Hafizi managed client portfolios and financial risk assessments, instilling the mathematical rigor he applies to software ledgers and atomic transactions.`,
     relatedIds: ['puncak_niaga', 'clinical', 'security', 'postgres'],
     suggestPrompt: 'explore his experience with financial risk modeling at Prudential BSN Takaful',
   },
@@ -77,6 +82,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Cross-Functional Team Direction:** Led and supervised a multi-cultural team of 10+ operational workers on the ground, optimizing daily workflow sequences and resolving on-site blockers.\n` +
       `2. **Asset, Inventory & Procurement Management:** Formulated project budgets, negotiated supplier contracts, and managed physical asset tracking—hands-on experience that directly inspired the inventory and fulfillment workflows he later automated in his capstone platform, URUS.\n` +
       `3. **Executive Reporting & Delivery Velocity:** Reported directly to the Director on project milestones, budget burn, and delivery velocity, cultivating clear communication with non-technical stakeholders.`,
+    recap: `At Puncak Niaga, Hafizi led 10+ operational workers on commercial landscaping sites, managed procurement budgets, and reported delivery velocity directly to executive directors.`,
     relatedIds: ['urus_overview', 'takaful', 'mdec', 'git'],
     suggestPrompt: 'know about his project velocity and budget management at Puncak Niaga',
   },
@@ -89,6 +95,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Commercial Deployment from Scratch:** Co-engineered and constructed a commercial one-acre chili cultivation facility from the ground up, deploying physical piping, pressure regulators, and automated fertigation systems.\n` +
       `2. **Deterministic Delivery Systems:** Configured automated nutrient and water delivery schedules, translating environmental inputs into scheduled mechanical operations.\n` +
       `3. **Engineering Tenacity:** Demonstrates Hafizi's willingness to get his hands dirty, solve tangible logistical problems, and deploy physical systems that must run reliably in demanding environments.`,
+    recap: `Through MAFI MyFutureAgro, Hafizi constructed a commercial 1-acre automated fertigation system from scratch, deploying physical pressure piping and automated nutrient delivery schedules.`,
     relatedIds: ['puncak_niaga', 'nvc', 'mdec', 'urus_barcode'],
     suggestPrompt: 'hear about his automated smart farming and fertigation work with MAFI',
   },
@@ -101,6 +108,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Remote Work & Communication Discipline:** Trained in asynchronous team communication, digital workspace management, and independent sprint execution.\n` +
       `2. **Cross-Border Service Delivery:** Formulated structured outreach frameworks and clear client documentation standards for international stakeholder alignment.\n` +
       `3. **Autonomous Project Ownership:** Reinforced the ability to take ambiguous product requirements and translate them into well-defined, independently executed software deliverables.`,
+    recap: `Through MDEC GLOW PENJANA, Hafizi mastered asynchronous cross-border delivery, structured digital documentation, and independent sprint execution for international clients.`,
     relatedIds: ['puncak_niaga', 'git', 'prompt_ai', 'kada'],
     suggestPrompt: 'explore his remote project execution experience through MDEC GLOW',
   },
@@ -113,6 +121,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Low-Level Imperative Programming:** Programmed extensively in **pure C** with zero third-party libraries, mastering manual memory allocation (\`malloc\` / \`free\`), pointer arithmetic, data structures, and recursion.\n` +
       `2. **Teacherless, Peer-to-Peer Model:** Evaluated under grueling daily code defenses, automated machine grading (Norminette, Moulinette), and intense time constraints.\n` +
       `3. **Deep Computational Intuition:** This low-level training gives Hafizi an intuitive grasp of memory layout, runtime complexity, and computer architecture that developers who only learn high-level frameworks rarely possess.`,
+    recap: `At the 42KL Piscine, Hafizi completed intensive pure C systems programming with zero external libraries—mastering manual memory management (malloc/free), pointers, and runtime complexity.`,
     relatedIds: ['typescript', 'kada', 'postgres', 'backend_layers'],
     suggestPrompt: 'explore his pure C systems programming training at the 42KL Piscine',
   },
@@ -126,6 +135,7 @@ export const TOPICS: InternalTopic[] = [
       `2. **Responsible AI-Assisted Development:** Taught disciplined AI prompt engineering across the SDLC (Role, Context, Task, Constraints, Format) and strict code-review standards to prevent unvetted "vibe coding."\n` +
       `3. **The Flagship Capstone — URUS:** Under KADA, Hafizi architected the Outbound Fulfillment & Wave Dispatch Queue for URUS, implementing PostgreSQL \`FOR UPDATE SKIP LOCKED\` row-locking to eliminate double-picking race conditions across warehouse operators, validated across 16 tables and 452 automated tests.\n` +
       `4. **Systems Engineering Transition:** Combined with his earlier foundation at the 42KL Piscine (pure C low-level systems programming), KADA solidified Hafizi's ability to seamlessly bridge low-level computational logic with modern, production-grade cloud web architectures.`,
+    recap: `During the Korea-ASEAN Digital Academy fellowship with Garranto Academy, Hafizi mastered AI-assisted full-stack development across React 19, TypeScript, PostgreSQL, and Redis, culminating in his URUS capstone.`,
     relatedIds: ['urus_overview', 'react19', 'prompt_ai', 'backend_layers'],
     suggestPrompt: 'know more about his KADA Fellowship in AI-enabled full-stack development',
   },
@@ -143,6 +153,7 @@ export const TOPICS: InternalTopic[] = [
       `2. **4-Stage Outbound State Machine:** Enforces a strict lifecycle (\`PENDING\` → \`READY_TO_PICK\` → \`PICKING\` → \`PACKING\` → \`FULFILLED\`) backed by real-time barcode scanning for SKU verification and atomic inventory deductions.\n` +
       `3. **Deterministic KPI & Workforce Engine:** Computes transparent productivity rankings using a weighted formula: **40% Output, 30% Accuracy, 20% Efficiency, and 10% Attendance**.\n` +
       `4. **Automated Verification:** Verified across **16 live database tables** and **452 automated tests** across API, web, and client packages.`,
+    recap: `URUS is Hafizi's 16-table SME warehouse fulfillment platform featuring PostgreSQL FOR UPDATE SKIP LOCKED row locking to eliminate operator race conditions, validated by 452 automated tests.`,
     relatedIds: ['urus_barcode', 'urus_kpi', 'postgres', 'backend_layers'],
     suggestPrompt: 'explore his URUS concurrency architecture and row-locking model',
   },
@@ -154,6 +165,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Browser Camera Stream Decoding:** Integrated device camera feeds to decode physical 1D/2D SKU barcodes in real time using HTML5 canvas buffers, avoiding the need for expensive proprietary warehouse scanners.\n` +
       `2. **Debounced SKU Validation:** Implemented strict input debouncing and audio-visual feedback loops so rapid multi-item scanning prevents accidental duplicate reads.\n` +
       `3. **Optimistic Inventory Deduction:** Once a valid barcode match is confirmed, the system verifies stock against the 4-stage outbound state machine and issues atomic inventory deduction events to the database.`,
+    recap: `In URUS, Hafizi engineered a browser camera barcode scanner that decodes physical 1D/2D SKU streams in real time via canvas buffers with debounced validation and atomic inventory deduction.`,
     relatedIds: ['urus_overview', 'urus_kpi', 'react19', 'postgres'],
     suggestPrompt: 'see how the URUS camera barcode pipeline decodes SKUs in real time',
   },
@@ -165,6 +177,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Mathematical KPI Formula:** Eliminates subjective evaluation by computing employee productivity through a transparent, weighted formula: **40% Output, 30% Accuracy, 20% Efficiency, and 10% Attendance**.\n` +
       `2. **Profit-Leak Detection Agent:** Built an automated auditing agent that compares realized sale margins against product unit costs, flagging anomalies into \`BELOW_COST\`, \`BELOW_FLOOR\`, and \`DISCOUNT_EROSION\` categories.\n` +
       `3. **Non-Authoritative AI Boundaries:** Assistive AI surfaces (OCR, Copilot) are strictly advisory and cannot mutate inventory or financial records without human verification.`,
+    recap: `In URUS, Hafizi implemented a deterministic workforce productivity formula (40% Output, 30% Accuracy, 20% Efficiency, 10% Attendance) and an automated profit-leak auditing agent.`,
     relatedIds: ['urus_overview', 'urus_barcode', 'prompt_ai', 'postgres'],
     suggestPrompt: 'explore how URUS computes deterministic workforce KPIs and audits profit leaks',
   },
@@ -183,6 +196,7 @@ export const TOPICS: InternalTopic[] = [
       `3. **State Management with Zustand:** Eliminates prop-drilling without the heavy boilerplate or full-tree re-renders of React Context. Implements immutable store updates and selector-based subscriptions.\n` +
       `4. **Data-Driven UI States:** Every data-fetching screen explicitly implements all 4 UI states: **Loading** (with skeleton loaders, not just spinners), **Success** (populated data), **Empty** (clear zero-state messaging), and **Error** (resilient fallback with inline retry buttons).\n` +
       `5. **Type Safety (DTOs & Mappers):** Strict TypeScript boundary where raw API DTOs are validated with Type Guards and mapped into clean domain UI models before reaching components.`,
+    recap: `Hafizi builds modern React 19 applications using concurrent transitions, Zustand state management, strict DTO type guards, and resilient 4-state UI loading/error handling.`,
     relatedIds: ['typescript', 'portfolio_architecture', 'zod', 'backend_layers'],
     suggestPrompt: 'explore his React 19 concurrent transitions and Zustand store architecture',
   },
@@ -196,6 +210,7 @@ export const TOPICS: InternalTopic[] = [
       `2. **Defensive Domain Modeling:** Enforces business logic with discriminated unions, mapped types, and strict type guards. In order fulfillment and warehouse state machines, static types guarantee that items can never transition into invalid states.\n` +
       `3. **Confident Refactoring:** Backed by 452 automated unit and integration tests, TypeScript enables rapid architectural refactoring and dependency upgrades without regression anxiety.\n` +
       `4. **Low-Level Rigor Applied to High-Level Code:** Hafizi's intensive background in pure C systems programming at the 42KL Piscine gave him a deep respect for memory layout and deterministic execution—discipline he brings directly into modern TypeScript development.`,
+    recap: `Hafizi applies TypeScript for defensive domain modeling, discriminated unions, and strict boundary type guards to eliminate runtime state errors across frontend and API contracts.`,
     relatedIds: ['zod', 'react19', 'backend_layers', '42kl'],
     suggestPrompt: 'see how he applies TypeScript for defensive domain modeling and type safety',
   },
@@ -211,6 +226,7 @@ export const TOPICS: InternalTopic[] = [
       `3. **Services:** House 100% of pure business rules and domain logic (pricing validation, state machine transitions, bonus calculations). Services never touch raw SQL.\n` +
       `4. **Repositories:** The only layer permitted to interact with the database pool (\`pg.Pool\`), encapsulating all SQL queries using parameterized placeholders (\`$1, $2\`) to guarantee SQL injection immunity.\n` +
       `5. **Database & Cache:** PostgreSQL serves as the durable source of truth, accelerated by Redis cache-aside reads.`,
+    recap: `Hafizi structures backends with a strict 6-layer Domain-Driven Architecture (Route ➔ Middleware ➔ Controller ➔ Service ➔ Repository ➔ DB/Cache), guaranteeing complete SQL query isolation.`,
     relatedIds: ['postgres', 'redis', 'security', 'error_handling'],
     suggestPrompt: 'explore his 6-layer enterprise backend architecture',
   },
@@ -225,6 +241,7 @@ export const TOPICS: InternalTopic[] = [
       `3. **Connection Pooling with \`pg.Pool\`:** Reuses a managed pool of database connections to handle concurrent traffic without exhausting server socket limits.\n` +
       `4. **Parameterized Queries:** Always utilizes parameterized queries (\`$1, $2\`) to guarantee absolute protection against SQL Injection vulnerabilities.\n` +
       `5. **Docker & Supabase Ecosystem:** Skilled in spinning up containerized PostgreSQL instances via Docker Compose, running database migrations, seeding test datasets, and managing live schemas via DBeaver.`,
+    recap: `Hafizi uses PostgreSQL as an active data integrity boundary with CHECK constraints, foreign keys, pg.Pool connection pooling, and parameterized queries for SQL injection immunity.`,
     relatedIds: ['redis', 'backend_layers', 'urus_overview', 'security'],
     suggestPrompt: 'know how he structures PostgreSQL connection pooling and database integrity constraints',
   },
@@ -236,6 +253,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Cache-Aside Pattern:** On read requests, the service checks Redis first (\`products:all\`). On a cache hit, data is served in sub-milliseconds without touching PostgreSQL. On a cache miss, data is queried from PostgreSQL and cached with a Time-To-Live (TTL).\n` +
       `2. **Mandatory Invalidation on Write:** *"A cache without invalidation is a bug waiting for its first UPDATE."* Every mutation (POST, PUT, DELETE) immediately deletes the relevant Redis cache key (\`redisClient.del\`), forcing the next read to fetch fresh authoritative data.\n` +
       `3. **Source of Truth Discipline:** PostgreSQL is the permanent durable source of truth; Redis is treated as a disposable, rebuildable speed layer. If Redis ever restarts, the application continues to function seamlessly.`,
+    recap: `Hafizi implements Redis cache-aside reads accelerated by mandatory cache invalidation on write mutations, treating Redis as a high-speed disposable cache.`,
     relatedIds: ['postgres', 'backend_layers', 'urus_overview', 'error_handling'],
     suggestPrompt: 'see how he implements Redis cache invalidation on write',
   },
@@ -251,6 +269,7 @@ export const TOPICS: InternalTopic[] = [
       `   - **403 Forbidden:** *"I know who you are, but you are not allowed to perform this action."* (Role check failed).\n` +
       `4. **Role-Based Access Control (RBAC):** Implemented multi-tier role guards (WORKER, HR, FINANCE, MANAGER, ADMIN) ensuring sensitive domains (payroll, financial records) are strictly siloed from operational workers.\n` +
       `5. **HTTP Hardening:** Layered with CORS domain allowlisting, Helmet security headers, Zod runtime validation, and API rate limiting.`,
+    recap: `Hafizi hardens backends with bcrypt 10-salt password hashing, stateless JWT authorization with 24h expiry, Helmet HTTP headers, CORS allowlisting, and strict RBAC.`,
     relatedIds: ['backend_layers', 'zod', 'postgres', 'takaful'],
     suggestPrompt: 'explore his RBAC authorization and stateless JWT security architecture',
   },
@@ -266,6 +285,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Fail-Fast Request Parsing:** All controller endpoints validate incoming \`req.body\`, \`req.params\`, and \`req.query\` against strict Zod schemas before touching service layers. Invalid payloads immediately return structured \`400 Bad Request\` errors.\n` +
       `2. **Inferred TypeScript Types:** Derives TypeScript interfaces directly from Zod schemas (\`z.infer<typeof Schema>\`), eliminating schema drift between validation logic and type declarations.\n` +
       `3. **Defensive Frontend Forms:** Pairs Zod schemas with React forms to provide instant, accessible client-side feedback while ensuring identical validation rules run on the server.`,
+    recap: `Hafizi applies Zod schemas at controller entry points to validate and sanitize incoming payloads before business services run, paired with TypeScript Type Guards.`,
     relatedIds: ['typescript', 'react19', 'backend_layers', 'error_handling'],
     suggestPrompt: 'see how he enforces runtime type safety using Zod schema validation',
   },
@@ -277,6 +297,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Postman Automated Testing:** Builds structured Postman collections with automated pre-request scripts and response assertions to test status codes (200, 201, 400, 401, 403, 404), schema payloads, and authentication headers.\n` +
       `2. **OpenAPI 3.0 / Swagger Documentation:** Authors standardized API specifications so that frontend engineers and AI coding assistants have unambiguous, interactive documentation for every route.\n` +
       `3. **Defensive Endpoint Verification:** Verifies edge cases—such as malformed JSON, SQL injection vectors, and unauthorized token manipulation—before any endpoint is considered ready for production.`,
+    recap: `Hafizi tests APIs using Postman test scripts verifying status codes, JSON response schemas, and latency benchmarks, backed by Swagger/OpenAPI documentation.`,
     relatedIds: ['backend_layers', 'zod', 'git', 'error_handling'],
     suggestPrompt: 'explore his contract-first API testing with Postman and Swagger',
   },
@@ -288,6 +309,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Feature Branching & Atomic Commits:** Follows structured feature branching (\`feature/\`, \`fix/\`, \`refactor/\`) paired with Conventional Commits to ensure clear, bisectable git histories.\n` +
       `2. **Conflict Resolution & Rebase Hygiene:** Proficient in resolving complex merge conflicts, interactive rebasing, and keeping feature branches synchronized with \`main\` without generating messy merge bubbles.\n` +
       `3. **Pull Requests & Code Defense:** Approaches PRs with clear architectural summaries, testing evidence, and defensive reviews—cultivated through his 42KL peer-defense training and KADA team agile sprints.`,
+    recap: `Hafizi adheres to production Git discipline with Conventional Commits, atomic PR branching, and squash-merging to keep repository histories clean and bisectable.`,
     relatedIds: ['prompt_ai', 'postman', 'backend_layers', 'why_hire'],
     suggestPrompt: 'know about his Git branching hygiene and code review defense practices',
   },
@@ -300,6 +322,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **The 5-Ingredient Prompt Specification:** Engineers prompts using the 5 essential pillars: **Role/Persona**, **Context**, **Task**, **Constraints** (libraries allowed/forbidden, naming conventions), and **Output Format**.\n` +
       `2. **Antigravity Autonomous Workflows:** Directs autonomous coding agent hierarchies in Google Antigravity, designing deterministic evaluation harnesses, and verifying code correctness through automated test suites.\n` +
       `3. **Zero-Trust AI Boundaries:** Assistive AI models are never given direct authority to approve financial transactions or overwrite critical state without human or deterministic verification.`,
+    recap: `Hafizi directs AI tools using structured RCTCF prompts, treating AI outputs as advisory prototypes that require rigorous line-by-line verification and architectural ownership.`,
     relatedIds: ['git', 'toph', 'urus_overview', 'kada'],
     suggestPrompt: 'explore his 5-ingredient prompt framework and Antigravity AI workflows',
   },
@@ -311,6 +334,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Centralized Error Middleware:** Express routes never return raw runtime exceptions or leaked database stack traces. A centralized error-handling middleware catches all rejected promises and formats them into a standardized JSON envelope (\`{ success: false, error: { message, code } }\`).\n` +
       `2. **Custom Typed Application Errors:** Uses custom error classes (\`AppError\`, \`NotFoundError\`, \`UnauthorizedError\`, \`ConflictError\`) with pre-mapped HTTP status codes (400, 401, 403, 404, 409, 500).\n` +
       `3. **Graceful Fallbacks:** External service failures (such as Redis connection drops or AI API timeouts) degrade gracefully—falling back to database reads or cached responses rather than taking down the server.`,
+    recap: `Hafizi builds resilient backends with centralized ErrorHandler middleware, custom domain AppError classes, normalized JSON error envelopes, and Winston structured logging.`,
     relatedIds: ['backend_layers', 'zod', 'postgres', 'security'],
     suggestPrompt: 'see his centralized error-handling and resilience architecture',
   },
@@ -327,6 +351,7 @@ export const TOPICS: InternalTopic[] = [
       `1. **Hybrid Edge Architecture:** I run on a two-tier hybrid engine—powered by a sub-second deterministic knowledge base for verified CV records, backed by Google Gemini 3.8 Flash for open-ended synthesis.\n` +
       `2. **Non-Authoritative & Grounded Design:** Built under strict closed-world grounding rules so I never hallucinate experience or expose private contact credentials without authorization.\n` +
       `3. **The Inspiration Behind the Name:** Named after *Toph Beifong* from Avatar—grounded, sharp, resilient, and sensing foundational structural truths directly through the code.`,
+    recap: `Toph is Hafizi's custom AI CV Copilot, powered by a deterministic 26-topic internal engine for sub-second answers with Gemini 3.8 Flash as an open-ended concierge fallback.`,
     relatedIds: ['portfolio_architecture', 'capabilities', 'why_hire', 'prompt_ai'],
     suggestPrompt: 'learn more about how Toph herself was architected as an AI copilot',
   },
@@ -339,6 +364,7 @@ export const TOPICS: InternalTopic[] = [
       `2. **Cloud Backend & Database:** Powered by a layered **Node.js + Express** REST API deployed on Render, connected to containerized **PostgreSQL on Supabase** (Singapore region) and accelerated by an in-memory **Redis** cache-aside layer.\n` +
       `3. **Production Headless CMS:** Includes a secure, JWT-authenticated admin dashboard (\`/admin\`) allowing dynamic CRUD management over skills, experiences, and project records with instant database synchronization.\n` +
       `4. **Optimized Monorepo CI/CD:** Deployed via Netlify with custom build-credit suppression rules (\`netlify.toml\`) so frontend previews deploy in 20 seconds without burning serverless credits on backend commits.`,
+    recap: `This interactive portfolio is a production React 19 + TypeScript SPA on Netlify, backed by a Node.js/PostgreSQL/Redis API on Render and a headless CRUD admin CMS.`,
     relatedIds: ['capabilities', 'react19', 'postgres', 'redis'],
     suggestPrompt: 'explore the tech stack and architecture of this interactive portfolio site itself',
   },
@@ -351,6 +377,7 @@ export const TOPICS: InternalTopic[] = [
       `2. **Learning Management Systems (LMS) & Training Portals:** Structured course pipelines, real-time progress ledgers, automated e-certification generation (building on his Google Apps Script certification automation), and quiz evaluation engines.\n` +
       `3. **High-Performance SaaS & Corporate Web Applications:** Full-stack React 19 web apps backed by headless CMS architectures, multi-tenant databases, strict Zod input validation, and role-based access control (RBAC).\n` +
       `4. **AI-Enabled Operational Pipelines:** Embedding assistive AI copilots, OCR document ingestion, and autonomous agent workflows into legacy business operations with non-authoritative security boundaries.`,
+    recap: `Hafizi is capable of engineering enterprise SME portals, automated LMS platforms with e-certification pipelines, high-performance SaaS applications, and AI-enabled operational workflows.`,
     relatedIds: ['urus_overview', 'backend_layers', 'portfolio_architecture', 'why_hire'],
     suggestPrompt: 'know what other production platforms Hafizi is capable of building',
   },
@@ -375,9 +402,14 @@ export class CopilotService {
         if (suggestedTopic) {
           // Natural simulated thinking delay (1000ms)
           await new Promise((resolve) => setTimeout(resolve, 1000));
+          const visitedTopicIds = this.getVisitedTopicIds(history);
+          const isRevisit = visitedTopicIds.has(suggestedTopic.id);
+          const content = isRevisit
+            ? `As we touched on earlier, ${suggestedTopic.recap}`
+            : suggestedTopic.body;
           const followUp = this.buildFollowUpPrompt(suggestedTopic, history, portfolio);
           this.lastDebugInfo = `Affirmation Router: Continued to ${suggestedTopic.id}`;
-          return `${suggestedTopic.body}${followUp}`;
+          return `${content}${followUp}`;
         }
       }
     }
@@ -421,36 +453,87 @@ export class CopilotService {
       return null;
     }
 
+    const visitedTopicIds = this.getVisitedTopicIds(history);
+    const isRevisit = visitedTopicIds.has(matched.id);
+
+    // If already visited in this session, deliver the Smart Concise Recap (Approach 1)
+    const content = isRevisit
+      ? `As we covered earlier, ${matched.recap}`
+      : matched.body;
+
     // Append dynamic, statefully pruned follow-up suggestion
     const followUp = this.buildFollowUpPrompt(matched, history, portfolio);
-    return `${matched.body}${followUp}`;
+    return `${content}${followUp}`;
   }
 
-  private buildFollowUpPrompt(topic: InternalTopic, history: ChatMessage[], portfolio: any): string {
-    // Collect all topic IDs that have already been asked or answered in the conversation history
-    const askedTopicIds = new Set<string>();
-    askedTopicIds.add(topic.id); // Exclude the topic currently being answered
-
+  private getVisitedTopicIds(history: ChatMessage[]): Set<string> {
+    const visited = new Set<string>();
     for (const msg of history) {
-      const textLower = msg.content.toLowerCase();
-      for (const t of TOPICS) {
-        if (t.keywords.some((k) => textLower.includes(k))) {
-          askedTopicIds.add(t.id);
+      if (msg.role === 'assistant') {
+        for (const t of TOPICS) {
+          // Check if the assistant message contains this topic's body snippet or recap snippet
+          if (
+            msg.content.includes(t.body.slice(0, 40)) ||
+            (t.recap && msg.content.includes(t.recap.slice(0, 30)))
+          ) {
+            visited.add(t.id);
+          }
         }
       }
     }
+    return visited;
+  }
 
-    // Select candidate from related IDs first that hasn't been asked yet
-    const unaskedRelated = topic.relatedIds.filter((id) => !askedTopicIds.has(id));
+  private getSuggestedTopicIds(history: ChatMessage[]): Set<string> {
+    const suggested = new Set<string>();
+    for (const msg of history) {
+      if (msg.role === 'assistant') {
+        for (const t of TOPICS) {
+          if (msg.content.includes(t.suggestPrompt)) {
+            suggested.add(t.id);
+          }
+        }
+      }
+    }
+    return suggested;
+  }
+
+  private buildFollowUpPrompt(topic: InternalTopic, history: ChatMessage[], portfolio: any): string {
+    const visitedTopicIds = this.getVisitedTopicIds(history);
+    visitedTopicIds.add(topic.id); // Exclude the topic currently being answered
+
+    const suggestedTopicIds = this.getSuggestedTopicIds(history);
+
+    // 1. Pick an unvisited, unsuggested candidate from related IDs
+    const unvisitedUnsuggestedRelated = topic.relatedIds.filter(
+      (id) => !visitedTopicIds.has(id) && !suggestedTopicIds.has(id)
+    );
+
     let chosenId: string | null = null;
 
-    if (unaskedRelated.length > 0) {
-      chosenId = unaskedRelated[0];
+    if (unvisitedUnsuggestedRelated.length > 0) {
+      chosenId = unvisitedUnsuggestedRelated[0];
     } else {
-      // If all related topics were already asked, pick the first unasked topic from the master catalog
-      const anyUnasked = TOPICS.map((t) => t.id).filter((id) => !askedTopicIds.has(id));
-      if (anyUnasked.length > 0) {
-        chosenId = anyUnasked[0];
+      // 2. Fall back to any related topic that hasn't been visited in this conversation
+      const unvisitedRelated = topic.relatedIds.filter((id) => !visitedTopicIds.has(id));
+      if (unvisitedRelated.length > 0) {
+        chosenId = unvisitedRelated[0];
+      } else {
+        // 3. Fall back to any topic in master catalog that hasn't been visited or suggested
+        const unvisitedUnsuggestedCatalog = TOPICS.map((t) => t.id).filter(
+          (id) => !visitedTopicIds.has(id) && !suggestedTopicIds.has(id)
+        );
+        if (unvisitedUnsuggestedCatalog.length > 0) {
+          chosenId = unvisitedUnsuggestedCatalog[0];
+        } else {
+          // 4. Fall back to any unvisited topic in master catalog
+          const unvisitedCatalog = TOPICS.map((t) => t.id).filter(
+            (id) => !visitedTopicIds.has(id)
+          );
+          if (unvisitedCatalog.length > 0) {
+            chosenId = unvisitedCatalog[0];
+          }
+        }
       }
     }
 
@@ -461,7 +544,7 @@ export class CopilotService {
       }
     }
 
-    // If all 23 topics in the portfolio have already been explored
+    // 5. If all 26 topics in the portfolio have already been visited
     const linkedin = portfolio.profile?.linkedin_url || 'https://www.linkedin.com/in/ahmad-hafizi-ahmar';
     return `\n\nYou have explored all key pillars of Hafizi's engineering profile! Feel free to ask any custom question or connect with him directly via the contact form or [LinkedIn](${linkedin}).`;
   }
