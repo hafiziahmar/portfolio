@@ -50,7 +50,7 @@ export const TOPICS: InternalTopic[] = [
   },
   {
     id: 'nvc',
-    keywords: ['nvc', 'nvc group', 'apps script', 'aged care', 'registration system', 'compliance'],
+    keywords: ['nvc', 'nvc group', 'apps script', 'aged care', 'registration system', 'compliance', 'latest work experience', 'latest work', 'latest experience', 'latest job'],
     title: 'NVC Group — Operations & Google Apps Script Automation',
     body: `At NVC Group, Hafizi operated under strict international healthcare compliance frameworks while spearheading operational automation initiatives:\n\n` +
       `1. **Zero-Manual Data Entry Pipeline:** Engineered an automated event registration and database feedback pipeline utilizing Google Workspace and Google Apps Script, eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.\n` +
@@ -127,7 +127,7 @@ export const TOPICS: InternalTopic[] = [
   },
   {
     id: 'kada',
-    keywords: ['kada', 'garranto', 'fellowship', 'talent accelerator', 'korea-asean', 'korea asean'],
+    keywords: ['kada', 'garranto', 'fellowship', 'talent accelerator', 'korea-asean', 'korea asean', 'project kada', 'training in the project kada', 'training in project kada'],
     title: 'Korea-ASEAN Digital Academy (KADA) Fellowship',
     body: `Hafizi was selected as an elite KADA Fellow in the Korea-ASEAN Digital Academy (organized in collaboration with Garranto Academy), focusing on modern full-stack development and applied AI engineering (August – September 2026).\n\n` +
       `The fellowship emphasized production-grade software engineering realities and real-world system architecture:\n\n` +
@@ -370,7 +370,7 @@ export const TOPICS: InternalTopic[] = [
   },
   {
     id: 'capabilities',
-    keywords: ['can he build', 'able to build', 'capabilities', 'what can hafizi build', 'capable of building', 'what can he build', 'what systems can he build', 'lms', 'workforce portal', 'landing page', 'saas', 'internal tools', 'build for our company'],
+    keywords: ['can he build', 'able to build', 'capabilities', 'what can hafizi build', 'capable of building', 'what can he build', 'what systems can he build', 'what production platforms can hafizi build', 'what platforms can hafizi build', 'production platforms can hafizi build', 'lms', 'workforce portal', 'landing page', 'saas', 'internal tools', 'build for our company'],
     title: 'Production Capabilities — What Systems Hafizi Can Build',
     body: `With his modern full-stack toolkit and systems discipline, Hafizi can architect and ship production software across several major enterprise domains:\n\n` +
       `1. **Enterprise SME & Workforce Portals:** Platforms like URUS featuring high-concurrency order dispatch queues, row-level database locking (\`FOR UPDATE SKIP LOCKED\`), camera barcode scanning, and transparent KPI ranking algorithms.\n` +
