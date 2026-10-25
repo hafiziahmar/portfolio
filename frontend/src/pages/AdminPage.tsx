@@ -530,7 +530,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
           }`}
         >
           <Layers className="w-4 h-4" />
-          <span>Projects ({projects.length})</span>
+          <span>Project ({projects.length})</span>
         </button>
 
         <button
@@ -543,7 +543,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
           }`}
         >
           <Wrench className="w-4 h-4" />
-          <span>Skills ({skills.length})</span>
+          <span>Skill ({skills.length})</span>
         </button>
 
         <button
@@ -1010,7 +1010,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <h2 className="text-lg font-bold text-sand-text">
-                Projects Management ({projects.length})
+                Project Management ({projects.length})
               </h2>
               <p className="text-xs text-sand-text-muted">
                 Manage project name, start/end dates, and description. All wording is 100% controlled by you.
@@ -1218,7 +1218,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-lg font-bold text-sand-text">Technical Skills Inventory ({skills.length})</h2>
+              <h2 className="text-lg font-bold text-sand-text">Technical Skill Inventory ({skills.length})</h2>
               <p className="text-xs text-sand-text-muted">Directly manage skills, categories, and ratings.</p>
             </div>
           </div>

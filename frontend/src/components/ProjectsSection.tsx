@@ -21,7 +21,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
             <span>Featured Engineering Work</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-sand-text tracking-tight">
-            Production Systems & Projects
+            Production Systems & Project
           </h2>
           <p className="text-base text-sand-text-muted text-justify">
             Full-stack platforms, autonomous agentic implementations, and enterprise software systems engineered by Hafizi Ahmar.
