@@ -220,7 +220,7 @@ export const TOPICS: InternalTopic[] = [
   },
   {
     id: 'postgres',
-    keywords: ['database', 'postgres', 'postgresql', 'supabase', 'sql', 'pool', 'dbeaver', 'migration'],
+    keywords: ['database', 'postgres', 'postgresql', 'supabase', 'sql', 'pool', 'dbeaver', 'migration', 'docker', 'docker desktop', 'docker compose'],
     title: 'PostgreSQL & Database Constraints (pg.Pool, Supabase, Docker)',
     body: `Hafizi treats the database as an active enforcement boundary for data integrity, rather than a passive storage bucket.\n\n` +
       `His relational database design emphasizes strict constraints and deterministic transactions:\n\n` +
@@ -332,7 +332,7 @@ export const TOPICS: InternalTopic[] = [
   // ==========================================
   {
     id: 'toph',
-    keywords: ['toph', 'who are you', 'what are you', 'your name', 'about toph', 'copilot'],
+    keywords: ['toph', 'who are you', 'what are you', 'your name', 'about toph', 'copilot', 'you', 'tell me about you', 'about you', 'yourself', 'tell me about yourself', 'what can you do'],
     title: 'About Toph — AI CV Copilot & Architecture',
     body: `I am **Toph**, Hafizi Ahmar’s official AI CV Copilot and technical advocate.\n\n` +
       `I was architected to give engineering leaders and recruiters direct, real-time insight into Hafizi’s system architecture, technical decisions, and background:\n\n` +
@@ -423,11 +423,11 @@ export class CopilotService {
       }
     }
 
-    // 1. Instant High-Intelligence Prebuilt Topics (with natural 1500ms thinking delay)
+    // 1. Instant High-Intelligence Prebuilt Topics (with contemplative 2000ms thinking delay - Option C)
     const instantKnowledge = this.matchPrebuiltTopic(qLower, portfolio, history);
     if (instantKnowledge) {
-      // Natural simulated thinking delay (1500ms)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Contemplative simulated thinking delay (2000ms)
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       this.lastDebugInfo = 'Instant Engine: Verified Technical Knowledge Base';
       return instantKnowledge;
     }
@@ -461,9 +461,10 @@ export class CopilotService {
       for (const k of topic.keywords) {
         if (this.matchesKeyword(q, k)) {
           // If keyword length is strictly greater, it wins.
-          // If keyword length is equal, prefer domain-specific topics over the general identity topic 'why_hire'
+          // If keyword length is equal, prefer domain-specific topics over general identity topics ('why_hire' and 'toph')
+          const isGeneralTopic = bestMatched?.id === 'why_hire' || bestMatched?.id === 'toph';
           const isBetter = k.length > maxKeywordLength ||
-            (k.length === maxKeywordLength && bestMatched?.id === 'why_hire');
+            (k.length === maxKeywordLength && isGeneralTopic);
 
           if (isBetter) {
             maxKeywordLength = k.length;

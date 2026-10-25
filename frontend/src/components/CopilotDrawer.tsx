@@ -208,9 +208,9 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
 
       let currentIdx = 0;
       const fullText = reply;
-      // Target smooth ~2.0-2.5s streaming duration regardless of length
-      const chunkSize = Math.max(2, Math.ceil(fullText.length / 90));
-      const intervalMs = 22;
+      // Option C: Contemplative steady line-by-line typing over ~3.5s
+      const chunkSize = Math.max(1, Math.ceil(fullText.length / 135));
+      const intervalMs = 26;
 
       streamTimerRef.current = setInterval(() => {
         currentIdx += chunkSize;
