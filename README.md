@@ -1,8 +1,9 @@
 # Hafizi Ahmar — Full-Stack Portfolio & Headless CMS Engine
 
 [![Architecture](https://img.shields.io/badge/Architecture-Decoupled_Full--Stack_CMS-5E6C5B?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
+[![Frontend](https://img.shields.io/badge/Frontend-React_19_|_TailwindCSS_v4_|_Vercel-000000?style=for-the-badge&logo=vercel)](https://portfolio-mu-brown-39.vercel.app)
+[![Backend](https://img.shields.io/badge/Backend-Express_|_Render_Cloud-46E3B7?style=for-the-badge&logo=render)](https://hafizi-portfolio-api.onrender.com)
 [![Database](https://img.shields.io/badge/Database-PostgreSQL_16_|_Redis_7-C27803?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
-[![Frontend](https://img.shields.io/badge/Frontend-React_19_|_TailwindCSS_v4-2C2B29?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
 [![Security](https://img.shields.io/badge/Security-JWT_|_Bcrypt_|_Zod_|_Anti--Scraping-3B5249?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
 
 > **AI-Enabled Full-Stack Developer | Autonomous Workflows | Clinical Healthcare Foundation (Dietetics Hons.)**  
@@ -18,25 +19,27 @@ Rather than relying on static site generation, this platform operates on a **dec
 
 ```mermaid
 flowchart TD
-    subgraph Client ["Client Presentation Tier"]
-        UI["React 19 SPA (TailwindCSS v4)"]
-        Copilot["Toph AI CV Copilot (Interactive Drawer)"]
+    subgraph Client ["Client Presentation Tier (Vercel Edge)"]
+        UI["React 19 SPA (Vite + TailwindCSS v4)"]
+        Copilot["Toph AI CV Copilot (Contemplative Typewriter Stream)"]
         CMS["Secure Admin CMS Portal (JWT Authenticated)"]
     end
 
-    subgraph Gateway ["API & Gateway Tier"]
+    subgraph Gateway ["API & Gateway Tier (Render Cloud)"]
         API["Node.js / Express REST API (Strict TypeScript)"]
         Security["Defensive Layer: Helmet, CORS, Rate Limiters, Zod"]
         Router["Layered Routing (Routes → Controllers → Services → Repositories)"]
     end
 
-    subgraph Data ["Data & Caching Tier"]
+    subgraph Data ["Data & Caching Tier (Cloud Infrastructure)"]
         Cache[("Redis 7 In-Memory Cache (Sub-ms Latency)")]
-        DB[("PostgreSQL 16 Relational Engine (Normalized Schema)")]
+        DB[("PostgreSQL 16 Relational Engine (Normalised Schema)")]
     end
 
     subgraph AI ["AI & Intelligence Engine"]
-        LLM["Google Gemini API (Deterministic Knowledge Engine Fallback)"]
+        Engine["Toph Deterministic Engine (27-Topic Master Catalog)"]
+        LoopBuster["Dynamic Loop-Buster & Recap Redirection"]
+        LLM["Google Gemini API (Open-Ended Fallback Concierge)"]
     end
 
     UI --> Security
@@ -46,7 +49,9 @@ flowchart TD
     Router --> Cache
     Router --> DB
     Copilot --> API
-    API --> LLM
+    API --> Engine
+    Engine --> LoopBuster
+    Engine -. Fallback .-> LLM
 ```
 
 ---
@@ -54,47 +59,74 @@ flowchart TD
 ## ⚙️ Core Engineering Design Decisions
 
 ### 1. Relational PostgreSQL Schema & Strict Data Integrity
-All portfolio data — professional experiences, technical skill inventories, capstone projects, education credentials, and incoming recruiter messages — are modeled into normalized PostgreSQL tables:
-- **Foreign Constraints & Parameterized Queries**: Strict SQL parameterization (`$1, $2, ...`) eliminates SQL injection vectors.
+All portfolio data — professional experiences, technical skill inventories, capstone projects, education credentials, and incoming recruiter messages — are modelled into normalised PostgreSQL tables:
+- **Foreign Constraints & Parameterised Queries**: Strict SQL parameterisation (`$1, $2, ...`) eliminates SQL injection vectors.
 - **Concurrency Control**: Employs PostgreSQL row-level locks (`FOR UPDATE SKIP LOCKED`) in multi-user workflows to prevent data race conditions.
-- **Automated Versioned Migrations**: SQL DDL schemas run idempotently upon application initialization.
+- **Automated Versioned Migrations**: SQL DDL schemas run idempotently upon application initialisation.
 
 ### 2. High-Throughput Redis Caching with Write-Through Invalidation
-To minimize database read amplification while ensuring instantaneous global updates:
+To minimise database read amplification while ensuring instantaneous global updates:
 - Public portfolio reads (`GET /api/portfolio`) are cached in Redis with a 300-second TTL.
 - Any write operation in the Admin CMS (e.g. updating a project, adding a new skill category, or modifying bio details) immediately triggers **atomic cache eviction** (`redis.del('portfolio:full')`).
 - If Redis is unreachable, the backend automatically fails over to an in-memory cache without dropping client traffic.
 
 ### 3. Layered Enterprise Architecture
-The backend strictly adheres to the 4-layer architectural separation:
+The backend strictly adheres to a 4-layer architectural separation:
 1. **Routes**: Declarative HTTP endpoint definitions and authentication guards.
-2. **Controllers**: Request extraction, HTTP status coordination, and response serialization.
-3. **Services**: Business logic, cache synchronization, and AI copilot query dispatching.
-4. **Repositories**: Pure SQL abstraction and data access operations.
+2. **Controllers**: Request extraction, HTTP status coordination, and response serialisation.
+3. **Services**: Business logic, cache synchronisation, and AI copilot query dispatching.
+4. **Repositories**: Pure SQL abstraction and database access operations.
 
 ### 4. Defensive Security & Zero-Trust Authentication
 - **Stateless Authentication**: Admin endpoints require cryptographically signed JSON Web Tokens (JWT) verified via middleware.
 - **Bcrypt Password Hashing**: Passwords stored using 10 salt rounds with constant-time verification.
-- **Zod Runtime Contracts**: All incoming HTTP payloads undergo strict type-checking and sanitization before hitting business services.
+- **Zod Runtime Contracts**: All incoming HTTP payloads undergo strict type-checking and sanitisation before hitting business services.
 - **Anti-Bot & Rate Limiting**: Dedicated rate-limiting tiers (`copilotLimiter`, `contactLimiter`) throttle automated scraping and denial-of-service attempts.
 
 ---
 
-## 🛡️ Privacy & Contact Protection Architecture
+## 📦 Capstone Engineering: URUS SME Operations Platform
 
-In adherence to strict personal privacy best practices:
-- **Zero Raw PII Exposure**: Private phone numbers, residential addresses, and personal email addresses are intentionally excluded from the public DOM.
-- **Authenticated Message Queue**: Recruiter and engineering inquiries route through a secure, backend-validated **Contact Queue**. Inquiries are stored directly in PostgreSQL with honeypot spam protection and triaged exclusively within the authenticated Admin CMS.
-- **AI Privacy Guardrails**: The integrated AI Copilot (**Toph**) enforces strict system boundary constraints, deflecting queries targeting private personal details while facilitating verified recruiter communication.
+During the Korea-ASEAN Digital Academy (KADA) Fellowship, Hafizi spearheaded the **Outbound Fulfillment & Dispatch Queue Module** within a 5-member agile engineering team delivering **URUS**:
+
+- **Deterministic Order State Machine**: Architected the sequential order lifecycle (`READY_TO_PICK` $\rightarrow$ `PICKING` $\rightarrow$ `PACKING` $\rightarrow$ `FULFILLED`), enforcing explicit state transitions.
+- **Camera Barcode SKU Verification**: Integrated camera-based barcode scanning to validate physical item barcodes in real time against manifest SKUs before advancing fulfillment stages.
+- **Concurrency & Anti-Collision Logic**: Implemented PostgreSQL row-level locks (`FOR UPDATE SKIP LOCKED`) to ensure orders can only be claimed atomically by a single picker, eliminating duplicate picking in high-volume environments.
+- **Automated Inventory Deductions**: Triggered atomic operational event streams on order fulfillment to deduct warehouse stock balances with comprehensive audit logging.
 
 ---
 
 ## 🤖 AI CV Copilot Engine: "Toph"
 
-The portfolio features **Toph**, an integrated conversational copilot engineered to answer recruiter queries regarding architectural decisions, technical stack proficiencies, and career progression:
-- **Grounded Verification**: Answers strictly reflect verified CV records, 42KL systems programming training, Project KADA engineering methodologies, and NVC Group clinical operations.
-- **Dual-Mode Engine**: Dynamically interfaces with the **Google Gemini API** when credentials are provided, seamlessly falling back to a deterministic, zero-latency local knowledge engine if external APIs are unavailable.
-- **Context Boundaries**: Operates under strict non-authoritative boundaries to ensure accurate technical representation without hallucination.
+The portfolio features **Toph**, an integrated engineering copilot built to provide recruiters with direct, real-time insights into Hafizi's architecture, technical decisions, and background:
+
+### 1. Deterministic 27-Topic Master Catalog
+Toph is powered by a high-precision, sub-second deterministic knowledge engine covering **27 structured topics across 4 technical pillars**:
+- **Pillar 1: Career Journey & Leadership** (`why_hire`, `clinical`, `nvc`, `takaful`, `puncak_niaga`, `mafi`, `mdec`, `forty_two`, `kada`).
+- **Pillar 2: Technical Architecture & Capabilities** (`capabilities`, `backend_layers`, `jwt_auth`, `redis_cache`, `postgresql_db`, `sql_injection`, `react_frontend`, `typescript`, `zod_validation`, `postman_verification`).
+- **Pillar 3: Autonomous AI & Engineering Velocity** (`antigravity_platform`, `agentic_workflows`, `prompt_ai`, `non_authoritative_ai`).
+- **Pillar 4: URUS Capstone Deep Dive** (`urus_overview`, `urus_order_lifecycle`, `urus_barcode`, `urus_order_claiming`).
+- **System Identity & Boundaries** (`toph`, `portfolio_architecture`, `contact_channels`).
+
+### 2. State-Aware Loop-Buster & Smart Recap Algorithm
+- **First-Time Topic Queries**: Renders a comprehensive, technical answer with architectural rationale and metrics.
+- **Topic Re-Queries**: Automatically detects that the topic was previously visited and delivers a concise **Smart Recap** to acknowledge context without duplicating text.
+- **Dynamic Leading Redirections**: Proactively suggests the next logical, unvisited topic in the knowledge graph, mathematically preventing circular suggestion loops.
+
+### 3. Contemplative Pacing & Smooth Typewriter Streaming
+- **2.0-Second Simulated Thinking Pause**: Displays an animated *"Analysing CV context..."* status, simulating realistic neural analysis.
+- **Natural Typewriter Stream**: Answers stream word-by-word over ~3.5 seconds with an active pulsing indicator cursor.
+- **Instant Skip Shortcut**: Recruiters can click anywhere on the message bubble to instantly reveal the full response.
+- **Domain-Priority Tie-Breaker**: Polite conversational phrasing (*"Can you tell me about NVC?"*) prioritises specific technical domains (`nvc`) over generic greetings (`toph`).
+
+---
+
+## 🛡️ Privacy & Contact Protection Architecture
+
+In adherence to strict personal privacy standards:
+- **Zero Raw PII Exposure**: Private phone numbers, residential addresses, and personal email addresses are intentionally excluded from public DOM and client bundles.
+- **Authenticated Message Queue**: Recruiter inquiries route through a secure, backend-validated **Contact Queue**. Inquiries are stored directly in PostgreSQL with honeypot spam protection and triaged exclusively within the authenticated Admin CMS.
+- **AI Privacy Guardrails**: Toph enforces strict system boundary constraints, deflecting queries targeting private personal details while facilitating verified communication via the contact form, LinkedIn, or GitHub.
 
 ---
 
@@ -112,7 +144,7 @@ The frontend user experience is built upon an organic, nature-inspired palette t
 | **Borders & Dividers**| `#E3DDD2` (Sand Muted Border) | `#2E382F` (Deep Slate Border) |
 
 - **TailwindCSS v4**: Modern CSS-first configuration using CSS variables and semantic theme classes.
-- **Typography**: Fully justified, relaxed readability layout with semantic HTML5 structuring.
+- **Ergonomics**: Relaxed readability layout with semantic HTML5 structuring and unified singular navigation (`About • Project • Experience • Skill • Education • Contact`).
 
 ---
 
@@ -138,6 +170,35 @@ The frontend user experience is built upon an organic, nature-inspired palette t
 | `GET` | `/api/admin/messages` | Admin (JWT) | Retrieve incoming recruiter inquiries |
 | `PATCH`| `/api/admin/messages/:id/status` | Admin (JWT) | Update inquiry status (`unread` → `read` → `replied` → `archived`) |
 | `POST` | `/api/admin/cache/flush` | Admin (JWT) | Invalidate and flush all Redis cache keys |
+
+---
+
+## 🚀 Production Deployment & Infrastructure
+
+The application operates on a decoupled modern production pipeline:
+
+```
+┌─────────────────────────────────┐        ┌─────────────────────────────────┐
+│     Vercel Edge Network         │        │       Render Cloud Platform     │
+│   (React 19 SPA + Tailwind v4)  │        │   (Node.js / Express REST API)  │
+│                                 │        │                                 │
+│  • Edge-accelerated global CDN  │  HTTP  │  • Layered Clean Architecture   │
+│  • Automated SPA rewrites       ├───────►│  • Strict JWT authentication    │
+│  • Sub-25s atomic deployments   │        │  • Zod validation & rate limits │
+└─────────────────────────────────┘        └──────────────┬──────────────────┘
+                                                          │
+                                         ┌────────────────┴──────────────────┐
+                                         ▼                                   ▼
+                             ┌───────────────────────┐           ┌───────────────────────┐
+                             │  Supabase PostgreSQL  │           │   Upstash / Redis 7   │
+                             │  (Singapore Region)   │           │   (Cache-Aside Layer) │
+                             └───────────────────────┘           └───────────────────────┘
+```
+
+- **Frontend Hosting**: Deployed on **Vercel** with automated SPA routing rules configured via [`vercel.json`](vercel.json).
+- **Backend Hosting**: Deployed on **Render** as a long-running Node.js web service.
+- **Database Engine**: Managed PostgreSQL 16 on **Supabase** (Singapore region) with connection pooling (`pg.Pool`).
+- **In-Memory Cache**: Managed Redis 7 cluster for sub-millisecond portfolio read acceleration.
 
 ---
 
