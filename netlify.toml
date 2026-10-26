@@ -1,8 +1,0 @@
-# Netlify Monorepo Configuration
-# Skips build if no files in frontend/ were modified, preserving build credits
-
-[build]
-  base = "frontend"
-  publish = "dist"
-  command = "npm run build"
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ."

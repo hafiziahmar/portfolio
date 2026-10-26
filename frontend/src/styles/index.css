@@ -102,14 +102,3 @@ dialog::backdrop {
   background: var(--color-sand-moss);
 }
 
-/* Suppress third-party Netlify badge / drawer HUD overlay */
-#netlify-hud,
-[data-netlify-hud],
-.netlify-hud-btn,
-iframe[src*="netlify"],
-netlify-drawer {
-  display: none !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-

@@ -23,7 +23,7 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps, curl, or Postman)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.some((allowed) => origin.startsWith(allowed) || origin.endsWith('.netlify.app') || origin.endsWith('.vercel.app'))) {
+      if (allowedOrigins.some((allowed) => origin.startsWith(allowed) || origin.endsWith('.vercel.app'))) {
         return callback(null, true);
       }
       return callback(null, true); // Permissive in dev/preview, restricted in production if needed
