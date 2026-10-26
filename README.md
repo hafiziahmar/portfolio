@@ -85,28 +85,17 @@ The backend strictly adheres to a 4-layer architectural separation:
 
 ---
 
-## 📦 Capstone Engineering: URUS SME Operations Platform
-
-During the Korea-ASEAN Digital Academy (KADA) Fellowship, Hafizi spearheaded the **Outbound Fulfillment & Dispatch Queue Module** within a 5-member agile engineering team delivering **URUS**:
-
-- **Deterministic Order State Machine**: Architected the sequential order lifecycle (`READY_TO_PICK` $\rightarrow$ `PICKING` $\rightarrow$ `PACKING` $\rightarrow$ `FULFILLED`), enforcing explicit state transitions.
-- **Camera Barcode SKU Verification**: Integrated camera-based barcode scanning to validate physical item barcodes in real time against manifest SKUs before advancing fulfillment stages.
-- **Concurrency & Anti-Collision Logic**: Implemented PostgreSQL row-level locks (`FOR UPDATE SKIP LOCKED`) to ensure orders can only be claimed atomically by a single picker, eliminating duplicate picking in high-volume environments.
-- **Automated Inventory Deductions**: Triggered atomic operational event streams on order fulfillment to deduct warehouse stock balances with comprehensive audit logging.
-
----
-
 ## 🤖 AI CV Copilot Engine: "Toph"
 
 The portfolio features **Toph**, an integrated engineering copilot built to provide recruiters with direct, real-time insights into Hafizi's architecture, technical decisions, and background:
 
-### 1. Deterministic 27-Topic Master Catalog
-Toph is powered by a high-precision, sub-second deterministic knowledge engine covering **27 structured topics across 4 technical pillars**:
-- **Pillar 1: Career Journey & Leadership** (`why_hire`, `clinical`, `nvc`, `takaful`, `puncak_niaga`, `mafi`, `mdec`, `forty_two`, `kada`).
-- **Pillar 2: Technical Architecture & Capabilities** (`capabilities`, `backend_layers`, `jwt_auth`, `redis_cache`, `postgresql_db`, `sql_injection`, `react_frontend`, `typescript`, `zod_validation`, `postman_verification`).
-- **Pillar 3: Autonomous AI & Engineering Velocity** (`antigravity_platform`, `agentic_workflows`, `prompt_ai`, `non_authoritative_ai`).
-- **Pillar 4: URUS Capstone Deep Dive** (`urus_overview`, `urus_order_lifecycle`, `urus_barcode`, `urus_order_claiming`).
-- **System Identity & Boundaries** (`toph`, `portfolio_architecture`, `contact_channels`).
+### 1. Deterministic 27-Topic Master Knowledge Base
+Toph is powered by a high-precision, sub-second deterministic engine with zero hallucination, covering **exactly 27 structured topics**:
+- **Career Journey & Leadership (9 Topics)**: `why_hire`, `clinical`, `nvc`, `takaful`, `puncak_niaga`, `mafi`, `mdec`, `42kl`, `kada`.
+- **Full-Stack & Backend Systems (8 Topics)**: `backend_layers`, `postgres`, `redis`, `security`, `zod`, `react19`, `typescript`, `error_handling`.
+- **Verification & Engineering Tools (4 Topics)**: `postman`, `git`, `prompt_ai`, `capabilities`.
+- **URUS Capstone Module (2 Topics)**: `urus_overview`, `urus_barcode`.
+- **System Identity & Recruiter Boundaries (4 Topics)**: `toph`, `portfolio_architecture`, `contact_channels`, `personal_boundary`.
 
 ### 2. State-Aware Loop-Buster & Smart Recap Algorithm
 - **First-Time Topic Queries**: Renders a comprehensive, technical answer with architectural rationale and metrics.
