@@ -28,6 +28,8 @@ build/
 PRIVATE_CREDENTIALS_VAULT.md
 *vault*.md
 *credentials*
+PROJECT_COMPLETION_REPORT.md
+*REPORT*.md
 
 # Database and Local Persistence
 *.sqlite
