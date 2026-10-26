@@ -30,6 +30,8 @@ PRIVATE_CREDENTIALS_VAULT.md
 *credentials*
 PROJECT_COMPLETION_REPORT.md
 *REPORT*.md
+TOPICS_CATALOG.md
+*CATALOG*.md
 
 # Database and Local Persistence
 *.sqlite
