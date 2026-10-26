@@ -25,6 +25,9 @@ build/
 *.pem
 *.key
 *.cert
+PRIVATE_CREDENTIALS_VAULT.md
+*vault*.md
+*credentials*
 
 # Database and Local Persistence
 *.sqlite
