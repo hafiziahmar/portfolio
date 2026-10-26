@@ -31,7 +31,7 @@ export const SkillsMatrix: React.FC<SkillsMatrixProps> = ({ skills }) => {
             <span>Technical Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-sand-text tracking-tight">
-            Categorized Skill Matrix
+            Categorised Skill Matrix
           </h2>
           <p className="text-base text-sand-text-muted text-justify">
             Engineered across autonomous AI systems, modern full-stack frameworks, database architecture, and verification tooling.

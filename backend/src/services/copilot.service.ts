@@ -42,9 +42,9 @@ export const TOPICS: InternalTopic[] = [
     body: `Hafizi brings a rare and powerful hybrid background: a Bachelor of Dietetics (Hons) from UiTM combined with high-rigor full-stack software engineering.\n\n` +
       `His healthcare background directly shapes his software engineering discipline:\n\n` +
       `1. **Clinical Precision & Zero-Tolerance for Error:** In clinical healthcare environments where biochemical calculations directly impact patient health, Hafizi cultivated a zero-tolerance approach to sloppy data handling—discipline he carries into database constraints, type guards, and defensive coding.\n` +
-      `2. **Biochemical Data Analysis:** Trained to parse messy, multi-variable laboratory inputs into structured treatment plans, mirroring how software engineers normalize external API streams and database schemas.\n` +
+      `2. **Biochemical Data Analysis:** Trained to parse messy, multi-variable laboratory inputs into structured treatment plans, mirroring how software engineers normalise external API streams and database schemas.\n` +
       `3. **High-Empathy User Workflows:** Working with clinical patients honed exceptional active listening and diagnostic skills, enabling Hafizi to translate non-technical business pain points into elegant, resilient software architectures.`,
-    recap: `Hafizi's Clinical Dietetics degree from UiTM shapes his engineering discipline—cultivating zero-tolerance data integrity, structured biochemical/schema normalization, and diagnostic empathy for user workflows.`,
+    recap: `Hafizi's Clinical Dietetics degree from UiTM shapes his engineering discipline—cultivating zero-tolerance data integrity, structured biochemical/schema normalisation, and diagnostic empathy for user workflows.`,
     relatedIds: ['nvc', 'takaful', 'puncak_niaga', 'postgres'],
     suggestPrompt: 'explore how his clinical dietetics background translates into zero-tolerance software discipline',
   },
@@ -53,7 +53,7 @@ export const TOPICS: InternalTopic[] = [
     keywords: ['nvc', 'nvc group', 'apps script', 'aged care', 'registration system', 'compliance', 'latest work experience', 'latest work', 'latest experience', 'latest job', 'yayasan peneraju', 'peneraju', 'certificate iii'],
     title: 'NVC Group — Operations & Google Apps Script Automation',
     body: `At NVC Group, Hafizi operated under strict international healthcare compliance frameworks while spearheading operational automation initiatives:\n\n` +
-      `1. **Zero-Manual Data Entry Pipeline:** Engineered an automated event registration and database feedback pipeline utilizing Google Workspace and Google Apps Script, eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.\n` +
+      `1. **Zero-Manual Data Entry Pipeline:** Engineered an automated event registration and database feedback pipeline utilising Google Workspace and Google Apps Script, eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.\n` +
       `2. **International Healthcare Compliance:** Selected as a competitive Yayasan Peneraju International Scholar, mastering strict Australian aged-care compliance frameworks and adapting protocols to global operational standards.\n` +
       `3. **Early AI-Enabled Prototyping:** Leveraged structured prompt engineering with LLM assistants to accelerate script writing and prototype operational workflows, bridging healthcare processes with modern technical automation.`,
     recap: `At NVC Group, Hafizi engineered a zero-manual registration and e-certification pipeline using Google Apps Script while operating under strict Australian healthcare compliance frameworks.`,
@@ -67,7 +67,7 @@ export const TOPICS: InternalTopic[] = [
     body: `At Prudential BSN Takaful Berhad, Hafizi managed client portfolios, performed quantitative risk evaluations, and navigated strict financial compliance frameworks.\n\n` +
       `In software engineering, this domain experience directly translates into architectural discipline:\n\n` +
       `1. **Defensive Domain Logic:** Financial calculations allow zero tolerance for rounding errors or unhandled edge cases. Hafizi treats software business rules with this same rigor—ensuring non-negative ledger constraints and atomic database updates.\n` +
-      `2. **Enterprise CRM & Data Pipelines:** Utilized internal enterprise software and CRM systems to manage multi-tiered client data, giving him practical empathy for end-user data entry pain points and workflow bottlenecks.\n` +
+      `2. **Enterprise CRM & Data Pipelines:** Utilised internal enterprise software and CRM systems to manage multi-tiered client data, giving him practical empathy for end-user data entry pain points and workflow bottlenecks.\n` +
       `3. **Regulatory & Compliance-First Mindset:** Accustomed to operating within audited financial frameworks—habits that directly inform his approach to database access controls (RBAC) and data protection.`,
     recap: `At Prudential BSN Takaful, Hafizi managed client portfolios and financial risk assessments, instilling the mathematical rigor he applies to software ledgers and atomic transactions.`,
     relatedIds: ['puncak_niaga', 'clinical', 'security', 'postgres'],
@@ -79,7 +79,7 @@ export const TOPICS: InternalTopic[] = [
     title: 'Puncak Niaga Holdings — Project Velocity, Budgets & Team Leadership',
     body: `As a Project Executive at Puncak Niaga Holdings Berhad, Hafizi directed end-to-end planning, resource allocation, and site execution for major landscaping infrastructure projects at Masjid Puncak Alam and Ma'ahad Tahfiz Ismail.\n\n` +
       `This operational leadership directly strengthens his full-stack delivery capabilities:\n\n` +
-      `1. **Cross-Functional Team Direction:** Led and supervised a multi-cultural team of 10+ operational workers on the ground, optimizing daily workflow sequences and resolving on-site blockers.\n` +
+      `1. **Cross-Functional Team Direction:** Led and supervised a multi-cultural team of 10+ operational workers on the ground, optimising daily workflow sequences and resolving on-site blockers.\n` +
       `2. **Asset, Inventory & Procurement Management:** Formulated project budgets, negotiated supplier contracts, and managed physical asset tracking—hands-on experience that directly inspired the inventory and fulfillment workflows he later automated in his capstone platform, URUS.\n` +
       `3. **Executive Reporting & Delivery Velocity:** Reported directly to the Director on project milestones, budget burn, and delivery velocity, cultivating clear communication with non-technical stakeholders.`,
     recap: `At Puncak Niaga, Hafizi led 10+ operational workers on commercial landscaping sites, managed procurement budgets, and reported delivery velocity directly to executive directors.`,
@@ -103,7 +103,7 @@ export const TOPICS: InternalTopic[] = [
     id: 'mdec',
     keywords: ['mdec', 'glow', 'penjana', 'freelance', 'remote delivery', 'marketplace', 'global online workforce'],
     title: 'MDEC GLOW PENJANA — Global Remote Delivery & Asynchronous Workflows',
-    body: `Through the Malaysia Digital Economy Corporation (MDEC) Global Online Workforce (GLOW PENJANA) initiative, Hafizi completed specialized training on high-standard remote delivery and digital marketplace positioning.\n\n` +
+    body: `Through the Malaysia Digital Economy Corporation (MDEC) Global Online Workforce (GLOW PENJANA) initiative, Hafizi completed specialised training on high-standard remote delivery and digital marketplace positioning.\n\n` +
       `Key engineering and operational disciplines gained:\n\n` +
       `1. **Remote Work & Communication Discipline:** Trained in asynchronous team communication, digital workspace management, and independent sprint execution.\n` +
       `2. **Cross-Border Service Delivery:** Formulated structured outreach frameworks and clear client documentation standards for international stakeholder alignment.\n` +
@@ -210,9 +210,9 @@ export const TOPICS: InternalTopic[] = [
       `\`Route → Middleware → Controller → Service → Repository → Database / Cache\`\n\n` +
       `Each layer maintains a single, well-defined responsibility:\n\n` +
       `1. **Routes & Middleware:** Route URLs map cleanly to controllers, while middleware handles cross-cutting concerns—including CORS allowlisting, Helmet security headers, rate limiting, and JWT authentication.\n` +
-      `2. **Controllers:** Parse incoming HTTP requests, validate request shapes, invoke domain services, and return normalized JSON responses with precise HTTP status codes (200, 201, 204, 400, 401, 403, 404, 500).\n` +
+      `2. **Controllers:** Parse incoming HTTP requests, validate request shapes, invoke domain services, and return normalised JSON responses with precise HTTP status codes (200, 201, 204, 400, 401, 403, 404, 500).\n` +
       `3. **Services:** House 100% of pure business rules and domain logic (pricing validation, state machine transitions, bonus calculations). Services never touch raw SQL.\n` +
-      `4. **Repositories:** The only layer permitted to interact with the database pool (\`pg.Pool\`), encapsulating all SQL queries using parameterized placeholders (\`$1, $2\`) to guarantee SQL injection immunity.\n` +
+      `4. **Repositories:** The only layer permitted to interact with the database pool (\`pg.Pool\`), encapsulating all SQL queries using parameterised placeholders (\`$1, $2\`) to guarantee SQL injection immunity.\n` +
       `5. **Database & Cache:** PostgreSQL serves as the durable source of truth, accelerated by Redis cache-aside reads.`,
     recap: `Hafizi structures backends with a strict 6-layer Domain-Driven Architecture (Route ➔ Middleware ➔ Controller ➔ Service ➔ Repository ➔ DB/Cache), guaranteeing complete SQL query isolation.`,
     relatedIds: ['postgres', 'redis', 'security', 'error_handling'],
@@ -224,12 +224,12 @@ export const TOPICS: InternalTopic[] = [
     title: 'PostgreSQL & Database Constraints (pg.Pool, Supabase, Docker)',
     body: `Hafizi treats the database as an active enforcement boundary for data integrity, rather than a passive storage bucket.\n\n` +
       `His relational database design emphasizes strict constraints and deterministic transactions:\n\n` +
-      `1. **Relational Normalization:** Designed normalized schemas across users, categories, products, orders, inventory movements, and audit records with strict Primary and Foreign Keys.\n` +
+      `1. **Relational Normalisation:** Designed normalised schemas across users, categories, products, orders, inventory movements, and audit records with strict Primary and Foreign Keys.\n` +
       `2. **Database Constraints:** Uses database-level rules including \`NOT NULL\`, \`UNIQUE\`, and \`CHECK\` constraints (e.g. non-negative stock counts and positive product pricing) so invalid state can never be saved.\n` +
       `3. **Connection Pooling with \`pg.Pool\`:** Reuses a managed pool of database connections to handle concurrent traffic without exhausting server socket limits.\n` +
-      `4. **Parameterized Queries:** Always utilizes parameterized queries (\`$1, $2\`) to guarantee absolute protection against SQL Injection vulnerabilities.\n` +
+      `4. **Parameterised Queries:** Always utilises parameterised queries (\`$1, $2\`) to guarantee absolute protection against SQL Injection vulnerabilities.\n` +
       `5. **Docker & Supabase Ecosystem:** Skilled in spinning up containerized PostgreSQL instances via Docker Compose, running database migrations, seeding test datasets, and managing live schemas via DBeaver.`,
-    recap: `Hafizi uses PostgreSQL as an active data integrity boundary with CHECK constraints, foreign keys, pg.Pool connection pooling, and parameterized queries for SQL injection immunity.`,
+    recap: `Hafizi uses PostgreSQL as an active data integrity boundary with CHECK constraints, foreign keys, pg.Pool connection pooling, and parameterised queries for SQL injection immunity.`,
     relatedIds: ['redis', 'backend_layers', 'urus_overview', 'security'],
     suggestPrompt: 'know how he structures PostgreSQL connection pooling and database integrity constraints',
   },
@@ -248,18 +248,18 @@ export const TOPICS: InternalTopic[] = [
   {
     id: 'security',
     keywords: ['security', 'auth', 'jwt', 'bcrypt', 'rbac', 'helmet', 'cors'],
-    title: 'Security, Authentication & Role-Based Authorization',
+    title: 'Security, Authentication & Role-Based Authorisation',
     body: `Hafizi builds defensive, hardened backends following the principle of least privilege and strict boundary validation:\n\n` +
       `1. **Irreversible Password Hashing (bcrypt):** Passwords are never stored in plain text or decrypted. They are hashed using **10 salt rounds** with bcrypt and verified using one-way comparisons.\n` +
-      `2. **Stateless JWT Authentication:** Issues signed JSON Web Tokens containing user claims and expiration timestamps (\`expiresIn: '24h'\`). Verified via \`Authorization: Bearer <token>\` headers without database round-trips.\n` +
-      `3. **Authentication vs. Authorization:** Clearly enforces the boundary:\n` +
+      `2. **Stateless JWT Authentication:** Issues signed JSON Web Tokens containing user claims and expiration timestamps (\`expiresIn: '24h'\`). Verified via \`Authorisation: Bearer <token>\` headers without database round-trips.\n` +
+      `3. **Authentication vs. Authorisation:** Clearly enforces the boundary:\n` +
       `   - **401 Unauthorized:** *"Who are you?"* (Missing, expired, or invalid token).\n` +
       `   - **403 Forbidden:** *"I know who you are, but you are not allowed to perform this action."* (Role check failed).\n` +
       `4. **Role-Based Access Control (RBAC):** Implemented multi-tier role guards (WORKER, HR, FINANCE, MANAGER, ADMIN) ensuring sensitive domains (payroll, financial records) are strictly siloed from operational workers.\n` +
       `5. **HTTP Hardening:** Layered with CORS domain allowlisting, Helmet security headers, Zod runtime validation, and API rate limiting.`,
-    recap: `Hafizi hardens backends with bcrypt 10-salt password hashing, stateless JWT authorization with 24h expiry, Helmet HTTP headers, CORS allowlisting, and strict RBAC.`,
+    recap: `Hafizi hardens backends with bcrypt 10-salt password hashing, stateless JWT authorisation with 24h expiry, Helmet HTTP headers, CORS allowlisting, and strict RBAC.`,
     relatedIds: ['backend_layers', 'zod', 'postgres', 'takaful'],
-    suggestPrompt: 'explore his RBAC authorization and stateless JWT security architecture',
+    suggestPrompt: 'explore his RBAC authorisation and stateless JWT security architecture',
   },
 
   // ==========================================
@@ -283,7 +283,7 @@ export const TOPICS: InternalTopic[] = [
     title: 'API Testing & Contract Verification (Postman & OpenAPI/Swagger)',
     body: `Hafizi treats API contracts as binding architectural agreements between frontend clients and backend services:\n\n` +
       `1. **Postman Automated Testing:** Builds structured Postman collections with automated pre-request scripts and response assertions to test status codes (200, 201, 400, 401, 403, 404), schema payloads, and authentication headers.\n` +
-      `2. **OpenAPI 3.0 / Swagger Documentation:** Authors standardized API specifications so that frontend engineers and AI coding assistants have unambiguous, interactive documentation for every route.\n` +
+      `2. **OpenAPI 3.0 / Swagger Documentation:** Authors standardised API specifications so that frontend engineers and AI coding assistants have unambiguous, interactive documentation for every route.\n` +
       `3. **Defensive Endpoint Verification:** Verifies edge cases—such as malformed JSON, SQL injection vectors, and unauthorized token manipulation—before any endpoint is considered ready for production.`,
     recap: `Hafizi tests APIs using Postman test scripts verifying status codes, JSON response schemas, and latency benchmarks, backed by Swagger/OpenAPI documentation.`,
     relatedIds: ['backend_layers', 'zod', 'git', 'error_handling'],
@@ -295,7 +295,7 @@ export const TOPICS: InternalTopic[] = [
     title: 'Git, GitHub & Collaborative Branching Discipline',
     body: `Hafizi maintains disciplined version control practices built for collaborative, enterprise-grade engineering teams:\n\n` +
       `1. **Feature Branching & Atomic Commits:** Follows structured feature branching (\`feature/\`, \`fix/\`, \`refactor/\`) paired with Conventional Commits to ensure clear, bisectable git histories.\n` +
-      `2. **Conflict Resolution & Rebase Hygiene:** Proficient in resolving complex merge conflicts, interactive rebasing, and keeping feature branches synchronized with \`main\` without generating messy merge bubbles.\n` +
+      `2. **Conflict Resolution & Rebase Hygiene:** Proficient in resolving complex merge conflicts, interactive rebasing, and keeping feature branches synchronised with \`main\` without generating messy merge bubbles.\n` +
       `3. **Pull Requests & Code Defense:** Approaches PRs with clear architectural summaries, testing evidence, and defensive reviews—cultivated through his 42KL peer-defense training and KADA team agile sprints.`,
     recap: `Hafizi adheres to production Git discipline with Conventional Commits, atomic PR branching, and squash-merging to keep repository histories clean and bisectable.`,
     relatedIds: ['prompt_ai', 'postman', 'backend_layers', 'why_hire'],
@@ -318,13 +318,13 @@ export const TOPICS: InternalTopic[] = [
     id: 'error_handling',
     keywords: ['error handling', 'resilience', 'status code', 'http status', 'apperror', 'exception'],
     title: 'Error Handling & System Resilience Architecture',
-    body: `Hafizi designs backend services around defensive failure boundaries so errors are caught, normalized, and handled predictably:\n\n` +
-      `1. **Centralized Error Middleware:** Express routes never return raw runtime exceptions or leaked database stack traces. A centralized error-handling middleware catches all rejected promises and formats them into a standardized JSON envelope (\`{ success: false, error: { message, code } }\`).\n` +
+    body: `Hafizi designs backend services around defensive failure boundaries so errors are caught, normalised, and handled predictably:\n\n` +
+      `1. **Centralised Error Middleware:** Express routes never return raw runtime exceptions or leaked database stack traces. A centralised error-handling middleware catches all rejected promises and formats them into a standardised JSON envelope (\`{ success: false, error: { message, code } }\`).\n` +
       `2. **Custom Typed Application Errors:** Uses custom error classes (\`AppError\`, \`NotFoundError\`, \`UnauthorizedError\`, \`ConflictError\`) with pre-mapped HTTP status codes (400, 401, 403, 404, 409, 500).\n` +
       `3. **Graceful Fallbacks:** External service failures (such as Redis connection drops or AI API timeouts) degrade gracefully—falling back to database reads or cached responses rather than taking down the server.`,
-    recap: `Hafizi builds resilient backends with centralized ErrorHandler middleware, custom domain AppError classes, normalized JSON error envelopes, and Winston structured logging.`,
+    recap: `Hafizi builds resilient backends with centralised ErrorHandler middleware, custom domain AppError classes, normalised JSON error envelopes, and Winston structured logging.`,
     relatedIds: ['backend_layers', 'zod', 'postgres', 'security'],
-    suggestPrompt: 'see his centralized error-handling and resilience architecture',
+    suggestPrompt: 'see his centralised error-handling and resilience architecture',
   },
 
   // ==========================================
@@ -337,7 +337,7 @@ export const TOPICS: InternalTopic[] = [
     body: `I am **Toph**, Hafizi Ahmar’s official AI CV Copilot and technical advocate.\n\n` +
       `I was architected to give engineering leaders and recruiters direct, real-time insight into Hafizi’s system architecture, technical decisions, and background:\n\n` +
       `1. **Hybrid Edge Architecture:** I run on a two-tier hybrid engine—powered by a sub-second deterministic knowledge base for verified CV records, backed by Google Gemini 3.8 Flash for open-ended synthesis.\n` +
-      `2. **Non-Authoritative & Grounded Design:** Built under strict closed-world grounding rules so I never hallucinate experience or expose private contact credentials without authorization.\n` +
+      `2. **Non-Authoritative & Grounded Design:** Built under strict closed-world grounding rules so I never hallucinate experience or expose private contact credentials without authorisation.\n` +
       `3. **The Inspiration Behind the Name:** Named after *Toph Beifong* from Avatar—grounded, sharp, resilient, and sensing foundational structural truths directly through the code.`,
     recap: `Toph is Hafizi's custom AI CV Copilot, powered by a deterministic internal knowledge engine for sub-second answers with Gemini 3.8 Flash as an open-ended concierge fallback.`,
     relatedIds: ['portfolio_architecture', 'capabilities', 'why_hire', 'prompt_ai'],
@@ -345,14 +345,14 @@ export const TOPICS: InternalTopic[] = [
   },
   {
     id: 'portfolio_architecture',
-    keywords: ['portfolio', 'this website', 'this site', 'tech stack of this site', 'how was this built', 'architecture of this site', 'headless cms'],
+    keywords: ['portfolio', 'this website', 'this site', 'tech stack of this site', 'how was this built', 'architecture of this site', 'headless cms', 'vercel'],
     title: 'Interactive Portfolio & Headless CMS Architecture',
     body: `This interactive portfolio is a production-grade full-stack web application designed and built by Hafizi from scratch:\n\n` +
       `1. **Client-Side Architecture:** Built with modern **React 19**, **TypeScript (Strict Mode)**, **Tailwind CSS v4**, and **Vite**. Features custom Markdown rendering, reactive drawer state, and zero-layout-shift UI states.\n` +
-      `2. **Cloud Backend & Database:** Powered by a layered **Node.js + Express** REST API deployed on Render, connected to containerized **PostgreSQL on Supabase** (Singapore region) and accelerated by an in-memory **Redis** cache-aside layer.\n` +
-      `3. **Production Headless CMS:** Includes a secure, JWT-authenticated admin dashboard (\`/admin\`) allowing dynamic CRUD management over skills, experiences, and project records with instant database synchronization.\n` +
-      `4. **Optimized Monorepo CI/CD:** Deployed via Netlify with custom build-credit suppression rules (\`netlify.toml\`) so frontend previews deploy in 20 seconds without burning serverless credits on backend commits.`,
-    recap: `This interactive portfolio is a production React 19 + TypeScript SPA on Netlify, backed by a Node.js/PostgreSQL/Redis API on Render and a headless CRUD admin CMS.`,
+      `2. **Cloud Backend & Database:** Powered by a layered **Node.js + Express** REST API deployed on Render, connected to containerised **PostgreSQL on Supabase** (Singapore region) and accelerated by an in-memory **Redis** cache-aside layer.\n` +
+      `3. **Production Headless CMS:** Includes a secure, JWT-authenticated admin dashboard (\`/admin\`) allowing dynamic CRUD management over skills, experiences, and project records with instant database synchronisation.\n` +
+      `4. **Optimised Monorepo CI/CD:** Deployed via Vercel Edge Network with monorepo configuration (\`vercel.json\`) and automated SPA rewrites, ensuring sub-25-second atomic builds and high-availability global edge caching.`,
+    recap: `This interactive portfolio is a production React 19 + TypeScript SPA on Vercel, backed by a Node.js/PostgreSQL/Redis API on Render and a headless CRUD admin CMS.`,
     relatedIds: ['capabilities', 'react19', 'postgres', 'redis'],
     suggestPrompt: 'explore the tech stack and architecture of this interactive portfolio site itself',
   },
@@ -393,7 +393,7 @@ export const TOPICS: InternalTopic[] = [
 ];
 
 export class CopilotService {
-  public lastDebugInfo: string = 'Initialized';
+  public lastDebugInfo: string = 'Initialised';
 
   async processQuery(question: string, history: ChatMessage[] = []): Promise<string> {
     const portfolio = await portfolioService.getFullPortfolioData();
@@ -609,8 +609,8 @@ Part 2: Two or three numbered highlights using bold concept titles:
 Part 3: Closing Bridge Question (An engaging closing sentence steering the user toward one of his core portfolio areas: Career Journey, URUS, Full-Stack Architecture, or Tools & AI).
 
 [STRICT GUARDRAILS & ANTI-HALLUCINATION]
-- Strict Organization Naming: When referring to NVC, strictly and exclusively refer to it as "NVC Group" (never say "NVC Group Australia" or append "Australia" to its organization name).
-- Closed-World Grounding: You must only answer questions based strictly on Hafizi's verified CV context. Never invent, fabricate, or extrapolate skills, companies, or credentials not explicitly present in his profile. If a user asks about technologies Hafizi has not worked with, state clearly that he specializes in his core stack (React 19, TypeScript, Node.js, PostgreSQL, Redis, Docker) and invite them to explore his verified work.
+- Strict Organisation Naming: When referring to NVC, strictly and exclusively refer to it as "NVC Group" (never say "NVC Group Australia" or append "Australia" to its organisation name).
+- Closed-World Grounding: You must only answer questions based strictly on Hafizi's verified CV context. Never invent, fabricate, or extrapolate skills, companies, or credentials not explicitly present in his profile. If a user asks about technologies Hafizi has not worked with, state clearly that he specialises in his core stack (React 19, TypeScript, Node.js, PostgreSQL, Redis, Docker) and invite them to explore his verified work.
 - Typography: Never output raw markdown headings (### or ##). Always use standard Markdown bold with double asterisks (**bold**). Never use single asterisks for bolding. Use backticks for code and technical identifiers.
 - Privacy & Professional Boundaries: Do not discuss off-topic personal matters (such as dating, relationship status, or private personal arrangements). State succinctly: "I am programmed strictly to assist with Hafizi's software engineering capabilities, technical architecture, and professional background. Personal matters are outside my scope." For professional contact inquiries, direct recruiters to the portfolio contact form, LinkedIn, or GitHub. Do not disclose raw personal phone numbers or private email addresses.
 Provide a complete, articulate, and insightful answer directly without overthinking. Never leave thoughts cut off mid-sentence.`;
@@ -620,7 +620,7 @@ Provide a complete, articulate, and insightful answer directly without overthink
 
       let interaction: any;
       try {
-        // Fast, speed-optimized execution: 750 tokens, temperature 0.15, low thinking depth
+        // Fast, speed-optimised execution: 750 tokens, temperature 0.15, low thinking depth
         interaction = await ai.interactions.create({
           model: 'models/gemini-3.8-flash',
           system_instruction: systemPrompt,
@@ -679,7 +679,7 @@ Provide a complete, articulate, and insightful answer directly without overthink
       `Here are some topics I can answer for you instantly:\n` +
       `- **"Tell me about React 19"** — His frontend architecture, state management with Zustand, and modern hooks.\n` +
       `- **"Explain the URUS project"** — Concurrency control with PostgreSQL row-locking, barcode pipeline, and 452 automated tests.\n` +
-      `- **"Why should we hire Hafizi?"** — A 30-second summary synthesizing his clinical, 42KL C programming, and full-stack background.\n` +
+      `- **"Why should we hire Hafizi?"** — A 30-second summary synthesising his clinical, 42KL C programming, and full-stack background.\n` +
       `- **"Backend & Database Design"** — Clean layered architecture, PostgreSQL connection pools, and Redis cache invalidation.\n` +
       `- **"Clinical background"** — How his UiTM Dietetics degree and NVC Group operations translate into software reliability.\n\n` +
       `How can I assist your review of Hafizi's profile today?`;

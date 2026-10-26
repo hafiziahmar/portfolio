@@ -16,7 +16,7 @@ const renderFormattedMessage = (text: string) => {
   const lines = text.split('\n');
   return lines.map((line, lineIdx) => {
     const renderInline = (rawStr: string) => {
-      // Normalize any markdown links wrapped in bold like **[Label](url)** -> [Label](url)
+      // Normalise any markdown links wrapped in bold like **[Label](url)** -> [Label](url)
       const str = rawStr.replace(/\*\*(\[.*?\]\(.*?\))\*\*/g, '$1');
       // Matches links [text](url), bold **text**, code `code`, and single asterisk/underscore *emphasis* or _emphasis_
       const parts = str.split(/(\[.*?\]\(.*?\)|\*\*.*?\*\*|`.*?`|\*[^*\n]+?\*|_[^_\n]+?_)/g);
@@ -326,7 +326,7 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
           {isTyping && (
             <div className="flex items-center space-x-2 text-xs text-sand-text-muted">
               <Bot className="w-4 h-4 text-sand-moss animate-pulse" />
-              <span>Analyzing CV context...</span>
+              <span>Analysing CV context...</span>
             </div>
           )}
 

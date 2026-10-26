@@ -1323,7 +1323,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPortfolio }) => {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <h2 className="text-lg font-bold text-sand-text">Education & Specialized Training ({educationList.length})</h2>
+              <h2 className="text-lg font-bold text-sand-text">Education & Specialised Training ({educationList.length})</h2>
               <p className="text-xs text-sand-text-muted">
                 Title, Education Provider, Dates, and Description. Only your wording is displayed.
               </p>

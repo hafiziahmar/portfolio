@@ -190,19 +190,19 @@ export const ContactSection: React.FC = () => {
                         onChange={handleChange}
                         required
                         autoComplete="email"
-                        placeholder="sarah@organization.com"
+                        placeholder="sarah@organisation.com"
                         className="w-full px-3.5 py-2.5 rounded-xl border border-sand-border bg-sand-bg text-sm text-sand-text placeholder:text-sand-text-muted/60 focus:outline-none focus:ring-2 focus:ring-sand-moss transition-colors"
                         aria-describedby="email-hint"
                       />
                     </div>
                   </div>
 
-                  {/* Organization & Subject */}
+                  {/* Organisation & Subject */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Organization */}
+                    {/* Organisation */}
                     <div className="space-y-1">
                       <label htmlFor="sender_organization" className="text-xs font-semibold text-sand-text font-mono">
-                        Organization / Company
+                        Organisation / Company
                       </label>
                       <input
                         type="text"

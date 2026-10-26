@@ -83,9 +83,9 @@ export const seedDatabase = async (): Promise<void> => {
         start_date: 'May 2025',
         end_date: 'Mar 2026',
         is_current: false,
-        description: `Spearheaded administration, procurement, compliance, and digital outreach pipelines for an Australian aged-care organization expanding operations into the Malaysian market.
+        description: `Spearheaded administration, procurement, compliance, and digital outreach pipelines for an Australian aged-care organisation expanding operations into the Malaysian market.
 
-• Engineered and deployed an automated event registration and database feedback system utilizing Google Workspace and Google Apps Script, eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.
+• Engineered and deployed an automated event registration and database feedback system utilising Google Workspace and Google Apps Script, eliminating manual data entry to zero via auto-triggered confirmations and custom e-certificates.
 • Leveraged structured prompting techniques with LLM assistants to accelerate script writing and prototype operational workflows, bridging healthcare processes with technical automation.`,
         achievements: [],
         technologies: [],
@@ -114,7 +114,7 @@ export const seedDatabase = async (): Promise<void> => {
         is_current: false,
         description: `Managed client portfolios, performed risk evaluations, and translated complex financial protection structures into clear, accessible solutions for clients.
 
-• Utilized internal enterprise digital platforms and CRM software to streamline application submissions and manage data pipelines.
+• Utilised internal enterprise digital platforms and CRM software to streamline application submissions and manage data pipelines.
 • Maintained strict compliance with financial regulations and industry standards across all client accounts.`,
         achievements: [],
         technologies: [],
@@ -130,7 +130,7 @@ export const seedDatabase = async (): Promise<void> => {
         description: `Orchestrated end-to-end project planning, milestone scheduling, and execution for landscaping projects at Masjid Puncak Alam and Ma’ahad Tahfiz Ismail.
 
 • Formulated project budgets, executed procurement strategies, managed assets and inventories, and acted as the primary liaison for supplier and contractor negotiations.
-• Led and supervised a cross-cultural team of 10+ operational workers to optimize daily workflows, reporting project velocity directly to the Director.`,
+• Led and supervised a cross-cultural team of 10+ operational workers to optimise daily workflows, reporting project velocity directly to the Director.`,
         achievements: [],
         technologies: [],
         order_index: 4,
@@ -156,7 +156,7 @@ export const seedDatabase = async (): Promise<void> => {
         start_date: '2020',
         end_date: '2020',
         is_current: false,
-        description: `Immersed in specialized training focused on exploring freelance tech ecosystems, digital marketplace onboarding, and remote delivery frameworks.
+        description: `Immersed in specialised training focused on exploring freelance tech ecosystems, digital marketplace onboarding, and remote delivery frameworks.
 
 • Formulated professional client outreach pipelines, digital portfolio presentation standards, and cross-border service delivery strategies.
 • Equipped with structured remote project execution workflows, digital asset management, and independent professional branding strategies.`,
@@ -231,7 +231,7 @@ export const seedDatabase = async (): Promise<void> => {
       );
     }
 
-    // 5. Seed Education & Specialized Training (word-for-word from CV)
+    // 5. Seed Education & Specialised Training (word-for-word from CV)
     await pool.query('DELETE FROM education');
     const education = [
       {
@@ -263,7 +263,7 @@ export const seedDatabase = async (): Promise<void> => {
         end_date: '2020',
         period: '2020',
         field_of_study: 'Clinical Healthcare, Biochemical Nutrition & Data Analysis',
-        description: 'Formulated precision Medical Nutrition Therapy (MNT) by interpreting raw biochemical parameters and clinical data inputs. Utilized behavioral counseling frameworks to systematically deliver and execute clinical dietary interventions. Executed structured quantitative research methodologies to accurately track, analyze, and report on complex data trends.',
+        description: 'Formulated precision Medical Nutrition Therapy (MNT) by interpreting raw biochemical parameters and clinical data inputs. Utilised behavioural counselling frameworks to systematically deliver and execute clinical dietary interventions. Executed structured quantitative research methodologies to accurately track, analyse, and report on complex data trends.',
         badges: [],
         order_index: 3,
       },

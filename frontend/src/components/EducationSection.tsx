@@ -21,7 +21,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education })
             <span>Academic & Technical Foundations</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-sand-text tracking-tight">
-            Education & Specialized Training
+            Education & Specialised Training
           </h2>
           <p className="text-base text-sand-text-muted text-justify">
             Academic degrees, technical fellowships, and systems programming intensives.

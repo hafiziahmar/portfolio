@@ -21,7 +21,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experien
             Professional Experience Timeline
           </h2>
           <p className="text-base text-sand-text-muted">
-            From clinical operations in Australia and process automation to enterprise project execution and tech modernization.
+            From clinical operations in Australia and process automation to enterprise project execution and tech modernisation.
           </p>
         </div>
 
