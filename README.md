@@ -1,7 +1,7 @@
 # Hafizi Ahmar — Full-Stack Portfolio & Headless CMS Engine
 
 [![Architecture](https://img.shields.io/badge/Architecture-Decoupled_Full--Stack_CMS-5E6C5B?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
-[![Frontend](https://img.shields.io/badge/Frontend-React_19_|_TailwindCSS_v4_|_Vercel-000000?style=for-the-badge&logo=vercel)](https://portfolio-mu-brown-39.vercel.app)
+[![Frontend](https://img.shields.io/badge/Frontend-React_19_|_TailwindCSS_v4_|_Vercel-000000?style=for-the-badge&logo=vercel)](https://hafizi-portfolio.vercel.app)
 [![Backend](https://img.shields.io/badge/Backend-Express_|_Render_Cloud-46E3B7?style=for-the-badge&logo=render)](https://hafizi-portfolio-api.onrender.com)
 [![Database](https://img.shields.io/badge/Database-PostgreSQL_16_|_Redis_7-C27803?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
 [![Security](https://img.shields.io/badge/Security-JWT_|_Bcrypt_|_Zod_|_Anti--Scraping-3B5249?style=for-the-badge)](https://github.com/hafiziahmar/portfolio)
